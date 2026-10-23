@@ -1,0 +1,58 @@
+{
+  "pages": [
+    {
+      "path": "pages/home/index",
+      "style": {
+        "navigationBarTitleText": "AI 个人提醒助手",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/list/index",
+      "style": {
+        "navigationBarTitleText": "全部提醒",
+        "navigationBarBackgroundColor": "#F3F8F7"
+      }
+    },
+    {
+      "path": "pages/confirm/index",
+      "style": {
+        "navigationBarTitleText": "确认提醒",
+        "navigationBarBackgroundColor": "#F3F8F7"
+      }
+    },
+    {
+      "path": "pages/settings/index",
+      "style": {
+        "navigationBarTitleText": "提醒设置",
+        "navigationBarBackgroundColor": "#F3F8F7"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "AI 个人提醒助手",
+    "navigationBarBackgroundColor": "#F3F8F7",
+    "backgroundColor": "#F3F8F7"
+  },
+  "tabBar": {
+    "color": "#6B8582",
+    "selectedColor": "#1A7A72",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "static/tab-home.png",
+        "selectedIconPath": "static/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/list/index",
+        "text": "提醒",
+        "iconPath": "static/tab-list.png",
+        "selectedIconPath": "static/tab-list-active.png"
+      }
+    ]
+  }
+}
