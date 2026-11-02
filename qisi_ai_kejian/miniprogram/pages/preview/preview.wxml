@@ -1,17 +1,27 @@
 <view class="page">
-  <view class="meta muted">
-    风格 {{preview.style_id}} · 模型 {{preview.model_id}} · mock
+  <view class="hero-band">
+    <view class="hero-kicker">课件预览</view>
+    <view class="hero-title">六页课堂速览</view>
+    <view class="meta">
+      风格 {{preview.style_id}} · 模型 {{preview.model_id}}
+    </view>
   </view>
 
-  <swiper class="pager" current="{{current}}" bindchange="onChange" indicator-dots circular>
+  <swiper class="pager" current="{{current}}" bindchange="onChange" indicator-dots circular autoplay interval="3200">
     <block wx:for="{{preview.pages}}" wx:key="page_no">
       <swiper-item>
-        <view class="slide">
-          <view class="page-no">第 {{item.page_no}} / {{preview.pages.length}} 页</view>
+        <view class="slide layout-{{item.layout || 'content'}}">
+          <view class="slide-glow"></view>
+          <view class="page-meta">
+            <text class="page-no">第 {{item.page_no}} / {{preview.pages.length}} 页</text>
+            <text class="phase-chip" wx:if="{{item.phase}}">{{item.phase}}</text>
+          </view>
           <view class="slide-title">{{item.title}}</view>
-          <view class="bullet" wx:for="{{item.bullets}}" wx:for-item="b" wx:key="*this">· {{b}}</view>
+          <view class="sub" wx:if="{{item.subtitle}}">{{item.subtitle}}</view>
+          <view class="bullet" wx:for="{{item.bullets}}" wx:for-item="b" wx:key="*this">
+            <text class="bmark">▸</text> {{b}}
+          </view>
           <view class="note" wx:if="{{item.speaker_note}}">讲者提示：{{item.speaker_note}}</view>
-          <view class="hint muted">视觉占位：{{item.mock_image_hint}}</view>
         </view>
       </swiper-item>
     </block>
@@ -22,5 +32,5 @@
     <view class="btn-primary" bindtap="reModel">换模型</view>
   </view>
   <view class="btn-accent gen" bindtap="onGenerate">正式生成{{isExam ? '试卷' : '课件'}}</view>
-  <view class="done muted">预览为 6 页 mock；正式生成将写出完整 artifact 并落库。</view>
+  <view class="done muted">预览取自 teacher-prep 结构；正式生成将写出带主题视觉的完整 PPTX。</view>
 </view>

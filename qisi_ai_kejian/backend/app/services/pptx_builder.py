@@ -1,4 +1,9 @@
-"""Build a real .pptx from slide JSON. Prefer python-pptx; improved OOXML fallback."""
+"""Build a real .pptx from slide JSON with a coherent classroom visual system.
+
+Prefer python-pptx (shapes, theme colors, layout variants); post-process OOXML
+for slide transitions / entrance-friendly timing. Improved OOXML fallback when
+python-pptx is unavailable.
+"""
 
 from __future__ import annotations
 
@@ -12,6 +17,20 @@ from xml.sax.saxutils import escape
 from ..config import settings
 
 PPTX_MIME = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+
+# Coherent 「启思课堂」 visual system (not flat white bullets)
+THEME = {
+    "ink": "1B3A57",
+    "ink_soft": "4A6078",
+    "paper": "F7F4EC",
+    "paper_deep": "EDE6D8",
+    "accent": "C45C26",
+    "accent_soft": "E8A87C",
+    "sage": "2F6B4F",
+    "teal": "4C8CB4",
+    "white": "FFFFFF",
+    "cover_deep": "152A3D",
+}
 
 
 def storage_dir() -> Path:
@@ -52,10 +71,389 @@ def _slides_or_placeholder(content: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def _palette_colors(content: dict[str, Any]) -> dict[str, str]:
+    """Map style palette → theme roles; keep brand defaults when missing."""
+    colors = dict(THEME)
+    palette = content.get("palette") or []
+    if isinstance(palette, list) and len(palette) >= 1:
+        p0 = str(palette[0]).lstrip("#").upper()
+        if len(p0) == 6:
+            colors["paper"] = p0
+    if isinstance(palette, list) and len(palette) >= 2:
+        p1 = str(palette[1]).lstrip("#").upper()
+        if len(p1) == 6:
+            colors["ink"] = p1
+            colors["cover_deep"] = p1
+    if isinstance(palette, list) and len(palette) >= 3:
+        p2 = str(palette[2]).lstrip("#").upper()
+        if len(p2) == 6:
+            colors["accent"] = p2
+            colors["teal"] = p2
+    return colors
+
+
+def _rgb(hex_color: str):
+    from pptx.dml.color import RGBColor
+
+    h = hex_color.lstrip("#")
+    return RGBColor(int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
+
+
+def _set_run_font(run, *, size_pt: int, bold: bool = False, color: str = "1B3A57", name: str = "PingFang SC"):
+    from pptx.util import Pt
+
+    run.font.size = Pt(size_pt)
+    run.font.bold = bold
+    run.font.color.rgb = _rgb(color)
+    run.font.name = name
+    # Prefer public font API only — private rPr hooks differ across python-pptx builds
+    # and are not required for Keynote/PowerPoint openability.
+
+
+def _add_rect(slide, left, top, width, height, fill_hex: str, line_hex: str | None = None):
+    from pptx.enum.shapes import MSO_SHAPE
+    from pptx.util import Inches
+
+    shape = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE,
+        Inches(left),
+        Inches(top),
+        Inches(width),
+        Inches(height),
+    )
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = _rgb(fill_hex)
+    if line_hex:
+        shape.line.color.rgb = _rgb(line_hex)
+    else:
+        shape.line.fill.background()
+    return shape
+
+
+def _add_oval(slide, left, top, width, height, fill_hex: str):
+    from pptx.enum.shapes import MSO_SHAPE
+    from pptx.util import Inches
+
+    shape = slide.shapes.add_shape(
+        MSO_SHAPE.OVAL,
+        Inches(left),
+        Inches(top),
+        Inches(width),
+        Inches(height),
+    )
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = _rgb(fill_hex)
+    shape.line.fill.background()
+    return shape
+
+
+def _add_round_rect(slide, left, top, width, height, fill_hex: str):
+    from pptx.enum.shapes import MSO_SHAPE
+    from pptx.util import Inches
+
+    shape = slide.shapes.add_shape(
+        MSO_SHAPE.ROUNDED_RECTANGLE,
+        Inches(left),
+        Inches(top),
+        Inches(width),
+        Inches(height),
+    )
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = _rgb(fill_hex)
+    shape.line.fill.background()
+    return shape
+
+
+def _textbox(slide, left, top, width, height, text: str, *, size: int, bold: bool = False, color: str = "1B3A57", align=None):
+    from pptx.enum.text import PP_ALIGN
+    from pptx.util import Inches, Pt
+
+    box = slide.shapes.add_textbox(Inches(left), Inches(top), Inches(width), Inches(height))
+    tf = box.text_frame
+    tf.word_wrap = True
+    p = tf.paragraphs[0]
+    if align == "center":
+        p.alignment = PP_ALIGN.CENTER
+    elif align == "right":
+        p.alignment = PP_ALIGN.RIGHT
+    run = p.add_run()
+    run.text = text
+    _set_run_font(run, size_pt=size, bold=bold, color=color)
+    return box
+
+
+def _bullets_box(slide, left, top, width, height, bullets: list[str], *, size: int = 18, color: str = "1B3A57", accent: str = "C45C26"):
+    from pptx.util import Inches, Pt
+
+    body = slide.shapes.add_textbox(Inches(left), Inches(top), Inches(width), Inches(height))
+    tf = body.text_frame
+    tf.word_wrap = True
+    for i, bullet in enumerate(bullets[:7]):
+        para = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+        para.level = 0
+        para.space_after = Pt(10)
+        # Accent glyph as visual bullet
+        run_mark = para.add_run()
+        run_mark.text = "▸ "
+        _set_run_font(run_mark, size_pt=size, bold=True, color=accent)
+        run = para.add_run()
+        run.text = str(bullet)
+        _set_run_font(run, size_pt=size, bold=False, color=color)
+    return body
+
+
+def _layout_of(slide: dict[str, Any], index: int) -> str:
+    layout = str(slide.get("layout") or "").strip().lower()
+    if layout:
+        return layout
+    if index == 0:
+        return "cover"
+    return "content"
+
+
+def _paint_cover(s, slide: dict[str, Any], colors: dict[str, str], total: int, index: int):
+    from pptx.util import Inches
+
+    # Full-bleed deep ink plane
+    _add_rect(s, 0, 0, 13.333, 7.5, colors["cover_deep"])
+    # Soft decorative circles (atmosphere, not clutter)
+    _add_oval(s, 10.2, -1.2, 4.2, 4.2, colors["ink"])
+    _add_oval(s, -1.4, 5.0, 3.6, 3.6, colors["ink"])
+    _add_rect(s, 0, 0, 0.22, 7.5, colors["accent"])
+    # Accent band near bottom
+    _add_rect(s, 0, 6.55, 13.333, 0.95, colors["ink"])
+
+    title = str(slide.get("title") or "课堂课件")
+    subtitle = str(slide.get("subtitle") or "teacher-prep · 启思备课")
+    _textbox(s, 0.9, 2.0, 11.2, 1.6, title, size=40, bold=True, color=colors["white"])
+    _textbox(s, 0.9, 3.7, 10.5, 0.6, subtitle, size=18, bold=False, color=colors["accent_soft"])
+    _textbox(
+        s,
+        0.9,
+        6.75,
+        8.0,
+        0.45,
+        f"共 {total} 页 · 第 {index + 1} 页",
+        size=12,
+        color="A8B8C8",
+    )
+    kicker = str(slide.get("phase") or "导入")
+    badge = _add_round_rect(s, 0.9, 1.35, 1.6, 0.42, colors["accent"])
+    _textbox(s, 0.9, 1.38, 1.6, 0.4, kicker, size=12, bold=True, color=colors["white"], align="center")
+    _ = badge
+
+
+def _paint_section(s, slide: dict[str, Any], colors: dict[str, str], index: int, total: int):
+    _add_rect(s, 0, 0, 13.333, 7.5, colors["paper"])
+    _add_rect(s, 0, 0, 4.2, 7.5, colors["ink"])
+    _add_rect(s, 4.2, 0, 0.12, 7.5, colors["accent"])
+    _add_oval(s, 0.6, 5.8, 2.4, 2.4, colors["cover_deep"])
+
+    phase = str(slide.get("phase") or slide.get("subtitle") or "概念建构")
+    _textbox(s, 0.55, 2.3, 3.3, 0.5, phase, size=14, bold=True, color=colors["accent_soft"])
+    _textbox(s, 0.55, 2.9, 3.3, 2.2, str(slide.get("title") or "章节"), size=28, bold=True, color=colors["white"])
+
+    bullets = list(slide.get("bullets") or [])
+    if bullets:
+        _bullets_box(s, 4.9, 2.0, 7.6, 4.5, bullets, size=20, color=colors["ink"], accent=colors["accent"])
+    else:
+        _textbox(s, 4.9, 2.8, 7.5, 1.0, str(slide.get("subtitle") or ""), size=18, color=colors["ink_soft"])
+    _textbox(s, 4.9, 6.9, 7.5, 0.35, f"{index + 1} / {total}", size=11, color=colors["ink_soft"])
+
+
+def _paint_agenda(s, slide: dict[str, Any], colors: dict[str, str], index: int, total: int):
+    _add_rect(s, 0, 0, 13.333, 7.5, colors["paper"])
+    _add_rect(s, 0, 0, 13.333, 1.35, colors["ink"])
+    _add_rect(s, 0, 1.35, 13.333, 0.1, colors["accent"])
+    _textbox(s, 0.7, 0.35, 10, 0.7, str(slide.get("title") or "学习目标"), size=28, bold=True, color=colors["white"])
+    if slide.get("subtitle"):
+        _textbox(s, 0.7, 0.95, 10, 0.35, str(slide["subtitle"]), size=13, color=colors["accent_soft"])
+
+    bullets = list(slide.get("bullets") or [])
+    # Goal cards as rounded blocks
+    y = 1.9
+    for i, b in enumerate(bullets[:5]):
+        _add_round_rect(s, 0.7, y, 11.9, 0.85, colors["white"] if i % 2 == 0 else colors["paper_deep"])
+        _add_rect(s, 0.7, y, 0.14, 0.85, colors["accent"] if i % 2 == 0 else colors["teal"])
+        _textbox(s, 1.15, y + 0.22, 11.0, 0.5, str(b), size=18, color=colors["ink"])
+        y += 1.0
+    _textbox(s, 0.7, 6.95, 6, 0.3, f"{index + 1} / {total}", size=11, color=colors["ink_soft"])
+
+
+def _paint_content(s, slide: dict[str, Any], colors: dict[str, str], index: int, total: int, *, accent: str | None = None):
+    accent = accent or colors["accent"]
+    _add_rect(s, 0, 0, 13.333, 7.5, colors["paper"])
+    # Top bar + left rail
+    _add_rect(s, 0, 0, 13.333, 0.18, accent)
+    _add_rect(s, 0, 0, 0.18, 7.5, colors["ink"])
+    # Soft corner wash
+    _add_oval(s, 11.6, -0.8, 2.8, 2.8, colors["paper_deep"])
+
+    title = str(slide.get("title") or "")
+    _textbox(s, 0.7, 0.45, 11.5, 0.85, title, size=30, bold=True, color=colors["ink"])
+    y = 1.45
+    if slide.get("subtitle"):
+        _textbox(s, 0.7, 1.25, 11.5, 0.4, str(slide["subtitle"]), size=14, color=colors["ink_soft"])
+        y = 1.75
+
+    # Icon disc for hierarchy
+    _add_oval(s, 0.7, y, 0.55, 0.55, accent)
+    _textbox(s, 0.7, y + 0.08, 0.55, 0.4, "◆", size=12, bold=True, color=colors["white"], align="center")
+
+    bullets = list(slide.get("bullets") or [])
+    if bullets:
+        _bullets_box(s, 1.5, y, 10.8, 4.6, bullets, size=18, color=colors["ink"], accent=accent)
+    _textbox(s, 0.7, 6.95, 6, 0.3, f"{index + 1} / {total}", size=11, color=colors["ink_soft"])
+
+
+def _paint_example(s, slide: dict[str, Any], colors: dict[str, str], index: int, total: int):
+    _add_rect(s, 0, 0, 13.333, 7.5, colors["paper"])
+    _add_rect(s, 0, 0, 0.55, 7.5, colors["accent"])
+    badge = _add_round_rect(s, 0.9, 0.45, 1.15, 0.48, colors["accent"])
+    _ = badge
+    _textbox(s, 0.9, 0.5, 1.15, 0.4, "例题", size=14, bold=True, color=colors["white"], align="center")
+    _textbox(s, 2.3, 0.45, 10, 0.7, str(slide.get("title") or "例题精讲"), size=28, bold=True, color=colors["ink"])
+    if slide.get("subtitle"):
+        _textbox(s, 0.9, 1.2, 11.5, 0.4, str(slide["subtitle"]), size=14, color=colors["ink_soft"])
+    bullets = list(slide.get("bullets") or [])
+    # Step cards
+    y = 1.85
+    labels = ["审", "建", "解", "验", "拓"]
+    for i, b in enumerate(bullets[:5]):
+        _add_round_rect(s, 0.9, y, 11.5, 0.85, colors["white"])
+        _add_oval(s, 1.15, y + 0.18, 0.5, 0.5, colors["accent"] if i == 0 else colors["teal"])
+        _textbox(
+            s,
+            1.15,
+            y + 0.26,
+            0.5,
+            0.4,
+            labels[i] if i < len(labels) else str(i + 1),
+            size=12,
+            bold=True,
+            color=colors["white"],
+            align="center",
+        )
+        _textbox(s, 1.9, y + 0.22, 10.0, 0.5, str(b), size=17, color=colors["ink"])
+        y += 0.95
+    _textbox(s, 0.9, 6.95, 6, 0.3, f"{index + 1} / {total}", size=11, color=colors["ink_soft"])
+
+
+def _paint_practice(s, slide: dict[str, Any], colors: dict[str, str], index: int, total: int):
+    _paint_content(s, slide, colors, index, total, accent=colors["sage"])
+    # Corner ribbon
+    _add_rect(s, 11.6, 0, 1.733, 0.55, colors["sage"])
+    _textbox(s, 11.6, 0.1, 1.733, 0.4, "练习", size=12, bold=True, color=colors["white"], align="center")
+
+
+def _paint_summary(s, slide: dict[str, Any], colors: dict[str, str], index: int, total: int):
+    _add_rect(s, 0, 0, 13.333, 7.5, colors["paper"])
+    _add_rect(s, 0, 5.9, 13.333, 1.6, colors["ink"])
+    _add_rect(s, 0, 0, 13.333, 0.18, colors["sage"])
+    _textbox(s, 0.8, 0.55, 11.5, 0.7, str(slide.get("title") or "课堂小结"), size=30, bold=True, color=colors["ink"])
+    bullets = list(slide.get("bullets") or [])
+    _bullets_box(s, 0.9, 1.6, 11.5, 3.8, bullets, size=20, color=colors["ink"], accent=colors["sage"])
+    _textbox(
+        s,
+        0.8,
+        6.25,
+        11.5,
+        0.8,
+        str(slide.get("subtitle") or "回顾结构 · 重申易错 · 预告下节"),
+        size=14,
+        color=colors["accent_soft"],
+    )
+    _textbox(s, 11.2, 6.95, 1.5, 0.3, f"{index + 1}/{total}", size=11, color="A8B8C8", align="right")
+
+
+def _paint_homework(s, slide: dict[str, Any], colors: dict[str, str], index: int, total: int):
+    _add_rect(s, 0, 0, 13.333, 7.5, colors["paper"])
+    _add_rect(s, 0, 0, 13.333, 1.5, colors["teal"])
+    _textbox(s, 0.8, 0.4, 11, 0.7, str(slide.get("title") or "分层作业"), size=30, bold=True, color=colors["white"])
+    if slide.get("subtitle"):
+        _textbox(s, 0.8, 1.05, 11, 0.35, str(slide["subtitle"]), size=13, color=colors["paper"])
+    bullets = list(slide.get("bullets") or [])
+    tiers = [("基础", colors["sage"]), ("拔高", colors["accent"]), ("选做", colors["ink"])]
+    cols = min(3, max(1, len(bullets) or 1))
+    for i in range(cols):
+        left = 0.7 + i * 4.15
+        label, fill = tiers[i % 3]
+        _add_round_rect(s, left, 2.0, 3.9, 4.2, colors["white"])
+        _add_rect(s, left, 2.0, 3.9, 0.55, fill)
+        _textbox(s, left, 2.1, 3.9, 0.4, label, size=14, bold=True, color=colors["white"], align="center")
+        text = str(bullets[i]) if i < len(bullets) else "按学情布置"
+        _textbox(s, left + 0.25, 2.85, 3.4, 3.0, text, size=16, color=colors["ink"])
+    _textbox(s, 0.7, 6.95, 6, 0.3, f"{index + 1} / {total}", size=11, color=colors["ink_soft"])
+
+
+def _paint_speaker_footer(s, slide: dict[str, Any], colors: dict[str, str], layout: str):
+    """Render speaker notes on-slide.
+
+    python-pptx notesSlide parts are often rejected by Keynote; keep notes in the
+    JSON for in-app preview, and mirror a short footer on the canvas instead.
+    """
+    note = slide.get("speaker_note")
+    if not note:
+        return
+    text = f"讲者：{note}"
+    if len(text) > 48:
+        text = text[:46] + "…"
+    color = colors["accent_soft"] if layout == "cover" else colors["ink_soft"]
+    _textbox(s, 0.7, 6.55, 10.5, 0.35, text, size=11, color=color)
+
+
+def _paint_slide(s, slide: dict[str, Any], colors: dict[str, str], index: int, total: int):
+    layout = _layout_of(slide, index)
+    if layout == "cover":
+        _paint_cover(s, slide, colors, total, index)
+    elif layout == "section":
+        _paint_section(s, slide, colors, index, total)
+    elif layout == "agenda":
+        _paint_agenda(s, slide, colors, index, total)
+    elif layout == "example":
+        _paint_example(s, slide, colors, index, total)
+    elif layout == "practice":
+        _paint_practice(s, slide, colors, index, total)
+    elif layout == "summary":
+        _paint_summary(s, slide, colors, index, total)
+    elif layout == "homework":
+        _paint_homework(s, slide, colors, index, total)
+    else:
+        _paint_content(s, slide, colors, index, total)
+
+    # Footer note instead of notesSlide (Keynote-safe). Skip layouts with busy bottom bands.
+    if layout not in ("cover", "summary", "homework"):
+        _paint_speaker_footer(s, slide, colors, layout)
+
+
+def _inject_animations(pptx_path: Path) -> None:
+    """Post-process OOXML: add fade slide transitions (Keynote/PowerPoint friendly)."""
+    data = pptx_path.read_bytes()
+    buf_in = io.BytesIO(data)
+    buf_out = io.BytesIO()
+    transition = '<p:transition spd="med"><p:fade/></p:transition>'
+    with zipfile.ZipFile(buf_in, "r") as zin, zipfile.ZipFile(
+        buf_out, "w", compression=zipfile.ZIP_DEFLATED
+    ) as zout:
+        for item in zin.infolist():
+            raw = zin.read(item.filename)
+            if re.match(r"ppt/slides/slide\d+\.xml$", item.filename):
+                text = raw.decode("utf-8")
+                if "<p:transition" not in text:
+                    text = text.replace("</p:sld>", transition + "</p:sld>")
+                    raw = text.encode("utf-8")
+            zout.writestr(item, raw)
+    out = buf_out.getvalue()
+    _assert_valid_pptx_bytes(out)
+    tmp = pptx_path.with_suffix(pptx_path.suffix + ".animtmp")
+    tmp.write_bytes(out)
+    tmp.replace(pptx_path)
+
+
 def _try_python_pptx(content: dict[str, Any], dest: Path) -> bool:
     try:
         from pptx import Presentation
-        from pptx.util import Inches, Pt
+        from pptx.util import Inches
     except ImportError:
         return False
 
@@ -63,50 +461,15 @@ def _try_python_pptx(content: dict[str, Any], dest: Path) -> bool:
     prs.slide_width = Inches(13.333)
     prs.slide_height = Inches(7.5)
     blank = prs.slide_layouts[6]  # blank
+    colors = _palette_colors(content)
+    slides = _slides_or_placeholder(content)
+    total = len(slides)
 
-    for slide in _slides_or_placeholder(content):
+    for index, slide in enumerate(slides):
         s = prs.slides.add_slide(blank)
-        title = str(slide.get("title") or "")
-        subtitle = slide.get("subtitle")
-        bullets = list(slide.get("bullets") or [])
-
-        box = s.shapes.add_textbox(Inches(0.7), Inches(0.5), Inches(11.8), Inches(1.2))
-        tf = box.text_frame
-        tf.word_wrap = True
-        p = tf.paragraphs[0]
-        p.text = title
-        p.font.size = Pt(32)
-        p.font.bold = True
-
-        y = 1.9
-        if subtitle:
-            sub = s.shapes.add_textbox(Inches(0.7), Inches(1.5), Inches(11.8), Inches(0.5))
-            st = sub.text_frame.paragraphs[0]
-            st.text = str(subtitle)
-            st.font.size = Pt(16)
-            y = 2.2
-
-        if bullets:
-            body = s.shapes.add_textbox(Inches(0.9), Inches(y), Inches(11.4), Inches(4.8))
-            btf = body.text_frame
-            btf.word_wrap = True
-            for i, bullet in enumerate(bullets):
-                para = btf.paragraphs[0] if i == 0 else btf.add_paragraph()
-                para.text = str(bullet)
-                para.level = 0
-                para.font.size = Pt(18)
-                para.space_after = Pt(8)
-
-        note = slide.get("speaker_note")
-        if note:
-            try:
-                ns = s.notes_slide
-                ns.notes_text_frame.text = str(note)
-            except Exception:
-                pass
+        _paint_slide(s, slide, colors, index, total)
 
     dest.parent.mkdir(parents=True, exist_ok=True)
-    # Atomic write: save to buffer then replace, avoids truncated downloads mid-write
     buf = io.BytesIO()
     prs.save(buf)
     data = buf.getvalue()
@@ -114,6 +477,11 @@ def _try_python_pptx(content: dict[str, Any], dest: Path) -> bool:
     tmp = dest.with_suffix(dest.suffix + ".tmp")
     tmp.write_bytes(data)
     tmp.replace(dest)
+    try:
+        _inject_animations(dest)
+    except Exception:
+        # Animations are best-effort; keep valid deck if post-process fails
+        pass
     return True
 
 
@@ -206,10 +574,99 @@ def _slide_layout_xml() -> str:
 </p:sldLayout>"""
 
 
+def _fallback_slide_xml(slide: dict[str, Any], index: int, total: int, colors: dict[str, str]) -> str:
+    layout = _layout_of(slide, index)
+    title = escape(str(slide.get("title") or f"第 {index + 1} 页"))
+    subtitle = escape(str(slide.get("subtitle") or ""))
+    bullets = slide.get("bullets") or []
+    body_lines = []
+    for b in bullets[:7]:
+        body_lines.append(
+            '<a:p><a:r><a:rPr lang="zh-CN" sz="1800" b="1">'
+            f'<a:solidFill><a:srgbClr val="{colors["accent"]}"/></a:solidFill></a:rPr>'
+            f'<a:t>▸ </a:t></a:r><a:r><a:rPr lang="zh-CN" sz="1800">'
+            f'<a:solidFill><a:srgbClr val="{colors["ink"]}"/></a:solidFill></a:rPr>'
+            f"<a:t>{escape(str(b))}</a:t></a:r></a:p>"
+        )
+    body_xml = "".join(body_lines) or '<a:p><a:endParaRPr lang="zh-CN"/></a:p>'
+
+    if layout == "cover":
+        bg = colors["cover_deep"]
+        title_color = colors["white"]
+        bar = (
+            f'<p:sp><p:nvSpPr><p:cNvPr id="4" name="Accent"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>'
+            f'<p:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="200000" cy="6858000"/></a:xfrm>'
+            f'<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>'
+            f'<a:solidFill><a:srgbClr val="{colors["accent"]}"/></a:solidFill></p:spPr>'
+            f"<p:txBody><a:bodyPr/><a:lstStyle/><a:p/></p:txBody></p:sp>"
+        )
+    else:
+        bg = colors["paper"]
+        title_color = colors["ink"]
+        bar = (
+            f'<p:sp><p:nvSpPr><p:cNvPr id="4" name="Top"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>'
+            f'<p:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="12192000" cy="160000"/></a:xfrm>'
+            f'<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>'
+            f'<a:solidFill><a:srgbClr val="{colors["accent"]}"/></a:solidFill></p:spPr>'
+            f"<p:txBody><a:bodyPr/><a:lstStyle/><a:p/></p:txBody></p:sp>"
+        )
+
+    sub_xml = ""
+    if subtitle:
+        sub_xml = (
+            f'<p:sp><p:nvSpPr><p:cNvPr id="5" name="Sub"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>'
+            f'<p:spPr><a:xfrm><a:off x="457200" y="1200000"/><a:ext cx="11277600" cy="400000"/></a:xfrm>'
+            f'<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr>'
+            f'<p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:r>'
+            f'<a:rPr lang="zh-CN" sz="1400"/><a:t>{subtitle}</a:t></a:r></a:p></p:txBody></p:sp>'
+        )
+
+    return f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+ xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+ xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
+  <p:cSld>
+    <p:bg><p:bgPr><a:solidFill><a:srgbClr val="{bg}"/></a:solidFill><a:effectLst/></p:bgPr></p:bg>
+    <p:spTree>
+      <p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>
+      <p:grpSpPr/>
+      {bar}
+      <p:sp>
+        <p:nvSpPr><p:cNvPr id="2" name="Title"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
+        <p:spPr>
+          <a:xfrm><a:off x="457200" y="400000"/><a:ext cx="11277600" cy="900000"/></a:xfrm>
+          <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/><a:lstStyle/>
+          <a:p><a:r><a:rPr lang="zh-CN" sz="3200" b="1">
+            <a:solidFill><a:srgbClr val="{title_color}"/></a:solidFill>
+          </a:rPr><a:t>{title}</a:t></a:r></a:p>
+        </p:txBody>
+      </p:sp>
+      {sub_xml}
+      <p:sp>
+        <p:nvSpPr><p:cNvPr id="3" name="Body"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
+        <p:spPr>
+          <a:xfrm><a:off x="457200" y="1700000"/><a:ext cx="11277600" cy="4500000"/></a:xfrm>
+          <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/><a:lstStyle/>
+          {body_xml}
+        </p:txBody>
+      </p:sp>
+    </p:spTree>
+  </p:cSld>
+  <p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr>
+  <p:transition spd="med"><p:fade/></p:transition>
+</p:sld>"""
+
+
 def _minimal_pptx_bytes(content: dict[str, Any]) -> bytes:
-    """OOXML with theme/master/layout so Keynote/PowerPoint can open (not just zip-valid)."""
+    """OOXML with theme/master/layout + colored backgrounds so Keynote/PowerPoint open."""
     slides = _slides_or_placeholder(content)
-    titles = [str(s.get("title") or f"Slide {i}") for i, s in enumerate(slides, 1)]
+    colors = _palette_colors(content)
 
     content_types = [
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
@@ -237,7 +694,6 @@ def _minimal_pptx_bytes(content: dict[str, Any]) -> bytes:
   <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>
 </Relationships>"""
 
-    # presentation rels: slides + slideMaster
     pres_rels_parts = [
         '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
         '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">',
@@ -312,53 +768,10 @@ def _minimal_pptx_bytes(content: dict[str, Any]) -> bytes:
         zf.writestr("ppt/slideMasters/_rels/slideMaster1.xml.rels", master_rels)
         zf.writestr("ppt/slideLayouts/slideLayout1.xml", _slide_layout_xml())
         zf.writestr("ppt/slideLayouts/_rels/slideLayout1.xml.rels", layout_rels)
-        for i, slide in enumerate(slides, 1):
-            title = escape(titles[i - 1])
-            bullets = slide.get("bullets") or []
-            body_lines = []
-            for b in bullets[:8]:
-                body_lines.append(
-                    '<a:p><a:r><a:rPr lang="zh-CN" sz="1800"/><a:t>'
-                    f"{escape(str(b))}</a:t></a:r></a:p>"
-                )
-            body_xml = "".join(body_lines) or '<a:p><a:endParaRPr lang="zh-CN"/></a:p>'
-            slide_xml = f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
- xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
- xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
-  <p:cSld>
-    <p:spTree>
-      <p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>
-      <p:grpSpPr/>
-      <p:sp>
-        <p:nvSpPr><p:cNvPr id="2" name="Title"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
-        <p:spPr>
-          <a:xfrm><a:off x="457200" y="274320"/><a:ext cx="11277600" cy="914400"/></a:xfrm>
-          <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
-        </p:spPr>
-        <p:txBody>
-          <a:bodyPr/><a:lstStyle/>
-          <a:p><a:r><a:rPr lang="zh-CN" sz="3200" b="1"/><a:t>{title}</a:t></a:r></a:p>
-        </p:txBody>
-      </p:sp>
-      <p:sp>
-        <p:nvSpPr><p:cNvPr id="3" name="Body"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
-        <p:spPr>
-          <a:xfrm><a:off x="457200" y="1371600"/><a:ext cx="11277600" cy="4572000"/></a:xfrm>
-          <a:prstGeom prst="rect"><a:avLst/></a:prstGeom>
-        </p:spPr>
-        <p:txBody>
-          <a:bodyPr/><a:lstStyle/>
-          {body_xml}
-        </p:txBody>
-      </p:sp>
-    </p:spTree>
-  </p:cSld>
-  <p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr>
-</p:sld>"""
-            zf.writestr(f"ppt/slides/slide{i}.xml", slide_xml)
+        for i, slide in enumerate(slides):
+            zf.writestr(f"ppt/slides/slide{i + 1}.xml", _fallback_slide_xml(slide, i, len(slides), colors))
             zf.writestr(
-                f"ppt/slides/_rels/slide{i}.xml.rels",
+                f"ppt/slides/_rels/slide{i + 1}.xml.rels",
                 '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
                 '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
                 '<Relationship Id="rId1" '
@@ -394,11 +807,9 @@ def write_pptx(content: dict[str, Any], dest: Path) -> dict[str, Any]:
         tmp = dest.with_suffix(dest.suffix + ".tmp")
         tmp.write_bytes(data)
         tmp.replace(dest)
-    # Prefer re-validating the on-disk file (catches partial writes)
     try:
         _assert_valid_pptx_bytes(dest.read_bytes())
     except RuntimeError:
-        # Last-resort rebuild via openable OOXML so download stays usable.
         data = _minimal_pptx_bytes(content)
         _assert_valid_pptx_bytes(data)
         tmp = dest.with_suffix(dest.suffix + ".tmp")
@@ -414,6 +825,8 @@ def write_pptx(content: dict[str, Any], dest: Path) -> dict[str, Any]:
         "builder": "python-pptx" if used_lib else "ooxml-fallback",
         "mock_file": not used_lib,
         "pptx_valid": True,
+        "visual_theme": "qisi-classroom",
+        "has_transitions": True,
     }
     return meta
 
@@ -432,5 +845,7 @@ def persist_artifact_pptx(artifact_id: int, content: dict[str, Any], title: str 
         "pptx_builder": meta["builder"],
         "has_pptx_file": True,
         "pptx_valid": bool(meta.get("pptx_valid", True)),
+        "visual_theme": meta.get("visual_theme"),
+        "has_transitions": bool(meta.get("has_transitions")),
         "mock": False if meta["builder"] == "python-pptx" else content.get("mock", True),
     }

@@ -1,32 +1,44 @@
 <view class="page" wx:if="{{artifact}}">
-  <view class="section-title">{{artifact.title}}</view>
-  <view class="muted">
-    {{artifact.content.slide_count}} 页 · {{artifact.model_id}}
-    <text wx:if="{{artifact.content.pptx_builder}}"> · {{artifact.content.pptx_builder}}</text>
+  <view class="hero-band">
+    <view class="hero-kicker">已生成 · {{artifact.content.pptx_builder || 'pptx'}}</view>
+    <view class="section-title">{{artifact.title}}</view>
+    <view class="muted">
+      {{artifact.content.slide_count}} 页 · {{artifact.model_id}}
+      <text wx:if="{{artifact.content.visual_theme}}"> · {{artifact.content.visual_theme}}</text>
+    </view>
   </view>
 
   <view class="outline-box" wx:if="{{outlineSummary}}">
     <view class="box-title">大纲摘要</view>
-    <view class="muted">要点</view>
+    <view class="muted">可检测目标</view>
     <view class="oitem" wx:for="{{outlineSummary.key_points}}" wx:key="*this">· {{item}}</view>
-    <view class="muted" style="margin-top: 12rpx;">章节</view>
-    <view class="oitem" wx:for="{{outlineSummary.outline}}" wx:key="section">· {{item.section}}</view>
+    <view class="muted" style="margin-top: 12rpx;">节段</view>
+    <view class="oitem" wx:for="{{outlineSummary.outline}}" wx:key="section">
+      <text class="ophase" wx:if="{{item.phase}}">{{item.phase}}</text>
+      {{item.section}}
+    </view>
   </view>
 
   <view class="download-row">
     <view class="btn-accent {{downloadBusy ? 'disabled' : ''}}" bindtap="onDownload">下载PPT</view>
     <view class="btn-primary ghost" bindtap="copyLink">复制链接</view>
   </view>
-  <view class="hint">将下载真实 .pptx 文件；微信内可打开预览或转发保存。</view>
+  <view class="hint">真实 .pptx：主题色背景、版式分层、页间淡入过渡；微信内可打开预览。</view>
 
-  <swiper class="pager" indicator-dots circular>
+  <swiper class="pager" indicator-dots circular autoplay interval="3000">
     <block wx:for="{{artifact.content.slides}}" wx:key="slide_no">
       <swiper-item>
-        <view class="slide">
-          <view class="page-no">Slide {{item.slide_no}} · {{item.layout}}</view>
+        <view class="slide layout-{{item.layout || 'content'}}">
+          <view class="slide-glow"></view>
+          <view class="page-meta">
+            <text class="page-no">Slide {{item.slide_no}} · {{item.layout}}</text>
+            <text class="phase-chip" wx:if="{{item.phase}}">{{item.phase}}</text>
+          </view>
           <view class="slide-title">{{item.title}}</view>
           <view class="sub" wx:if="{{item.subtitle}}">{{item.subtitle}}</view>
-          <view class="bullet" wx:for="{{item.bullets}}" wx:for-item="b" wx:key="*this">· {{b}}</view>
+          <view class="bullet" wx:for="{{item.bullets}}" wx:for-item="b" wx:key="*this">
+            <text class="bmark">▸</text> {{b}}
+          </view>
           <view class="note" wx:if="{{item.speaker_note}}">讲者：{{item.speaker_note}}</view>
         </view>
       </swiper-item>

@@ -1,53 +1,175 @@
 .page {
-  padding: 32rpx 28rpx 80rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 28rpx 28rpx calc(48rpx + env(safe-area-inset-bottom));
+  background:
+    radial-gradient(80% 50% at 100% 0%, rgba(76, 140, 180, 0.2), transparent 55%),
+    radial-gradient(60% 40% at 0% 20%, rgba(196, 92, 38, 0.12), transparent 50%),
+    linear-gradient(180deg, #f4f7fb 0%, #e8eef4 100%);
+}
+
+.hero-band {
+  margin-bottom: 20rpx;
+  animation: rise 0.45s ease-out;
+}
+
+.hero-kicker {
+  font-size: 22rpx;
+  color: #4a6078;
+  letter-spacing: 0.06em;
+  margin-bottom: 8rpx;
+}
+
+.hero-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #1b3a57;
+  margin-bottom: 8rpx;
 }
 
 .meta {
-  margin-bottom: 20rpx;
+  font-size: 24rpx;
+  color: #4a6078;
+  margin-bottom: 8rpx;
 }
 
 .pager {
-  height: 720rpx;
+  height: 740rpx;
 }
 
 .slide {
+  position: relative;
   height: 100%;
   box-sizing: border-box;
-  padding: 40rpx 36rpx;
-  border-radius: 20rpx;
-  background:
-    linear-gradient(160deg, #ffffff 0%, #f7f4ec 100%);
-  border: 1rpx solid var(--line);
+  padding: 36rpx 32rpx;
+  border-radius: 22rpx;
+  overflow: hidden;
+  background: linear-gradient(160deg, #ffffff 0%, #f3f6f9 100%);
+  border: 1rpx solid rgba(27, 58, 87, 0.08);
+  animation: rise 0.5s ease-out;
+}
+
+.slide-glow {
+  position: absolute;
+  width: 240rpx;
+  height: 240rpx;
+  right: -70rpx;
+  top: -90rpx;
+  border-radius: 50%;
+  background: rgba(76, 140, 180, 0.16);
+  animation: floatGlow 3.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatGlow {
+  0%, 100% { transform: translateY(0); opacity: 0.65; }
+  50% { transform: translateY(14rpx); opacity: 1; }
+}
+
+.slide.layout-cover {
+  background: linear-gradient(155deg, #152a3d 0%, #1b3a57 60%, #2a4d6e 100%);
+  border: none;
+  color: #e8eef4;
+}
+.slide.layout-cover .slide-title,
+.slide.layout-cover .page-no,
+.slide.layout-cover .sub,
+.slide.layout-cover .bullet { color: #e8eef4; }
+.slide.layout-cover .bmark,
+.slide.layout-cover .note { color: #e8a87c; }
+.slide.layout-cover .slide-glow { background: rgba(196, 92, 38, 0.28); }
+
+.slide.layout-section {
+  background: linear-gradient(115deg, #1b3a57 0 32%, #f7fafc 32% 100%);
+}
+.slide.layout-section .slide-title,
+.slide.layout-section .sub,
+.slide.layout-section .bullet,
+.slide.layout-section .page-meta { margin-left: 34%; }
+
+.slide.layout-example {
+  background: linear-gradient(165deg, #fff8f3 0%, #fff 50%, #f3f7fb 100%);
+  border-left: 8rpx solid #c45c26;
+}
+
+.slide.layout-practice {
+  background: linear-gradient(165deg, #f3faf6 0%, #fff 55%, #f3f7fb 100%);
+  border-left: 8rpx solid #2f6b4f;
+}
+
+.slide.layout-agenda {
+  background: linear-gradient(180deg, #1b3a57 0 20%, #ffffff 20% 100%);
+}
+.slide.layout-agenda .page-meta,
+.slide.layout-agenda .slide-title { color: #e8eef4; }
+
+.slide.layout-summary,
+.slide.layout-homework {
+  background: linear-gradient(180deg, #f7fafc 0%, #eef3f7 72%, #1b3a57 72% 100%);
+}
+
+.page-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18rpx;
 }
 
 .page-no {
   font-size: 22rpx;
-  color: var(--ink-soft);
-  margin-bottom: 20rpx;
+  color: #4a6078;
+}
+
+.phase-chip {
+  font-size: 20rpx;
+  color: #c45c26;
+  background: rgba(196, 92, 38, 0.12);
+  padding: 4rpx 14rpx;
+  border-radius: 999rpx;
+}
+
+.layout-cover .phase-chip {
+  color: #e8a87c;
+  background: rgba(232, 168, 124, 0.2);
 }
 
 .slide-title {
   font-size: 40rpx;
   font-weight: 700;
-  margin-bottom: 28rpx;
+  margin-bottom: 16rpx;
+  color: #1b3a57;
+}
+
+.sub {
+  font-size: 24rpx;
+  color: #4a6078;
+  margin-bottom: 18rpx;
 }
 
 .bullet {
   margin-bottom: 12rpx;
-  color: var(--ink-soft);
+  color: #4a6078;
+  font-size: 28rpx;
+  line-height: 1.45;
+}
+
+.bmark {
+  color: #c45c26;
+  font-weight: 700;
+  margin-right: 6rpx;
 }
 
 .note {
-  margin-top: 36rpx;
-  padding-top: 20rpx;
-  border-top: 1rpx dashed var(--line);
+  margin-top: 28rpx;
+  padding-top: 18rpx;
+  border-top: 1rpx dashed rgba(27, 58, 87, 0.15);
   font-size: 24rpx;
-  color: var(--accent);
-}
-
-.hint {
-  margin-top: 24rpx;
-  font-size: 22rpx;
+  color: #c45c26;
 }
 
 .actions {
