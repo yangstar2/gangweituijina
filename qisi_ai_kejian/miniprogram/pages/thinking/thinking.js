@@ -7,6 +7,64 @@ const BASE_STEPS = [
   { id: 'generate', title: '生成 PPT', detail: '调用课件生成工具' },
 ]
 
+function pagesFromOutline(outline, styleId, modelId) {
+  const ol = outline || {}
+  const keyPoints = ol.key_points || []
+  const sections = ol.outline || []
+  const notes = ol.notes || []
+  const pages = [
+    {
+      page_no: 1,
+      title: '封面 · 课件预览',
+      bullets: [
+        `风格：${styleId || 'clean_academic'}`,
+        `模型：${modelId || 'mock-qisi-lite'}`,
+        '生成中将据此写出完整 PPTX',
+      ],
+      speaker_note: '开场',
+    },
+    {
+      page_no: 2,
+      title: '内容要点',
+      bullets: keyPoints.length ? keyPoints.slice(0, 6) : ['（待补充要点）'],
+      speaker_note: null,
+    },
+  ]
+  sections.slice(0, 3).forEach((sec, i) => {
+    pages.push({
+      page_no: 3 + i,
+      title: (sec && sec.section) || `章节 ${i + 1}`,
+      bullets: (sec && sec.items) || ['要点'],
+      speaker_note: null,
+    })
+  })
+  while (pages.length < 5) {
+    pages.push({
+      page_no: pages.length + 1,
+      title: `扩展页 ${pages.length + 1}`,
+      bullets: ['根据大纲自动补齐'],
+      speaker_note: null,
+    })
+  }
+  pages.push({
+    page_no: 6,
+    title: '注意事项与收尾',
+    bullets: notes.slice(0, 4).length ? notes.slice(0, 4) : ['检查符号与难度', '留足互动时间'],
+    speaker_note: null,
+  })
+  return pages.slice(0, 6).map((p, i) => ({ ...p, page_no: i + 1 }))
+}
+
+function pagesFromSlides(slides) {
+  return (slides || []).slice(0, 6).map((s, i) => ({
+    page_no: i + 1,
+    title: s.title || `第 ${i + 1} 页`,
+    bullets: s.bullets || [],
+    speaker_note: s.speaker_note || null,
+    subtitle: s.subtitle || null,
+  }))
+}
+
 Page({
   data: {
     sessionId: null,
@@ -26,6 +84,9 @@ Page({
     scrollAnchor: '',
     outline: { key_points: [], outline: [], notes: [] },
     outlineReady: false,
+    previewPages: [],
+    previewCurrent: 0,
+    showSlidePreview: false,
     artifactId: null,
     errorMsg: '',
     autoGenerate: true,
@@ -44,6 +105,10 @@ Page({
 
   toggleThinking() {
     this.setData({ thinkingOpen: !this.data.thinkingOpen })
+  },
+
+  onPreviewChange(e) {
+    this.setData({ previewCurrent: e.detail.current })
   },
 
   _setStepStatus(activeId, doneIds) {
@@ -103,6 +168,37 @@ Page({
     }, 32)
   },
 
+  _loadPreview(outline) {
+    const draft = getApp().globalData.draft || {}
+    const styleId = draft.styleId || 'clean_academic'
+    const modelId = draft.modelId || 'mock-qisi-lite'
+    // Instant local preview from outline so UI is never blank while generating
+    const local = pagesFromOutline(outline, styleId, modelId)
+    this.setData({
+      previewPages: local,
+      showSlidePreview: true,
+      previewCurrent: 0,
+    })
+    draft.preview = {
+      style_id: styleId,
+      model_id: modelId,
+      pages: local,
+    }
+    // Prefer server ~6-page preview when available
+    return api
+      .createPreview(this.data.sessionId, styleId, modelId)
+      .then((preview) => {
+        const pages = (preview && preview.pages) || local
+        draft.preview = preview
+        this.setData({
+          previewPages: pages,
+          showSlidePreview: true,
+        })
+        return pages
+      })
+      .catch(() => local)
+  },
+
   _runThink() {
     const draft = getApp().globalData.draft || {}
     this.setData({
@@ -111,6 +207,8 @@ Page({
       phaseSub: '推理课件结构，稍后生成 PPT',
       errorMsg: '',
       outlineReady: false,
+      showSlidePreview: false,
+      previewPages: [],
     })
     this._setStepStatus('reason', ['need'])
 
@@ -145,13 +243,15 @@ Page({
             phase: 'ready',
             phaseTitle: '大纲已就绪',
             phaseSub: this.data.autoGenerate
-              ? '即将调用 PPT 生成工具'
-              : '可查看大纲或直接生成 PPT',
+              ? '预览页已展开，即将生成 PPTX'
+              : '可先滑动预览，再生成 PPT',
           })
           this._setStepStatus('generate', ['need', 'reason', 'outline'])
-          if (this.data.autoGenerate) {
-            setTimeout(() => this.onGenerate(), 450)
-          }
+          this._loadPreview(res.outline).then(() => {
+            if (this.data.autoGenerate) {
+              setTimeout(() => this.onGenerate(), 450)
+            }
+          })
         })
       })
       .catch((err) => {
@@ -190,11 +290,17 @@ Page({
   onGenerate() {
     if (this.data.phase === 'generating') return
     const draft = getApp().globalData.draft || {}
+    // Ensure preview is visible during file build
+    if (!this.data.showSlidePreview || !this.data.previewPages.length) {
+      this._loadPreview(this.data.outline || draft.outline)
+    }
     this.setData({
       phase: 'generating',
       phaseTitle: '正在生成 PPT',
-      phaseSub: '调用生成工具，整理完整课件页',
+      phaseSub: '下方可预览幻灯片，同时写出 .pptx 文件',
       errorMsg: '',
+      thinkingOpen: false,
+      showSlidePreview: true,
     })
     this._setStepStatus('generate', ['need', 'reason', 'outline'])
 
@@ -206,18 +312,23 @@ Page({
       )
       .then((artifact) => {
         draft.artifact = artifact
+        const slides = (artifact.content || {}).slides || []
+        const fromArtifact = pagesFromSlides(slides)
+        if (fromArtifact.length) {
+          this.setData({ previewPages: fromArtifact, showSlidePreview: true })
+          draft.preview = {
+            style_id: artifact.style_id,
+            model_id: artifact.model_id,
+            pages: fromArtifact,
+          }
+        }
         this.setData({
           phase: 'done',
           phaseTitle: 'PPT 已生成',
-          phaseSub: `共 ${((artifact.content || {}).slide_count) || '-'} 页`,
+          phaseSub: `共 ${((artifact.content || {}).slide_count) || '-'} 页，可下载或继续预览`,
           artifactId: artifact.id,
         })
         this._setStepStatus(null, ['need', 'reason', 'outline', 'generate'])
-        setTimeout(() => {
-          wx.redirectTo({
-            url: `/pages/result-ppt/result-ppt?artifactId=${artifact.id}`,
-          })
-        }, 600)
       })
       .catch((err) => {
         const d = err && err.detail

@@ -102,17 +102,43 @@ def main() -> None:
     pptx_path = artifact_pptx_path(art["id"])
     assert pptx_path.is_file(), f"missing pptx at {pptx_path}"
     assert pptx_path.stat().st_size > 1000
-    # ZIP/OOXML signature
-    assert pptx_path.read_bytes()[:2] == b"PK"
+    # ZIP/OOXML signature + integrity
+    raw = pptx_path.read_bytes()
+    assert raw[:2] == b"PK"
+    import io
+    import zipfile
+
+    with zipfile.ZipFile(io.BytesIO(raw)) as zf:
+        assert zf.testzip() is None
+        names = set(zf.namelist())
+        assert "[Content_Types].xml" in names and "ppt/presentation.xml" in names
+        # Openable decks need master/layout (Keynote rejects bare slide zips)
+        assert any(n.startswith("ppt/slideLayouts/") for n in names) or art[
+            "content"
+        ].get("pptx_builder") == "python-pptx"
+    # Round-trip with python-pptx when installed
+    try:
+        from pptx import Presentation
+
+        assert len(Presentation(str(pptx_path)).slides) >= 1
+    except ImportError:
+        pass
     dl = client.get(f"/api/artifacts/{art['id']}/download")
     assert dl.status_code == 200, dl.text
     ctype = (dl.headers.get("content-type") or "").split(";")[0].strip()
     assert ctype == PPTX_MIME, ctype
     assert dl.content[:2] == b"PK"
     assert len(dl.content) == pptx_path.stat().st_size
+    # WeChat-safe: plain ASCII filename=…pptx must be present (not only filename*)
+    cd = dl.headers.get("content-disposition") or ""
+    assert 'filename="artifact_' in cd and '.pptx"' in cd, cd
+    assert "filename*=" in cd
+    assert b"<html" not in dl.content[:200].lower()
+    assert not dl.content.lstrip().startswith(b"{")
     got = client.get(f"/api/artifacts/{art['id']}")
     assert got.status_code == 200 and got.json()["id"] == art["id"]
     assert got.json().get("download_url")
+    assert art["content"].get("ascii_file_name", "").endswith(".pptx")
 
     # exam path
     sess2 = client.post("/api/sessions", json={"content_type": "exam", "title": "smoke-exam"})

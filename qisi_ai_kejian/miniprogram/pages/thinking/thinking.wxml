@@ -49,12 +49,46 @@
     </block>
   </view>
 
+  <view class="slide-preview-card" wx:if="{{showSlidePreview && previewPages.length}}">
+    <view class="section-title">
+      幻灯片预览
+      <text class="muted preview-phase">
+        <block wx:if="{{phase === 'generating'}}"> · 生成中</block>
+        <block wx:elif="{{phase === 'done'}}"> · 已生成</block>
+        <block wx:else> · 大纲预览</block>
+      </text>
+    </view>
+    <swiper
+      class="preview-pager"
+      current="{{previewCurrent}}"
+      bindchange="onPreviewChange"
+      indicator-dots
+      circular
+    >
+      <block wx:for="{{previewPages}}" wx:key="page_no">
+        <swiper-item>
+          <view class="preview-slide">
+            <view class="page-no">第 {{item.page_no}} / {{previewPages.length}} 页</view>
+            <view class="slide-title">{{item.title}}</view>
+            <view class="sub" wx:if="{{item.subtitle}}">{{item.subtitle}}</view>
+            <view class="bullet" wx:for="{{item.bullets}}" wx:for-item="b" wx:key="*this">· {{b}}</view>
+            <view class="note" wx:if="{{item.speaker_note}}">讲者：{{item.speaker_note}}</view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
   <view class="err" wx:if="{{errorMsg}}">{{errorMsg}}</view>
 
   <view class="actions" wx:if="{{phase === 'ready' || phase === 'done'}}">
     <view class="btn-primary ghost" bindtap="goOutline">查看大纲</view>
     <view class="btn-accent" wx:if="{{phase === 'ready'}}" bindtap="onGenerate">生成 PPT</view>
-    <view class="btn-accent" wx:if="{{phase === 'done'}}" bindtap="goResult">查看结果</view>
+    <view class="btn-accent" wx:if="{{phase === 'done'}}" bindtap="goResult">下载 PPTX</view>
+  </view>
+
+  <view class="actions" wx:if="{{phase === 'generating'}}">
+    <view class="btn-primary ghost disabled">正在写出文件…</view>
   </view>
 
   <view class="actions" wx:if="{{phase === 'error'}}">
