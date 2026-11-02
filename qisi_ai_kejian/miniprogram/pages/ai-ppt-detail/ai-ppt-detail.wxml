@@ -1,0 +1,145 @@
+<view class="ppt-detail">
+  <view class="hero">
+    <view class="hero-title">
+      <text class="hero-title-plain">专业</text><text class="hero-title-grad">PPT</text><text class="hero-title-plain">创作</text>
+    </view>
+    <view class="hero-sub">输入主题或粘贴文本，快速生成结构清晰的专业课件</view>
+  </view>
+
+  <view class="mode-row">
+    <view
+      class="mode-card {{mode === 'theme' ? 'active' : ''}}"
+      data-mode="theme"
+      bindtap="onSelectMode"
+    >
+      <view class="mode-check" wx:if="{{mode === 'theme'}}">✓</view>
+      <view class="mode-icon icon-theme">
+        <view class="icon-pen-body"></view>
+        <view class="icon-pen-tip"></view>
+      </view>
+      <view class="mode-name">输入主题</view>
+      <view class="mode-desc">一句话生成</view>
+    </view>
+
+    <view
+      class="mode-card {{mode === 'paste' ? 'active' : ''}}"
+      data-mode="paste"
+      bindtap="onSelectMode"
+    >
+      <view class="mode-check" wx:if="{{mode === 'paste'}}">✓</view>
+      <view class="mode-icon icon-paste">
+        <view class="icon-doc-sheet"></view>
+        <view class="icon-doc-line"></view>
+        <view class="icon-doc-line short"></view>
+      </view>
+      <view class="mode-name">粘贴文本</view>
+      <view class="mode-desc">文章转PPT</view>
+    </view>
+
+    <view
+      class="mode-card {{mode === 'upload' ? 'active' : ''}}"
+      data-mode="upload"
+      bindtap="onSelectMode"
+    >
+      <view class="mode-check" wx:if="{{mode === 'upload'}}">✓</view>
+      <view class="mode-icon icon-upload">
+        <view class="icon-up-arrow"></view>
+        <view class="icon-up-tray"></view>
+      </view>
+      <view class="mode-name">上传文档</view>
+      <view class="mode-desc">文档转PPT</view>
+    </view>
+  </view>
+
+  <view class="panel">
+    <!-- 输入主题：对话澄清意图 -->
+    <block wx:if="{{mode === 'theme'}}">
+      <view class="chat-panel">
+        <scroll-view
+          class="chat-scroll"
+          scroll-y
+          scroll-into-view="{{scrollInto}}"
+          scroll-with-animation
+        >
+          <block wx:for="{{messages}}" wx:key="id">
+            <view id="msg-{{item.id}}" class="chat-row {{item.role}}">
+              <view class="avatar {{item.role === 'teacher' ? 'avatar-ai' : 'avatar-me'}}">
+                {{item.role === 'teacher' ? 'AI' : '我'}}
+              </view>
+              <view class="bubble {{item.role}}">
+                <text class="bubble-text">{{item.content}}</text>
+              </view>
+            </view>
+          </block>
+          <view wx:if="{{sending}}" class="chat-row teacher">
+            <view class="avatar avatar-ai">AI</view>
+            <view class="bubble teacher typing">正在理解你的目标…</view>
+          </view>
+        </scroll-view>
+
+        <view class="suggest-block">
+          <view class="suggest-label">
+            <text class="bulb">💡</text>
+            <text>{{suggestedReplies.length ? '可以这样回复' : '换个主题试试'}}</text>
+          </view>
+          <view class="chip-row">
+            <view
+              class="chip-pill"
+              wx:for="{{displayChips}}"
+              wx:key="*this"
+              data-text="{{item}}"
+              bindtap="onSuggest"
+            >{{item}}</view>
+          </view>
+        </view>
+
+        <view class="composer">
+          <input
+            class="composer-input"
+            value="{{input}}"
+            placeholder="说说你真正想讲清楚什么…"
+            confirm-type="send"
+            bindinput="onInput"
+            bindconfirm="onSend"
+          />
+          <view class="composer-send {{sending || !input ? 'disabled' : ''}}" bindtap="onSend">发送</view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 粘贴文本 -->
+    <block wx:elif="{{mode === 'paste'}}">
+      <view class="paste-wrap">
+        <textarea
+          class="paste-area"
+          value="{{pasteText}}"
+          maxlength="8000"
+          placeholder="粘贴文章、讲稿或大纲文本，将据此生成 PPT 结构…"
+          bindinput="onPasteInput"
+          show-confirm-bar="{{false}}"
+        />
+        <view class="char-count">{{pasteLen}}/8000</view>
+      </view>
+    </block>
+
+    <!-- 上传文档（mock） -->
+    <block wx:else>
+      <view class="upload-zone" bindtap="onPickDoc">
+        <view class="upload-icon-lg">
+          <view class="icon-up-arrow lg"></view>
+          <view class="icon-up-tray lg"></view>
+        </view>
+        <view class="upload-title" wx:if="{{!uploadName}}">点击上传文档（Mock）</view>
+        <view class="upload-title" wx:else>{{uploadName}}</view>
+        <view class="upload-hint">支持 PDF / Word / TXT 占位 · 不发起真实上传</view>
+      </view>
+    </block>
+
+    <view
+      class="cta {{canStart && !starting ? '' : 'cta-disabled'}}"
+      bindtap="onStartCreate"
+    >开始创作</view>
+  </view>
+
+  <view class="disclaimer">本服务为AI生成内容，结果仅供参考</view>
+</view>

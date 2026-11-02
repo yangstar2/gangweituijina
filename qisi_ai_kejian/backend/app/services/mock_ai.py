@@ -67,6 +67,14 @@ def list_models() -> list[dict[str, Any]]:
     return MODELS
 
 
+def _is_rich_material(user_text: str) -> bool:
+    """Paste/upload payloads: enough context to skip multi-turn clarifying."""
+    text = (user_text or "").strip()
+    if text.startswith("[粘贴]") or text.startswith("[文档]"):
+        return True
+    return len(text) >= 180
+
+
 def teacher_reply(
     content_type: str,
     history: list[dict[str, str]],
@@ -77,11 +85,27 @@ def teacher_reply(
     kind = "课件" if content_type == "courseware" else "试卷"
     lower = user_text.lower()
 
+    # Long paste / uploaded doc: one-shot outline for PPT / exam pipeline
+    if _is_rich_material(user_text):
+        outline = _build_outline(
+            content_type, history + [{"role": "user", "content": user_text}]
+        )
+        return {
+            "content": (
+                f"已根据你提供的材料整理出{kind}大纲。"
+                f"请确认「内容要点 / 大纲 / 注意事项」，确认后可继续筛选风格与生成。"
+            ),
+            "clarifying_done": True,
+            "suggested_replies": ["确认大纲，开始创作", "再补充受众与课时"],
+            "outline": outline,
+        }
+
     if turns == 1:
         return {
             "content": (
-                f"好的，我们先把这份{kind}说清楚再生成。"
-                f"你希望面向什么学段/对象？课时大概多久？有没有指定教材或章节？"
+                f"好的，我们先把这份{kind}说清楚再生成——"
+                f"你真正想让听众带走什么？面向什么对象、大概多久？"
+                f"有没有指定教材、章节或必须覆盖的场景？"
             ),
             "clarifying_done": False,
             "suggested_replies": [
