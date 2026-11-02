@@ -1,0 +1,20 @@
+<view class="page" wx:if="{{artifact}}">
+  <view class="section-title">{{artifact.title}}</view>
+  <view class="muted">{{artifact.content.slide_count}} 页 · {{artifact.model_id}} · mock</view>
+
+  <swiper class="pager" indicator-dots circular>
+    <block wx:for="{{artifact.content.slides}}" wx:key="slide_no">
+      <swiper-item>
+        <view class="slide">
+          <view class="page-no">Slide {{item.slide_no}} · {{item.layout}}</view>
+          <view class="slide-title">{{item.title}}</view>
+          <view class="sub" wx:if="{{item.subtitle}}">{{item.subtitle}}</view>
+          <view class="bullet" wx:for="{{item.bullets}}" wx:for-item="b" wx:key="*this">· {{b}}</view>
+          <view class="note" wx:if="{{item.speaker_note}}">讲者：{{item.speaker_note}}</view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <view class="btn-primary" bindtap="goHome">返回首页</view>
+</view>

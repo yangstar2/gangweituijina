@@ -6,11 +6,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from .config import settings
 from .db import ensure_db
 from .routers import auth, catalog, sessions
+from .routers import generate
 
 app = FastAPI(
     title=settings.app_name,
-    description="分享/追问老师 — clarification + 6-page preview (mock AI)",
-    version="0.1.0",
+    description="奇思 AI 课件 — ask-teacher + generate + membership (mock)",
+    version="0.2.0",
 )
 
 app.add_middleware(
@@ -24,6 +25,8 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(catalog.router)
 app.include_router(sessions.router)
+app.include_router(generate.router)
+app.include_router(generate.artifacts_router)
 
 
 @app.on_event("startup")
@@ -37,5 +40,5 @@ def health() -> dict:
         "ok": True,
         "app": settings.app_name,
         "mock_mode": settings.mock_mode,
-        "slice": "ask-teacher-preview",
+        "slice": "ask-teacher-preview-generate",
     }

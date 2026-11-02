@@ -1,0 +1,19 @@
+<scroll-view class="page" scroll-y wx:if="{{artifact}}">
+  <view class="section-title">{{artifact.title}}</view>
+  <view class="muted">
+    {{artifact.content.total_score}} 分 · {{artifact.content.duration_minutes}} 分钟 · {{artifact.model_id}}
+  </view>
+  <view class="book muted">教材参考：{{artifact.content.textbook_ref}}</view>
+
+  <block wx:for="{{artifact.content.questions}}" wx:key="no">
+    <view class="q">
+      <view class="q-head">{{item.no}}. [{{item.type}} · {{item.score}}分]</view>
+      <view class="stem">{{item.stem}}</view>
+      <view class="opt" wx:for="{{item.options}}" wx:for-item="o" wx:key="*this">{{o}}</view>
+      <view class="ans">参考答案：{{item.answer}}</view>
+      <view class="ana muted">{{item.analysis}}</view>
+    </view>
+  </block>
+
+  <view class="btn-primary home" bindtap="goHome">返回首页</view>
+</scroll-view>

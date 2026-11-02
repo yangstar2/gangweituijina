@@ -5,7 +5,10 @@
     "pages/outline/outline",
     "pages/style-filter/style-filter",
     "pages/model-select/model-select",
-    "pages/preview/preview"
+    "pages/preview/preview",
+    "pages/result-ppt/result-ppt",
+    "pages/result-exam/result-exam",
+    "pages/membership/membership"
   ],
   "window": {
     "navigationBarTitleText": "奇思 AI 课件",

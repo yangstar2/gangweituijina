@@ -12,6 +12,7 @@ App({
       styleId: 'clean_academic',
       modelId: 'mock-qisi-lite',
       preview: null,
+      artifact: null,
     },
   },
 
