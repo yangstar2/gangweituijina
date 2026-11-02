@@ -1,0 +1,21 @@
+<view class="page">
+  <view class="section-title">PPT 生成模型</view>
+  <view class="muted">均为 Mock Provider，不会发起真实推理请求。</view>
+
+  <view
+    class="model-row {{selectedId === item.id ? 'active' : ''}}"
+    wx:for="{{models}}"
+    wx:key="id"
+    data-id="{{item.id}}"
+    bindtap="onSelect"
+  >
+    <view class="name">
+      {{item.name}}
+      <text class="badge" wx:if="{{item.recommended}}">推荐</text>
+    </view>
+    <view class="provider">{{item.provider}}</view>
+    <view class="desc">{{item.description}}</view>
+  </view>
+
+  <view class="btn-accent next" bindtap="goPreview">生成 6 页预览</view>
+</view>

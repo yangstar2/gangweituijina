@@ -1,0 +1,24 @@
+<view class="page">
+  <view class="section-title">内容要点</view>
+  <view class="list">
+    <view class="item" wx:for="{{outline.key_points}}" wx:key="*this">· {{item}}</view>
+  </view>
+
+  <view class="section-title">大纲</view>
+  <block wx:for="{{outline.outline}}" wx:key="section">
+    <view class="section-block">
+      <view class="sec-name">{{item.section}}</view>
+      <view class="item" wx:for="{{item.items}}" wx:for-item="it" wx:key="*this">· {{it}}</view>
+    </view>
+  </block>
+
+  <view class="section-title">注意事项</view>
+  <view class="list">
+    <view class="item note" wx:for="{{outline.notes}}" wx:key="*this">· {{item}}</view>
+  </view>
+
+  <view class="actions">
+    <view class="btn-primary ghost" bindtap="backChat">继续追问</view>
+    <view class="btn-accent" bindtap="goStyle">确认，选风格</view>
+  </view>
+</view>

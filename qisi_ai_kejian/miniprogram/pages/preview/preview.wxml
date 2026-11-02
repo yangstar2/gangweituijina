@@ -1,0 +1,25 @@
+<view class="page">
+  <view class="meta muted">
+    风格 {{preview.style_id}} · 模型 {{preview.model_id}} · mock
+  </view>
+
+  <swiper class="pager" current="{{current}}" bindchange="onChange" indicator-dots circular>
+    <block wx:for="{{preview.pages}}" wx:key="page_no">
+      <swiper-item>
+        <view class="slide">
+          <view class="page-no">第 {{item.page_no}} / {{preview.pages.length}} 页</view>
+          <view class="slide-title">{{item.title}}</view>
+          <view class="bullet" wx:for="{{item.bullets}}" wx:for-item="b" wx:key="*this">· {{b}}</view>
+          <view class="note" wx:if="{{item.speaker_note}}">讲者提示：{{item.speaker_note}}</view>
+          <view class="hint muted">视觉占位：{{item.mock_image_hint}}</view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <view class="actions">
+    <view class="btn-primary ghost" bindtap="reStyle">换风格</view>
+    <view class="btn-primary" bindtap="reModel">换模型</view>
+  </view>
+  <view class="done muted">完整生成流水线后续接入；本页仅为澄清后预览。</view>
+</view>

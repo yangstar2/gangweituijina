@@ -1,0 +1,43 @@
+<view class="chat-page">
+  <scroll-view
+    class="messages"
+    scroll-y
+    scroll-into-view="{{scrollInto}}"
+    scroll-with-animation
+  >
+    <block wx:for="{{messages}}" wx:key="id">
+      <view id="msg-{{item.id}}" class="bubble-row {{item.role}}">
+        <view class="bubble">
+          <text class="role-label">{{item.role === 'teacher' ? '老师' : '我'}}</text>
+          <text class="bubble-text">{{item.content}}</text>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <view class="suggest" wx:if="{{suggestedReplies.length}}">
+    <view
+      class="chip"
+      wx:for="{{suggestedReplies}}"
+      wx:key="*this"
+      data-text="{{item}}"
+      bindtap="onSuggest"
+    >{{item}}</view>
+  </view>
+
+  <view class="composer">
+    <input
+      class="input"
+      value="{{input}}"
+      placeholder="告诉老师主题、对象、课时…"
+      confirm-type="send"
+      bindinput="onInput"
+      bindconfirm="onSend"
+    />
+    <view class="send btn-accent" bindtap="onSend">发送</view>
+  </view>
+
+  <view class="footer-bar" wx:if="{{clarifyingDone}}">
+    <view class="btn-primary" bindtap="goOutline">查看大纲并继续</view>
+  </view>
+</view>

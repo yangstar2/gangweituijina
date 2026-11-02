@@ -1,0 +1,19 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/chat/chat",
+    "pages/outline/outline",
+    "pages/style-filter/style-filter",
+    "pages/model-select/model-select",
+    "pages/preview/preview"
+  ],
+  "window": {
+    "navigationBarTitleText": "奇思 AI 课件",
+    "navigationBarBackgroundColor": "#1B3A57",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F3F0E8",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

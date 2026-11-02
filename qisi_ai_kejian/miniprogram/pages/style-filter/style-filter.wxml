@@ -1,0 +1,28 @@
+<view class="page">
+  <view class="section-title">选择预览风格</view>
+  <view class="muted">先筛风格，再选模型；约 6 页预览均为 mock。</view>
+
+  <view
+    class="style-row {{selectedId === item.id ? 'active' : ''}}"
+    wx:for="{{styles}}"
+    wx:key="id"
+    data-id="{{item.id}}"
+    bindtap="onSelect"
+  >
+    <view class="swatches">
+      <view
+        class="swatch"
+        wx:for="{{item.palette}}"
+        wx:for-item="color"
+        wx:key="*this"
+        style="background: {{color}};"
+      ></view>
+    </view>
+    <view class="meta">
+      <view class="name">{{item.name}}</view>
+      <view class="desc">{{item.description}}</view>
+    </view>
+  </view>
+
+  <view class="btn-accent next" bindtap="goModel">下一步：选择模型</view>
+</view>
