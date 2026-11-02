@@ -2,7 +2,7 @@
 
 微信小程序 + Python（FastAPI）+ SQLite3。本目录为独立产品代码，与仓库根目录历史无关。
 
-**已覆盖：** 追问老师 → 预览 → 正式生成 → 会员/支付门禁 → **管理后台（会员/订单/会话）**。腾讯云部署见下一 PR。
+**已覆盖：** 追问老师 → 预览 → 正式生成 → 会员/支付门禁 → 管理后台 → **腾讯云 Docker 部署说明（SQLite）**。
 
 ## 目录
 
@@ -25,6 +25,8 @@
 | `backend/app/routers/pay.py` | mock 下单 / prepay / notify |
 | `miniprogram/pages/membership/` | 会员购买（模拟支付） |
 | `backend/app/admin/` | Web 管理后台（Jinja2 + Basic Auth） |
+| `backend/Dockerfile` / `docker-compose.yml` | 容器化 |
+| `deploy/tencent-cloud.md` | 腾讯云部署步骤 |
 
 ## 启动后端
 
@@ -65,7 +67,18 @@ API 文档：`http://127.0.0.1:8000/docs`
 
 `WECHAT_APP_ID` / `WECHAT_APP_SECRET` / `WECHAT_PAY_MCH_ID` / `WECHAT_PAY_API_V3_KEY` / `WECHAT_PAY_NOTIFY_URL` — 见 `backend/app/config.py`，默认均为 mock。
 
+## Docker / 腾讯云
+
+详见 [`deploy/tencent-cloud.md`](./deploy/tencent-cloud.md)。本地：
+
+```bash
+cd qisi_ai_kejian
+cp backend/.env.example backend/.env
+docker compose up -d --build
+# 或 bash deploy/scripts/build-and-run.sh
+```
+
 ## 后续扩展预留
 
-- 腾讯云 Dockerfile 与部署说明
-- `mock_wechat` / `mock_ai` 换成真实 Provider
+- `mock_wechat` / `mock_ai` 换成真实 Provider（混元 / 微信支付 APIv3）
+- SQLite → 云数据库（如需多实例）
