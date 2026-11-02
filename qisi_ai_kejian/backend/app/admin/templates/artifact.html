@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+{% if not artifact %}
+<p>产物不存在</p>
+{% else %}
+<p class="muted">
+  #{{ artifact.id }} · {{ artifact.artifact_type }} · {{ artifact.model_id }} · {{ artifact.status }}
+</p>
+<h2>{{ artifact.title }}</h2>
+<pre>{{ artifact.content_obj | tojson_pretty }}</pre>
+{% endif %}
+{% endblock %}

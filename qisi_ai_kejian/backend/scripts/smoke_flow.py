@@ -108,6 +108,11 @@ def main() -> None:
     )
     assert ungated.status_code == 200, ungated.text
 
+    admin = client.get("/admin/members", auth=("admin", "admin_mock_change_me"))
+    assert admin.status_code == 200 and "会员" in admin.text
+    denied = client.get("/admin/orders", auth=("nope", "nope"))
+    assert denied.status_code == 401
+
     print(
         "SMOKE OK — session",
         sid,
@@ -117,6 +122,7 @@ def main() -> None:
         len(exam.json()["content"]["questions"]),
         "membership",
         me["plan"],
+        "admin_ok",
     )
 
 

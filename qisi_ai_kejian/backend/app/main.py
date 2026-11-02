@@ -5,13 +5,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .config import settings
 from .db import ensure_db
+from .admin.router import router as admin_router
 from .routers import auth, catalog, membership, pay, sessions
 from .routers import generate
 
 app = FastAPI(
     title=settings.app_name,
-    description="奇思 AI 课件 — ask-teacher + generate + membership (mock)",
-    version="0.2.0",
+    description="奇思 AI 课件 — ask-teacher + generate + membership + admin (mock)",
+    version="0.3.0",
 )
 
 app.add_middleware(
@@ -29,6 +30,7 @@ app.include_router(generate.router)
 app.include_router(generate.artifacts_router)
 app.include_router(membership.router)
 app.include_router(pay.router)
+app.include_router(admin_router)
 
 
 @app.on_event("startup")
@@ -42,5 +44,6 @@ def health() -> dict:
         "ok": True,
         "app": settings.app_name,
         "mock_mode": settings.mock_mode,
-        "slice": "ask-teacher-generate-membership",
+        "slice": "full-product-mock",
+        "admin": "/admin/members",
     }

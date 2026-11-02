@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<table>
+  <thead>
+    <tr>
+      <th>会话</th>
+      <th>用户</th>
+      <th>类型</th>
+      <th>标题</th>
+      <th>状态</th>
+      <th>产物数</th>
+      <th>更新</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in rows %}
+    <tr>
+      <td>#{{ r.id }}</td>
+      <td>{{ r.nickname or r.user_id }}</td>
+      <td>{{ r.content_type }}</td>
+      <td>{{ r.title }}</td>
+      <td><span class="badge">{{ r.status }}</span></td>
+      <td>{{ r.artifact_count }}</td>
+      <td class="muted">{{ r.updated_at }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7" class="muted">暂无会话</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

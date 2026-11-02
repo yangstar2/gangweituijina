@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title }} · 奇思管理后台</title>
+  <style>
+    :root {
+      --ink: #1b3a57;
+      --paper: #f3f0e8;
+      --line: #d9d2c3;
+      --accent: #c45c26;
+      --ok: #2f6b4f;
+      --warn: #a15c00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+      background: radial-gradient(100% 80% at 0% 0%, #fff8ee, var(--paper));
+      color: var(--ink);
+    }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1rem 1.5rem;
+      background: var(--ink);
+      color: #fff;
+    }
+    header .brand { font-weight: 700; letter-spacing: 0.04em; }
+    nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      margin-right: 1rem;
+      font-size: 0.95rem;
+    }
+    nav a.active { color: #fff; border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+    main { padding: 1.5rem; max-width: 1100px; margin: 0 auto; }
+    h1 { font-size: 1.4rem; margin: 0 0 1rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+    }
+    th, td {
+      text-align: left;
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+      vertical-align: top;
+    }
+    th { background: rgba(27,58,87,0.06); }
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      background: rgba(27,58,87,0.1);
+    }
+    .badge.paid { background: rgba(47,107,79,0.15); color: var(--ok); }
+    .badge.pending { background: rgba(161,92,0,0.15); color: var(--warn); }
+    .muted { color: #4a6078; font-size: 0.85rem; }
+    pre {
+      background: #1b3a57;
+      color: #e8eef5;
+      padding: 1rem;
+      overflow: auto;
+      border-radius: 8px;
+      font-size: 0.8rem;
+    }
+    .note { margin-top: 1.5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">奇思管理后台</div>
+    <nav>
+      <a href="/admin/members" class="{{ 'active' if active == 'members' else '' }}">会员</a>
+      <a href="/admin/orders" class="{{ 'active' if active == 'orders' else '' }}">订单</a>
+      <a href="/admin/sessions" class="{{ 'active' if active == 'sessions' else '' }}">会话</a>
+    </nav>
+  </header>
+  <main>
+    <h1>{{ title }}</h1>
+    {% block content %}{% endblock %}
+    <p class="muted note">Mock Basic Auth（ADMIN_USERNAME / ADMIN_PASSWORD）。勿在生产使用默认口令。</p>
+  </main>
+</body>
+</html>
