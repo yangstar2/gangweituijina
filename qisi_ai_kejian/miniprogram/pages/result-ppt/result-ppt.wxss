@@ -1,4 +1,25 @@
 .page { padding: 32rpx 28rpx 80rpx; }
+.outline-box {
+  margin: 24rpx 0 8rpx;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  background: linear-gradient(165deg, #fffdf8, #f3f7fb);
+  border: 1rpx solid var(--line);
+}
+.box-title { font-size: 30rpx; font-weight: 650; margin-bottom: 12rpx; }
+.oitem { color: var(--ink-soft); font-size: 26rpx; margin-bottom: 6rpx; }
+.download-row {
+  display: flex;
+  gap: 16rpx;
+  margin: 28rpx 0 8rpx;
+}
+.download-row .btn-accent,
+.download-row .btn-primary {
+  flex: 1;
+  text-align: center;
+}
+.btn-accent.disabled { opacity: 0.55; }
+.hint { font-size: 22rpx; color: var(--ink-soft); margin-bottom: 8rpx; }
 .pager { height: 760rpx; margin: 24rpx 0 40rpx; }
 .slide {
   height: 100%;

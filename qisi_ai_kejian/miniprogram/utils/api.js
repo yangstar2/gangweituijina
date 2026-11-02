@@ -75,6 +75,12 @@ const api = {
   getArtifact(artifactId) {
     return request(`/api/artifacts/${artifactId}`)
   },
+  artifactDownloadPath(artifactId) {
+    return `/api/artifacts/${artifactId}/download`
+  },
+  artifactDownloadUrl(artifactId) {
+    return `${getBase()}${api.artifactDownloadPath(artifactId)}`
+  },
   listPlans() {
     return request('/api/membership/plans')
   },
@@ -89,4 +95,4 @@ const api = {
   },
 }
 
-module.exports = { api, request }
+module.exports = { api, request, getBase }
