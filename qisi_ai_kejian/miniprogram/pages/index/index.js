@@ -1,12 +1,12 @@
 const { api } = require('../../utils/api')
 
 Page({
-  /** AI生成PPT → existing ask-teacher / courseware flow */
+  /** AI生成PPT → 详情页（主题对话 / 粘贴 / 上传） */
   startCourseware() {
-    this._start('courseware')
+    wx.navigateTo({ url: '/pages/ai-ppt-detail/ai-ppt-detail' })
   },
 
-  /** AI生成试卷 → existing exam flow */
+  /** AI生成试卷 → existing exam ask-teacher flow */
   startExam() {
     this._start('exam')
   },

@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/ai-ppt-detail/ai-ppt-detail",
     "pages/chat/chat",
     "pages/outline/outline",
     "pages/style-filter/style-filter",
