@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<table>
+  <thead>
+    <tr>
+      <th>用户 ID</th>
+      <th>昵称</th>
+      <th>OpenID</th>
+      <th>套餐</th>
+      <th>到期</th>
+      <th>注册时间</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.user_id }}</td>
+      <td>{{ r.nickname or '—' }}</td>
+      <td class="muted">{{ r.openid }}</td>
+      <td><span class="badge">{{ r.plan or 'free' }}</span></td>
+      <td>{{ r.expires_at or '—' }}</td>
+      <td class="muted">{{ r.user_created }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="muted">暂无用户</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

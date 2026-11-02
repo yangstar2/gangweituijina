@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<table>
+  <thead>
+    <tr>
+      <th>订单</th>
+      <th>用户</th>
+      <th>套餐</th>
+      <th>金额</th>
+      <th>状态</th>
+      <th>微信单号</th>
+      <th>支付时间</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in rows %}
+    <tr>
+      <td>#{{ r.id }}</td>
+      <td>{{ r.nickname or r.user_id }}<div class="muted">{{ r.openid }}</div></td>
+      <td>{{ r.plan_id }}</td>
+      <td>¥{{ '%.2f'|format(r.amount_fen / 100) }}</td>
+      <td>
+        <span class="badge {{ 'paid' if r.status == 'paid' else 'pending' }}">{{ r.status }}</span>
+      </td>
+      <td class="muted">{{ r.wx_transaction_id or r.wx_prepay_id or '—' }}</td>
+      <td class="muted">{{ r.paid_at or '—' }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="7" class="muted">暂无订单</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -2,7 +2,7 @@
 
 微信小程序 + Python（FastAPI）+ SQLite3。本目录为独立产品代码，与仓库根目录历史无关。
 
-**已覆盖：** 追问老师澄清 → 大纲 → 风格/模型 → 6 页预览 → 正式生成 PPT/试卷 → **会员套餐 + mock 微信支付 + 高级模型门禁**。管理后台 / 腾讯云部署见后续 PR。
+**已覆盖：** 追问老师 → 预览 → 正式生成 → 会员/支付门禁 → **管理后台（会员/订单/会话）**。腾讯云部署见下一 PR。
 
 ## 目录
 
@@ -24,6 +24,7 @@
 | `backend/app/routers/membership.py` | 套餐与当前会员状态 |
 | `backend/app/routers/pay.py` | mock 下单 / prepay / notify |
 | `miniprogram/pages/membership/` | 会员购买（模拟支付） |
+| `backend/app/admin/` | Web 管理后台（Jinja2 + Basic Auth） |
 
 ## 启动后端
 
@@ -40,6 +41,9 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 健康检查：`GET http://127.0.0.1:8000/api/health`
 
 API 文档：`http://127.0.0.1:8000/docs`
+
+管理后台：`http://127.0.0.1:8000/admin/members`  
+默认账号（mock）：`admin` / `admin_mock_change_me`（可用环境变量 `ADMIN_USERNAME` / `ADMIN_PASSWORD` 覆盖）
 
 ## 启动小程序
 
@@ -63,5 +67,5 @@ API 文档：`http://127.0.0.1:8000/docs`
 
 ## 后续扩展预留
 
-- 管理后台、腾讯云 Dockerfile
+- 腾讯云 Dockerfile 与部署说明
 - `mock_wechat` / `mock_ai` 换成真实 Provider
