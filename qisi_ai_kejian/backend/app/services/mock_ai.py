@@ -38,20 +38,23 @@ MODELS: list[dict[str, Any]] = [
         "provider": "qisi_mock",
         "description": "本地 mock，响应快，适合联调",
         "recommended": True,
+        "requires_membership": False,
     },
     {
         "id": "mock-hunyuan",
         "name": "混元（Mock）",
         "provider": "tencent_mock",
-        "description": "腾讯云混元占位，不发起真实请求",
+        "description": "腾讯云混元占位，不发起真实请求（需会员）",
         "recommended": False,
+        "requires_membership": True,
     },
     {
         "id": "mock-deepseek",
         "name": "DeepSeek（Mock）",
         "provider": "deepseek_mock",
-        "description": "第三方模型占位，不发起真实请求",
+        "description": "第三方模型占位，不发起真实请求（需会员）",
         "recommended": False,
+        "requires_membership": True,
     },
 ]
 

@@ -14,7 +14,9 @@ function request(path, method, data) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
           resolve(res.data)
         } else {
-          reject(res.data || { detail: `HTTP ${res.statusCode}` })
+          const payload = res.data || { detail: `HTTP ${res.statusCode}` }
+          if (payload && typeof payload === 'object') payload.statusCode = res.statusCode
+          reject(payload)
         }
       },
       fail: reject,

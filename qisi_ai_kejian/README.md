@@ -2,7 +2,7 @@
 
 微信小程序 + Python（FastAPI）+ SQLite3。本目录为独立产品代码，与仓库根目录历史无关。
 
-**已覆盖：** 追问老师澄清 → 大纲 → 风格/模型 → 6 页预览 → **正式生成完整 PPT / 试卷（mock，落库 artifacts）**。会员支付 / 管理后台 / 腾讯云部署见后续 PR。
+**已覆盖：** 追问老师澄清 → 大纲 → 风格/模型 → 6 页预览 → 正式生成 PPT/试卷 → **会员套餐 + mock 微信支付 + 高级模型门禁**。管理后台 / 腾讯云部署见后续 PR。
 
 ## 目录
 
@@ -21,6 +21,9 @@
 | `miniprogram/pages/preview/` | 约 6 页预览 + 正式生成入口 |
 | `miniprogram/pages/result-ppt/` | 完整课件结果 |
 | `miniprogram/pages/result-exam/` | 完整试卷结果 |
+| `backend/app/routers/membership.py` | 套餐与当前会员状态 |
+| `backend/app/routers/pay.py` | mock 下单 / prepay / notify |
+| `miniprogram/pages/membership/` | 会员购买（模拟支付） |
 
 ## 启动后端
 
@@ -52,9 +55,13 @@ API 文档：`http://127.0.0.1:8000/docs`
 2. 与追问老师对话 **至少 3 轮**（mock 规则在第 3 轮产出大纲）
 3. 确认大纲 → 选风格 → 选模型 → 滑动查看约 6 页预览
 4. 点「正式生成」→ 查看完整 PPT 或试卷（写入 `artifacts` 表）
+5. 首页「会员中心」→ 选套餐 → 模拟支付；高级模型（混元/DeepSeek mock）需会员
+
+## 凭据占位（环境变量）
+
+`WECHAT_APP_ID` / `WECHAT_APP_SECRET` / `WECHAT_PAY_MCH_ID` / `WECHAT_PAY_API_V3_KEY` / `WECHAT_PAY_NOTIFY_URL` — 见 `backend/app/config.py`，默认均为 mock。
 
 ## 后续扩展预留
 
-- `members` / `pay_orders` 表已 stub（会员与支付下一切片）
-- `mock_wechat.create_prepay` 可换真实微信支付
-- `mock_ai.generate_ppt` / `generate_exam` 可换成真实 Provider
+- 管理后台、腾讯云 Dockerfile
+- `mock_wechat` / `mock_ai` 换成真实 Provider

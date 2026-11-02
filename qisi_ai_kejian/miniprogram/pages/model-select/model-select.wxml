@@ -12,6 +12,7 @@
     <view class="name">
       {{item.name}}
       <text class="badge" wx:if="{{item.recommended}}">推荐</text>
+      <text class="badge vip" wx:if="{{item.requires_membership}}">会员</text>
     </view>
     <view class="provider">{{item.provider}}</view>
     <view class="desc">{{item.description}}</view>
