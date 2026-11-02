@@ -234,3 +234,184 @@ def build_preview(
     for i, p in enumerate(pages, start=1):
         p["page_no"] = i
     return pages
+
+
+def generate_ppt(
+    outline: dict[str, Any],
+    style_id: str,
+    model_id: str,
+    title: str | None = None,
+) -> dict[str, Any]:
+    """Full mock PPT from clarified outline (more slides than preview)."""
+    style = next((s for s in STYLES if s["id"] == style_id), STYLES[0])
+    sections = outline.get("outline") or []
+    key_points = outline.get("key_points") or []
+    notes = outline.get("notes") or []
+    ppt_title = title or "AI 生成课件（Mock）"
+
+    slides: list[dict[str, Any]] = [
+        {
+            "slide_no": 1,
+            "layout": "cover",
+            "title": ppt_title,
+            "subtitle": f"{style['name']} · {model_id}",
+            "bullets": [],
+            "speaker_note": "封面停留 3 秒，自我介绍",
+        },
+        {
+            "slide_no": 2,
+            "layout": "agenda",
+            "title": "学习目标",
+            "subtitle": None,
+            "bullets": key_points or ["完成本节核心概念", "能独立完成例题"],
+            "speaker_note": "强调可检测目标",
+        },
+    ]
+
+    slide_no = 3
+    for sec in sections:
+        items = list(sec.get("items") or ["要点"])
+        slides.append(
+            {
+                "slide_no": slide_no,
+                "layout": "section",
+                "title": sec.get("section", f"章节 {slide_no}"),
+                "subtitle": "本节要点",
+                "bullets": items,
+                "speaker_note": f"展开讲解「{sec.get('section', '')}」",
+            }
+        )
+        slide_no += 1
+        for j, item in enumerate(items):
+            slides.append(
+                {
+                    "slide_no": slide_no,
+                    "layout": "content",
+                    "title": item,
+                    "subtitle": sec.get("section"),
+                    "bullets": [
+                        f"定义与边界（mock · {model_id}）",
+                        "常见误区与对比",
+                        "课堂提问：你怎么理解？",
+                    ],
+                    "speaker_note": f"细讲 {item}",
+                }
+            )
+            slide_no += 1
+            if j >= 1:
+                break  # keep mock deck bounded
+
+    slides.append(
+        {
+            "slide_no": slide_no,
+            "layout": "example",
+            "title": "例题示范",
+            "subtitle": "从易到难",
+            "bullets": [
+                "例 1：基础巩固",
+                "例 2：变式迁移",
+                "师生共答要点",
+            ],
+            "speaker_note": "板书关键步骤",
+        }
+    )
+    slide_no += 1
+    slides.append(
+        {
+            "slide_no": slide_no,
+            "layout": "summary",
+            "title": "小结与作业",
+            "subtitle": None,
+            "bullets": notes[:4] or ["回顾结构图", "完成课后练习"],
+            "speaker_note": "布置作业与答疑",
+        }
+    )
+
+    return {
+        "title": ppt_title,
+        "style_id": style_id,
+        "model_id": model_id,
+        "palette": style["palette"],
+        "slide_count": len(slides),
+        "slides": slides,
+        "mock": True,
+        "provider_note": "Replace mock_ai.generate_ppt with real PPT provider",
+    }
+
+
+def generate_exam(
+    outline: dict[str, Any],
+    style_id: str,
+    model_id: str,
+    title: str | None = None,
+    textbook_hint: str | None = None,
+) -> dict[str, Any]:
+    """Mock textbook-based exam paper from clarified outline."""
+    sections = outline.get("outline") or []
+    notes = outline.get("notes") or []
+    exam_title = title or "教材配套试卷（Mock）"
+    book = textbook_hint or (outline.get("raw_summary") or "指定教材章节")[:80]
+
+    questions: list[dict[str, Any]] = []
+    qno = 1
+
+    # Choice
+    for i in range(1, 5):
+        questions.append(
+            {
+                "no": qno,
+                "type": "choice",
+                "score": 5,
+                "stem": f"（Mock）选择题 {i}：根据「{book}」相关概念，下列说法正确的是？",
+                "options": ["A. 表述一", "B. 表述二", "C. 表述三", "D. 表述四"],
+                "answer": "B",
+                "analysis": f"采分点：概念辨析（model={model_id}）",
+            }
+        )
+        qno += 1
+
+    # Fill
+    for i in range(1, 4):
+        questions.append(
+            {
+                "no": qno,
+                "type": "fill",
+                "score": 4,
+                "stem": f"（Mock）填空题 {i}：写出与大纲「{(sections[0].get('section') if sections else '核心知识')}」相关的关键术语或公式。",
+                "options": [],
+                "answer": "（参考答案占位）",
+                "analysis": "单位与符号需统一",
+            }
+        )
+        qno += 1
+
+    # Short / calc
+    for i in range(1, 3):
+        questions.append(
+            {
+                "no": qno,
+                "type": "short",
+                "score": 10,
+                "stem": f"（Mock）简答/计算 {i}：结合教材情境，完成综合应用题（步骤分）。",
+                "options": [],
+                "answer": "步骤 1 …；步骤 2 …；结论 …",
+                "analysis": "按步骤给分；常见错因见注意事项",
+            }
+        )
+        qno += 1
+
+    total = sum(q["score"] for q in questions)
+    return {
+        "title": exam_title,
+        "style_id": style_id,
+        "model_id": model_id,
+        "textbook_ref": book,
+        "duration_minutes": 45,
+        "total_score": total,
+        "sections_from_outline": [s.get("section") for s in sections],
+        "notes": notes,
+        "questions": questions,
+        "answer_key": [{"no": q["no"], "answer": q["answer"], "score": q["score"]} for q in questions],
+        "mock": True,
+        "provider_note": "Replace mock_ai.generate_exam with real exam provider",
+    }

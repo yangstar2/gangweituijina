@@ -74,11 +74,29 @@ CREATE TABLE IF NOT EXISTS previews (
 CREATE TABLE IF NOT EXISTS pay_orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
+    plan_id TEXT NOT NULL DEFAULT 'pro_month',
     amount_fen INTEGER NOT NULL,
-    status TEXT NOT NULL DEFAULT 'mock_pending',
+    status TEXT NOT NULL DEFAULT 'mock_pending',  -- mock_pending | paid | closed | refunded
     wx_prepay_id TEXT,
+    wx_transaction_id TEXT,
+    notify_payload TEXT,
+    paid_at TEXT,
     created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS artifacts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id INTEGER NOT NULL,
+    artifact_type TEXT NOT NULL,         -- ppt | exam
+    style_id TEXT NOT NULL,
+    model_id TEXT NOT NULL,
+    title TEXT,
+    content TEXT NOT NULL,                -- JSON: slides or exam paper
+    status TEXT NOT NULL DEFAULT 'ready', -- generating | ready | failed
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (session_id) REFERENCES sessions(id)
 );
 """
 
@@ -87,11 +105,38 @@ def utcnow() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _column_names(conn: sqlite3.Connection, table: str) -> set[str]:
+    rows = conn.execute(f"PRAGMA table_info({table})").fetchall()
+    return {r[1] for r in rows}
+
+
+def _migrate(conn: sqlite3.Connection) -> None:
+    """Additive migrations for evolving stubs (safe on fresh DB)."""
+    if "pay_orders" in {
+        r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()
+    }:
+        cols = _column_names(conn, "pay_orders")
+        alters = []
+        if "plan_id" not in cols:
+            alters.append("ALTER TABLE pay_orders ADD COLUMN plan_id TEXT NOT NULL DEFAULT 'pro_month'")
+        if "wx_transaction_id" not in cols:
+            alters.append("ALTER TABLE pay_orders ADD COLUMN wx_transaction_id TEXT")
+        if "notify_payload" not in cols:
+            alters.append("ALTER TABLE pay_orders ADD COLUMN notify_payload TEXT")
+        if "paid_at" not in cols:
+            alters.append("ALTER TABLE pay_orders ADD COLUMN paid_at TEXT")
+        if "updated_at" not in cols:
+            alters.append("ALTER TABLE pay_orders ADD COLUMN updated_at TEXT")
+        for sql in alters:
+            conn.execute(sql)
+
+
 def ensure_db() -> None:
     path = Path(settings.database_path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with sqlite3.connect(path) as conn:
         conn.executescript(SCHEMA)
+        _migrate(conn)
         conn.commit()
 
 

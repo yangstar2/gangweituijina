@@ -22,6 +22,7 @@ Page({
           styleId: 'clean_academic',
           modelId: 'mock-qisi-lite',
           preview: null,
+          artifact: null,
         }
         wx.hideLoading()
         wx.navigateTo({ url: `/pages/chat/chat?sessionId=${session.id}` })

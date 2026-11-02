@@ -50,7 +50,39 @@ def main() -> None:
     assert preview.status_code == 200, preview.text
     pages = preview.json()["pages"]
     assert len(pages) == 6, pages
-    print("SMOKE OK — session", sid, "pages", [p["title"] for p in pages])
+
+    gen = client.post(
+        f"/api/sessions/{sid}/generate",
+        json={"style_id": styles[0]["id"], "model_id": models[0]["id"]},
+    )
+    assert gen.status_code == 200, gen.text
+    art = gen.json()
+    assert art["artifact_type"] == "ppt"
+    assert art["content"]["slide_count"] >= 6
+    got = client.get(f"/api/artifacts/{art['id']}")
+    assert got.status_code == 200 and got.json()["id"] == art["id"]
+
+    # exam path
+    sess2 = client.post("/api/sessions", json={"content_type": "exam", "title": "smoke-exam"})
+    sid2 = sess2.json()["id"]
+    for text in ["初三化学，人教版", "覆盖酸碱盐，难度中等", "整理试卷大纲"]:
+        client.post(f"/api/sessions/{sid2}/messages", json={"content": text})
+    exam = client.post(
+        f"/api/sessions/{sid2}/generate",
+        json={"style_id": "exam_focus", "model_id": models[0]["id"]},
+    )
+    assert exam.status_code == 200, exam.text
+    assert exam.json()["artifact_type"] == "exam"
+    assert len(exam.json()["content"]["questions"]) >= 5
+
+    print(
+        "SMOKE OK — session",
+        sid,
+        "ppt_slides",
+        art["content"]["slide_count"],
+        "exam_q",
+        len(exam.json()["content"]["questions"]),
+    )
 
 
 if __name__ == "__main__":

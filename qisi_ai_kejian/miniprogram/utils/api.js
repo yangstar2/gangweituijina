@@ -54,6 +54,28 @@ const api = {
     const q = `style_id=${encodeURIComponent(styleId)}&model_id=${encodeURIComponent(modelId)}`
     return request(`/api/sessions/${sessionId}/preview?${q}`, 'POST')
   },
+  generate(sessionId, styleId, modelId, title) {
+    return request(`/api/sessions/${sessionId}/generate`, 'POST', {
+      style_id: styleId,
+      model_id: modelId,
+      title: title || null,
+    })
+  },
+  getArtifact(artifactId) {
+    return request(`/api/artifacts/${artifactId}`)
+  },
+  listPlans() {
+    return request('/api/membership/plans')
+  },
+  getMembership(userId) {
+    return request(`/api/membership/me?user_id=${userId}`)
+  },
+  createOrder(userId, planId) {
+    return request('/api/pay/orders', 'POST', { user_id: userId, plan_id: planId })
+  },
+  mockPayNotify(orderId) {
+    return request(`/api/pay/notify/mock`, 'POST', { order_id: orderId })
+  },
 }
 
 module.exports = { api, request }

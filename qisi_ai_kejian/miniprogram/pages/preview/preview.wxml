@@ -21,5 +21,6 @@
     <view class="btn-primary ghost" bindtap="reStyle">换风格</view>
     <view class="btn-primary" bindtap="reModel">换模型</view>
   </view>
-  <view class="done muted">完整生成流水线后续接入；本页仅为澄清后预览。</view>
+  <view class="btn-accent gen" bindtap="onGenerate">正式生成{{isExam ? '试卷' : '课件'}}</view>
+  <view class="done muted">预览为 6 页 mock；正式生成将写出完整 artifact 并落库。</view>
 </view>

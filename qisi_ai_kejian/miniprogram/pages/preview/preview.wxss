@@ -60,6 +60,10 @@
   flex: 1;
 }
 
+.gen {
+  margin-top: 28rpx;
+}
+
 .done {
   margin-top: 28rpx;
   text-align: center;
