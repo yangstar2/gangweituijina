@@ -1,0 +1,1678 @@
+{
+  "knowledge_graphs": {
+    "pep-math-7-ch1": {
+      "chapter_id": "pep-math-7-ch1",
+      "version_id": "pep-math-7",
+      "chapter_number": 1,
+      "title": "有理数",
+      "sections": [
+        {
+          "section_id": "1.1",
+          "title": "正数和负数",
+          "page_range": "P1-4",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-001",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "1.2",
+          "title": "有理数",
+          "page_range": "P5-14",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-001",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-003",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "1.3",
+          "title": "有理数的加减法",
+          "page_range": "P15-30",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-002",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "1.4",
+          "title": "有理数的乘除法",
+          "page_range": "P31-42",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-002",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "1.5",
+          "title": "有理数的乘方",
+          "page_range": "P43-52",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-002",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-math-7-ch2": {
+      "chapter_id": "pep-math-7-ch2",
+      "version_id": "pep-math-7",
+      "chapter_number": 2,
+      "title": "整式的加减",
+      "sections": [
+        {
+          "section_id": "2.1",
+          "title": "整式",
+          "page_range": "P53-61",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-010",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "2.2",
+          "title": "整式的加减",
+          "page_range": "P62-73",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-011",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-012",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-math-7-ch3": {
+      "chapter_id": "pep-math-7-ch3",
+      "version_id": "pep-math-7",
+      "chapter_number": 3,
+      "title": "一元一次方程",
+      "sections": [
+        {
+          "section_id": "3.1",
+          "title": "从算式到方程",
+          "page_range": "P74-82",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-020",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-021",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "3.2",
+          "title": "解一元一次方程(一)",
+          "page_range": "P83-90",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-022",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "3.3",
+          "title": "解一元一次方程(二)",
+          "page_range": "P91-100",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-023",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "3.4",
+          "title": "实际问题与一元一次方程",
+          "page_range": "P101-112",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-024",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-math-7-ch4": {
+      "chapter_id": "pep-math-7-ch4",
+      "version_id": "pep-math-7",
+      "chapter_number": 4,
+      "title": "几何图形初步",
+      "sections": [
+        {
+          "section_id": "4.1",
+          "title": "几何图形",
+          "page_range": "P113-120",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-030",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "4.2",
+          "title": "直线射线线段",
+          "page_range": "P121-128",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-031",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "4.3",
+          "title": "角",
+          "page_range": "P129-140",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-032",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-math-8-ch11": {
+      "chapter_id": "pep-math-8-ch11",
+      "version_id": "pep-math-8",
+      "chapter_number": 11,
+      "title": "三角形",
+      "sections": [
+        {
+          "section_id": "11.1",
+          "title": "与三角形有关的线段",
+          "page_range": "P1-8",
+          "knowledge_points": [
+            {
+              "code": "K8-MAT-001",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "11.2",
+          "title": "与三角形有关的角",
+          "page_range": "P9-18",
+          "knowledge_points": [
+            {
+              "code": "K8-MAT-001",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-math-8-ch12": {
+      "chapter_id": "pep-math-8-ch12",
+      "version_id": "pep-math-8",
+      "chapter_number": 12,
+      "title": "全等三角形",
+      "sections": [
+        {
+          "section_id": "12.1",
+          "title": "全等三角形",
+          "page_range": "P30-36",
+          "knowledge_points": [
+            {
+              "code": "K8-MAT-002",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "12.2",
+          "title": "三角形全等的判定",
+          "page_range": "P37-52",
+          "knowledge_points": [
+            {
+              "code": "K8-MAT-002",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-math-8-ch17": {
+      "chapter_id": "pep-math-8-ch17",
+      "version_id": "pep-math-8",
+      "chapter_number": 17,
+      "title": "勾股定理",
+      "sections": [
+        {
+          "section_id": "17.1",
+          "title": "勾股定理",
+          "page_range": "P1-8",
+          "knowledge_points": [
+            {
+              "code": "K8-MAT-020",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "17.2",
+          "title": "勾股定理的逆定理",
+          "page_range": "P9-15",
+          "knowledge_points": [
+            {
+              "code": "K8-MAT-020",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-math-8-ch19": {
+      "chapter_id": "pep-math-8-ch19",
+      "version_id": "pep-math-8",
+      "chapter_number": 19,
+      "title": "一次函数",
+      "sections": [
+        {
+          "section_id": "19.1",
+          "title": "函数",
+          "page_range": "P1-8",
+          "knowledge_points": [
+            {
+              "code": "K8-MAT-040",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "19.2",
+          "title": "一次函数",
+          "page_range": "P9-20",
+          "knowledge_points": [
+            {
+              "code": "K8-MAT-040",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-math-10-ch1": {
+      "chapter_id": "pep-math-10-ch1",
+      "version_id": "pep-math-10",
+      "chapter_number": 1,
+      "title": "集合与常用逻辑用语",
+      "sections": [
+        {
+          "section_id": "1.1",
+          "title": "集合的概念",
+          "page_range": "P1-6",
+          "knowledge_points": [
+            {
+              "code": "KH-MAT-001",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "1.2",
+          "title": "集合间的基本关系",
+          "page_range": "P7-10",
+          "knowledge_points": [
+            {
+              "code": "KH-MAT-001",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-math-10-ch3": {
+      "chapter_id": "pep-math-10-ch3",
+      "version_id": "pep-math-10",
+      "chapter_number": 3,
+      "title": "函数的概念与性质",
+      "sections": [
+        {
+          "section_id": "3.1",
+          "title": "函数的概念及其表示",
+          "page_range": "P58-67",
+          "knowledge_points": [
+            {
+              "code": "KH-MAT-010",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "3.2",
+          "title": "函数的基本性质",
+          "page_range": "P68-80",
+          "knowledge_points": [
+            {
+              "code": "KH-MAT-010",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-math-10-ch5": {
+      "chapter_id": "pep-math-10-ch5",
+      "version_id": "pep-math-10",
+      "chapter_number": 5,
+      "title": "三角函数",
+      "sections": [
+        {
+          "section_id": "5.1",
+          "title": "任意角和弧度制",
+          "page_range": "P165-172",
+          "knowledge_points": [
+            {
+              "code": "KH-MAT-020",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "5.2",
+          "title": "三角函数的概念",
+          "page_range": "P173-182",
+          "knowledge_points": [
+            {
+              "code": "KH-MAT-020",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-chi-3-ch1": {
+      "chapter_id": "pep-chi-3-ch1",
+      "version_id": "pep-chi-3",
+      "chapter_number": 1,
+      "title": "第一单元",
+      "sections": [
+        {
+          "section_id": "1",
+          "title": "大青树下的小学",
+          "page_range": "P1-3",
+          "knowledge_points": [
+            {
+              "code": "KP-CHI-020",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "2",
+          "title": "花的学校",
+          "page_range": "P4-6",
+          "knowledge_points": [
+            {
+              "code": "KP-CHI-020",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "pep-eng-3-ch1": {
+      "chapter_id": "pep-eng-3-ch1",
+      "version_id": "pep-eng-3",
+      "chapter_number": 1,
+      "title": "Unit 1 Hello!",
+      "sections": [
+        {
+          "section_id": "A",
+          "title": "Let's talk",
+          "page_range": "P1-2",
+          "knowledge_points": [
+            {
+              "code": "KP-ENG-001",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "KP-ENG-003",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "B",
+          "title": "Let's learn",
+          "page_range": "P3-4",
+          "knowledge_points": [
+            {
+              "code": "KP-ENG-002",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "su-math-7-ch1": {
+      "chapter_id": "su-math-7-ch1",
+      "version_id": "su-math-7",
+      "chapter_number": 1,
+      "title": "数学与我们同行",
+      "sections": [
+        {
+          "section_id": "1.1",
+          "title": "生活 数学",
+          "page_range": "P1-6",
+          "knowledge_points": [],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "su-math-7-ch2": {
+      "chapter_id": "su-math-7-ch2",
+      "version_id": "su-math-7",
+      "chapter_number": 2,
+      "title": "有理数",
+      "sections": [
+        {
+          "section_id": "2.1",
+          "title": "正数与负数",
+          "page_range": "P7-12",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-001",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "2.2",
+          "title": "有理数与无理数",
+          "page_range": "P13-18",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-001",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-050",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "2.3",
+          "title": "数轴",
+          "page_range": "P19-24",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-003",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "su-math-7-ch3": {
+      "chapter_id": "su-math-7-ch3",
+      "version_id": "su-math-7",
+      "chapter_number": 3,
+      "title": "代数式",
+      "sections": [
+        {
+          "section_id": "3.1",
+          "title": "字母表示数",
+          "page_range": "P48-53",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-010",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "3.2",
+          "title": "代数式",
+          "page_range": "P54-60",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-010",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "su-math-7-ch4": {
+      "chapter_id": "su-math-7-ch4",
+      "version_id": "su-math-7",
+      "chapter_number": 4,
+      "title": "一元一次方程",
+      "sections": [
+        {
+          "section_id": "4.1",
+          "title": "从问题到方程",
+          "page_range": "P92-97",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-020",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "4.2",
+          "title": "解一元一次方程",
+          "page_range": "P98-115",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-022",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-023",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "4.3",
+          "title": "用一元一次方程解决问题",
+          "page_range": "P116-138",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-024",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "bsd-math-7-ch1": {
+      "chapter_id": "bsd-math-7-ch1",
+      "version_id": "bsd-math-7",
+      "chapter_number": 1,
+      "title": "丰富的图形世界",
+      "sections": [
+        {
+          "section_id": "1.1",
+          "title": "生活中的立体图形",
+          "page_range": "P1-6",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-030",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "bsd-math-7-ch2": {
+      "chapter_id": "bsd-math-7-ch2",
+      "version_id": "bsd-math-7",
+      "chapter_number": 2,
+      "title": "有理数及其运算",
+      "sections": [
+        {
+          "section_id": "2.1",
+          "title": "有理数",
+          "page_range": "P22-28",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-001",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "2.2",
+          "title": "数轴",
+          "page_range": "P29-33",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-003",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "bsd-math-7-ch3": {
+      "chapter_id": "bsd-math-7-ch3",
+      "version_id": "bsd-math-7",
+      "chapter_number": 3,
+      "title": "整式及其加减",
+      "sections": [
+        {
+          "section_id": "3.1",
+          "title": "字母表示数",
+          "page_range": "P70-74",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-010",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "bsd-math-7-ch5": {
+      "chapter_id": "bsd-math-7-ch5",
+      "version_id": "bsd-math-7",
+      "chapter_number": 5,
+      "title": "一元一次方程",
+      "sections": [
+        {
+          "section_id": "5.1",
+          "title": "认识一元一次方程",
+          "page_range": "P118-123",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-020",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "5.2",
+          "title": "求解一元一次方程",
+          "page_range": "P124-135",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-022",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-023",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "shk-math-7-ch1": {
+      "chapter_id": "shk-math-7-ch1",
+      "version_id": "shk-math-7",
+      "chapter_number": 1,
+      "title": "有理数",
+      "sections": [
+        {
+          "section_id": "1.1",
+          "title": "正数和负数",
+          "page_range": "P1-6",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-001",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "shk-math-7-ch2": {
+      "chapter_id": "shk-math-7-ch2",
+      "version_id": "shk-math-7",
+      "chapter_number": 2,
+      "title": "整式加减",
+      "sections": [
+        {
+          "section_id": "2.1",
+          "title": "代数式",
+          "page_range": "P50-56",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-010",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "shk-math-7-ch3": {
+      "chapter_id": "shk-math-7-ch3",
+      "version_id": "shk-math-7",
+      "chapter_number": 3,
+      "title": "一次方程与方程组",
+      "sections": [
+        {
+          "section_id": "3.1",
+          "title": "一元一次方程及其解法",
+          "page_range": "P72-80",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-020",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-022",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "3.2",
+          "title": "一元一次方程的应用",
+          "page_range": "P81-95",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-023",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-024",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "ecnu-math-7-ch1": {
+      "chapter_id": "ecnu-math-7-ch1",
+      "version_id": "ecnu-math-7",
+      "chapter_number": 1,
+      "title": "走进数学世界",
+      "sections": []
+    },
+    "ecnu-math-7-ch2": {
+      "chapter_id": "ecnu-math-7-ch2",
+      "version_id": "ecnu-math-7",
+      "chapter_number": 2,
+      "title": "有理数",
+      "sections": [
+        {
+          "section_id": "2.1",
+          "title": "有理数",
+          "page_range": "P12-18",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-001",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "ecnu-math-7-ch3": {
+      "chapter_id": "ecnu-math-7-ch3",
+      "version_id": "ecnu-math-7",
+      "chapter_number": 3,
+      "title": "整式的加减",
+      "sections": [
+        {
+          "section_id": "3.1",
+          "title": "列代数式",
+          "page_range": "P56-62",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-010",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "ecnu-math-7-ch6": {
+      "chapter_id": "ecnu-math-7-ch6",
+      "version_id": "ecnu-math-7",
+      "chapter_number": 6,
+      "title": "一元一次方程",
+      "sections": [
+        {
+          "section_id": "6.1",
+          "title": "从实际问题到方程",
+          "page_range": "P1-6",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-020",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "6.2",
+          "title": "解一元一次方程",
+          "page_range": "P7-20",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-022",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-023",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "zjedu-math-7-ch1": {
+      "chapter_id": "zjedu-math-7-ch1",
+      "version_id": "zjedu-math-7",
+      "chapter_number": 1,
+      "title": "有理数",
+      "sections": [
+        {
+          "section_id": "1.1",
+          "title": "从自然数到有理数",
+          "page_range": "P1-10",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-001",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "zjedu-math-7-ch4": {
+      "chapter_id": "zjedu-math-7-ch4",
+      "version_id": "zjedu-math-7",
+      "chapter_number": 4,
+      "title": "代数式",
+      "sections": [
+        {
+          "section_id": "4.1",
+          "title": "用字母表示数",
+          "page_range": "P73-78",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-010",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "zjedu-math-7-ch5": {
+      "chapter_id": "zjedu-math-7-ch5",
+      "version_id": "zjedu-math-7",
+      "chapter_number": 5,
+      "title": "一元一次方程",
+      "sections": [
+        {
+          "section_id": "5.1",
+          "title": "一元一次方程",
+          "page_range": "P102-112",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-020",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-022",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "5.2",
+          "title": "一元一次方程的应用",
+          "page_range": "P113-130",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-024",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "sdedu-math-7-ch1": {
+      "chapter_id": "sdedu-math-7-ch1",
+      "version_id": "sdedu-math-7",
+      "chapter_number": 1,
+      "title": "基本的几何图形",
+      "sections": [
+        {
+          "section_id": "1.1",
+          "title": "我们身边的图形世界",
+          "page_range": "P1-6",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-030",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "sdedu-math-7-ch3": {
+      "chapter_id": "sdedu-math-7-ch3",
+      "version_id": "sdedu-math-7",
+      "chapter_number": 3,
+      "title": "有理数的运算",
+      "sections": [
+        {
+          "section_id": "3.1",
+          "title": "有理数的加减法",
+          "page_range": "P46-55",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-002",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "sdedu-math-7-ch6": {
+      "chapter_id": "sdedu-math-7-ch6",
+      "version_id": "sdedu-math-7",
+      "chapter_number": 6,
+      "title": "整式的加减",
+      "sections": [
+        {
+          "section_id": "6.1",
+          "title": "单项式与多项式",
+          "page_range": "P98-105",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-010",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    },
+    "sdedu-math-7-ch7": {
+      "chapter_id": "sdedu-math-7-ch7",
+      "version_id": "sdedu-math-7",
+      "chapter_number": 7,
+      "title": "一元一次方程",
+      "sections": [
+        {
+          "section_id": "7.1",
+          "title": "等式与方程",
+          "page_range": "P118-124",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-020",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-021",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        },
+        {
+          "section_id": "7.2",
+          "title": "一元一次方程的解法",
+          "page_range": "P125-136",
+          "knowledge_points": [
+            {
+              "code": "K7-MAT-022",
+              "name": "",
+              "difficulty": ""
+            },
+            {
+              "code": "K7-MAT-023",
+              "name": "",
+              "difficulty": ""
+            }
+          ],
+          "learning_objectives": [],
+          "key_points": [],
+          "difficult_points": [],
+          "examples": [],
+          "exercises": []
+        }
+      ]
+    }
+  },
+  "cross_version_mappings": [
+    {
+      "topic": "有理数概念",
+      "knowledge_code": "K7-MAT-001",
+      "mappings": [
+        {
+          "version": "人教版",
+          "version_id": "pep-math-7-vol1-2024",
+          "chapter": "第一章",
+          "section": "1.1-1.2"
+        },
+        {
+          "version": "苏教版",
+          "version_id": "su-math-7-vol1-2024",
+          "chapter": "第二章",
+          "section": "2.1-2.2"
+        },
+        {
+          "version": "北师大版",
+          "version_id": "bsd-math-7-vol1-2024",
+          "chapter": "第二章",
+          "section": "2.1"
+        },
+        {
+          "version": "沪科版",
+          "version_id": "shk-math-7-vol1-2024",
+          "chapter": "第一章",
+          "section": "1.1"
+        },
+        {
+          "version": "华师大版",
+          "version_id": "ecnu-math-7-vol1-2024",
+          "chapter": "第二章",
+          "section": "2.1"
+        },
+        {
+          "version": "浙教版",
+          "version_id": "zjedu-math-7-vol1-2024",
+          "chapter": "第一章",
+          "section": "1.1"
+        },
+        {
+          "version": "鲁教版",
+          "version_id": "sdedu-math-7-vol1-2024",
+          "chapter": "第三章",
+          "section": "3.1"
+        }
+      ]
+    },
+    {
+      "topic": "一元一次方程解法",
+      "knowledge_code": "K7-MAT-022",
+      "mappings": [
+        {
+          "version": "人教版",
+          "version_id": "pep-math-7-vol1-2024",
+          "chapter": "第三章",
+          "section": "3.2-3.3"
+        },
+        {
+          "version": "苏教版",
+          "version_id": "su-math-7-vol1-2024",
+          "chapter": "第四章",
+          "section": "4.2"
+        },
+        {
+          "version": "北师大版",
+          "version_id": "bsd-math-7-vol1-2024",
+          "chapter": "第五章",
+          "section": "5.2"
+        },
+        {
+          "version": "沪科版",
+          "version_id": "shk-math-7-vol1-2024",
+          "chapter": "第三章",
+          "section": "3.1"
+        },
+        {
+          "version": "华师大版",
+          "version_id": "ecnu-math-7-vol1-2024",
+          "chapter": "第六章",
+          "section": "6.2"
+        },
+        {
+          "version": "浙教版",
+          "version_id": "zjedu-math-7-vol1-2024",
+          "chapter": "第五章",
+          "section": "5.1"
+        },
+        {
+          "version": "鲁教版",
+          "version_id": "sdedu-math-7-vol1-2024",
+          "chapter": "第七章",
+          "section": "7.2"
+        }
+      ]
+    },
+    {
+      "topic": "一元一次方程应用",
+      "knowledge_code": "K7-MAT-024",
+      "mappings": [
+        {
+          "version": "人教版",
+          "version_id": "pep-math-7-vol1-2024",
+          "chapter": "第三章",
+          "section": "3.4"
+        },
+        {
+          "version": "苏教版",
+          "version_id": "su-math-7-vol1-2024",
+          "chapter": "第四章",
+          "section": "4.3"
+        },
+        {
+          "version": "北师大版",
+          "version_id": "bsd-math-7-vol1-2024",
+          "chapter": "第五章",
+          "section": "5.3"
+        },
+        {
+          "version": "沪科版",
+          "version_id": "shk-math-7-vol1-2024",
+          "chapter": "第三章",
+          "section": "3.2"
+        },
+        {
+          "version": "华师大版",
+          "version_id": "ecnu-math-7-vol1-2024",
+          "chapter": "第六章",
+          "section": "6.3"
+        },
+        {
+          "version": "浙教版",
+          "version_id": "zjedu-math-7-vol1-2024",
+          "chapter": "第五章",
+          "section": "5.2"
+        },
+        {
+          "version": "鲁教版",
+          "version_id": "sdedu-math-7-vol1-2024",
+          "chapter": "第七章",
+          "section": "7.3"
+        }
+      ]
+    },
+    {
+      "topic": "勾股定理",
+      "knowledge_code": "K8-MAT-020",
+      "mappings": [
+        {
+          "version": "人教版",
+          "version_id": "pep-math-8-vol2-2024",
+          "chapter": "第十七章",
+          "section": "17.1-17.2"
+        },
+        {
+          "version": "苏教版",
+          "version_id": "su-math-8-vol1-2024",
+          "chapter": "第三章",
+          "section": "3.1-3.2"
+        },
+        {
+          "version": "北师大版",
+          "version_id": "bsd-math-8-vol1-2024",
+          "chapter": "第一章",
+          "section": "1.1-1.2"
+        },
+        {
+          "version": "沪科版",
+          "version_id": "shk-math-8-vol2-2024",
+          "chapter": "第十八章",
+          "section": "18.1"
+        },
+        {
+          "version": "华师大版",
+          "version_id": "ecnu-math-8-vol1-2024",
+          "chapter": "第十四章",
+          "section": "14.1-14.2"
+        },
+        {
+          "version": "浙教版",
+          "version_id": "zjedu-math-8-vol1-2024",
+          "chapter": "第二章",
+          "section": "2.1-2.2"
+        },
+        {
+          "version": "鲁教版",
+          "version_id": "sdedu-math-8-vol1-2024",
+          "chapter": "第五章",
+          "section": "5.1-5.2"
+        }
+      ]
+    },
+    {
+      "topic": "三角函数",
+      "knowledge_code": "KH-MAT-020",
+      "mappings": [
+        {
+          "version": "人教版",
+          "version_id": "pep-math-10-required1-2024",
+          "chapter": "第五章",
+          "section": "5.1-5.2"
+        },
+        {
+          "version": "苏教版",
+          "version_id": "su-math-10-required1-2024",
+          "chapter": "第七章",
+          "section": "7.1-7.2"
+        },
+        {
+          "version": "北师大版",
+          "version_id": "bsd-math-10-required2-2024",
+          "chapter": "第一章",
+          "section": "1.1-1.2"
+        },
+        {
+          "version": "沪科版",
+          "version_id": "shk-math-10-required2-2024",
+          "chapter": "第六章",
+          "section": "6.1"
+        },
+        {
+          "version": "华师大版",
+          "version_id": "ecnu-math-10-required1-2024",
+          "chapter": "第五章",
+          "section": "5.1-5.2"
+        },
+        {
+          "version": "浙教版",
+          "version_id": "zjedu-math-10-required2-2024",
+          "chapter": "第一章",
+          "section": "1.1-1.2"
+        },
+        {
+          "version": "鲁教版",
+          "version_id": "sdedu-math-10-required2-2024",
+          "chapter": "第三章",
+          "section": "3.1"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "total_chapters": 35,
+    "total_versions_covered": 7,
+    "total_cross_mappings": 5,
+    "generated": "2026-06-25"
+  }
+}

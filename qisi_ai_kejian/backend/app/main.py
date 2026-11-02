@@ -8,12 +8,12 @@ from .db import ensure_db
 from .admin.router import router as admin_router
 from .routers import auth, catalog, membership, pay, sessions
 from .routers import generate, ppt_think
-from .services import deepseek
+from .services import deepseek, teacher_prep
 
 app = FastAPI(
     title=settings.app_name,
-    description="奇思 AI 课件 — ask-teacher + DeepSeek thinking + generate + membership + admin",
-    version="0.5.0",
+    description="奇思 AI 课件 — ask-teacher + teacher-prep-skill + DeepSeek + generate + membership + admin",
+    version="0.6.0",
 )
 
 app.add_middleware(
@@ -47,6 +47,8 @@ def health() -> dict:
         "app": settings.app_name,
         "mock_mode": settings.mock_mode,
         "deepseek_configured": deepseek.is_configured(),
+        "teacher_prep_skill": teacher_prep.is_available(),
+        "teacher_prep_path": teacher_prep.skill_install_path(),
         "slice": "full-product-mock",
         "admin": "/admin/members",
         "pptx_download": True,

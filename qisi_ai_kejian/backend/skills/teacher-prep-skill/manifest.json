@@ -1,0 +1,176 @@
+---
+name: teacher-prep-skill
+display_name: 教师个性化备课助手
+version: 1.1.0
+description: |
+  基于教材版本知识图谱 + 班级学情数据 + 教师个人风格，
+  为 K-12 全学科（15 个学科）教师提供 6 大核心能力的 AI 备课助手。
+  覆盖：智能备课、班级学情、错题变式、名师模板、应急救场、教学反思。
+  备课时间从 3-5 小时缩短到 10-15 分钟。
+author: WorkBuddy
+license: Apache-2.0
+
+# 触发关键词
+triggers:
+  - 备课
+  - 出题
+  - 教学设计
+  - 教案
+  - 课件
+  - 错题变式
+  - 应急备课
+  - 教学反思
+  - 学情分析
+  - 教师AI
+  - 智能备课
+  - 物理备课
+  - 化学备课
+  - 生物备课
+  - 历史备课
+  - 地理备课
+  - 政治备课
+  - 道德与法治备课
+  - lesson plan
+  - teaching prep
+  - teacher AI
+
+# 入口能力
+capabilities:
+  - id: smart_prep
+    name: 智能备课
+    description: 6 参数输入 + 3 版本 AI 生成
+    icon: 📝
+  - id: class_analytics
+    name: 班级学情看板
+    description: 数据驱动的教学决策
+    icon: 📊
+  - id: mistake_variants
+    name: 错题变式
+    description: 自动归集错题 + 生成变式
+    icon: 🎯
+  - id: template_library
+    name: 名师模板
+    description: 私有 + 共享双轨模板
+    icon: 📚
+  - id: emergency_rescue
+    name: 应急救场
+    description: 1 分钟急救版备课
+    icon: 🚨
+  - id: teaching_reflection
+    name: 教学反思周报
+    description: 自动生成反思 + 语音输入
+    icon: 📈
+
+# 学科覆盖
+subjects:
+  primary:
+    - code: chi
+      name: 语文
+      grades: [1, 2, 3, 4, 5, 6]
+    - code: math
+      name: 数学
+      grades: [1, 2, 3, 4, 5, 6]
+    - code: eng
+      name: 英语
+      grades: [3, 4, 5, 6]
+    - code: sci
+      name: 科学
+      grades: [1, 2, 3, 4, 5, 6]
+    - code: pe
+      name: 体育与健康
+      grades: [1, 2, 3, 4, 5, 6]
+    - code: art
+      name: 美术
+      grades: [1, 2, 3, 4, 5, 6]
+    - code: mus
+      name: 音乐
+      grades: [1, 2, 3, 4, 5, 6]
+    - code: comp
+      name: 综合实践
+      grades: [1, 2, 3, 4, 5, 6]
+  junior:
+    - code: chi
+      name: 语文
+      grades: [7, 8, 9]
+    - code: math
+      name: 数学
+      grades: [7, 8, 9]
+    - code: eng
+      name: 英语
+      grades: [7, 8, 9]
+    - code: phy
+      name: 物理
+      grades: [8, 9]
+    - code: chem
+      name: 化学
+      grades: [9]
+    - code: bio
+      name: 生物
+      grades: [7, 8, 9]
+    - code: pol
+      name: 道德与法治
+      grades: [7, 8, 9]
+    - code: hist
+      name: 历史
+      grades: [7, 8, 9]
+    - code: geo
+      name: 地理
+      grades: [7, 8, 9]
+    - code: it
+      name: 信息技术
+      grades: [7, 8, 9]
+    - code: pe
+      name: 体育与健康
+      grades: [7, 8, 9]
+    - code: art
+      name: 美术
+      grades: [7, 8, 9]
+    - code: mus
+      name: 音乐
+      grades: [7, 8, 9]
+    - code: comp
+      name: 综合实践
+      grades: [7, 8, 9]
+  senior:
+    - code: chi
+      name: 语文
+      grades: [10, 11, 12]
+    - code: math
+      name: 数学
+      grades: [10, 11, 12]
+    - code: eng
+      name: 英语
+      grades: [10, 11, 12]
+    - code: phy
+      name: 物理
+      grades: [10, 11, 12]
+    - code: chem
+      name: 化学
+      grades: [10, 11, 12]
+    - code: bio
+      name: 生物
+      grades: [10, 11, 12]
+    - code: pol
+      name: 道德与法治
+      grades: [10, 11, 12]
+    - code: hist
+      name: 历史
+      grades: [10, 11, 12]
+    - code: geo
+      name: 地理
+      grades: [10, 11, 12]
+    - code: it
+      name: 信息技术
+      grades: [10, 11, 12]
+    - code: pe
+      name: 体育与健康
+      grades: [10, 11, 12]
+    - code: art
+      name: 美术
+      grades: [10, 11, 12]
+    - code: mus
+      name: 音乐
+      grades: [10, 11, 12]
+    - code: comp
+      name: 综合实践
+      grades: [10, 11, 12]

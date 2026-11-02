@@ -39,6 +39,9 @@ class PptThinkOut(BaseModel):
     deepseek_configured: bool = False
     artifact: ArtifactOut | None = None
     error: str | None = None
+    skill_slug: str | None = None
+    skill_path: str | None = None
+    skill_context: dict | None = None
 
 
 def _get_outline_dict(conn, session_id: int) -> dict | None:
@@ -166,7 +169,10 @@ def ppt_think(session_id: int, body: PptThinkIn | None = None) -> PptThinkOut:
         existing = _get_outline_dict(conn, session_id)
 
         result = deepseek.think_ppt_content(
-            session["content_type"], history, existing
+            session["content_type"],
+            history,
+            existing,
+            title=body.title or session["title"],
         )
         outline_out = _upsert_outline(conn, session_id, result.outline, now)
         artifact = _maybe_generate(conn, session, session_id, result.outline, body, now)
@@ -182,6 +188,9 @@ def ppt_think(session_id: int, body: PptThinkIn | None = None) -> PptThinkOut:
         deepseek_configured=deepseek.is_configured(),
         artifact=artifact,
         error=result.error,
+        skill_slug=result.skill_slug,
+        skill_path=result.skill_path,
+        skill_context=result.skill_context or None,
     )
 
 
@@ -228,7 +237,10 @@ def ppt_think_stream(session_id: int, body: PptThinkIn | None = None):
             ) + "\n"
 
             result = deepseek.think_ppt_content(
-                session["content_type"], history, existing
+                session["content_type"],
+                history,
+                existing,
+                title=body.title or session["title"],
             )
 
             for i, step in enumerate(result.thinking_steps):
@@ -263,6 +275,9 @@ def ppt_think_stream(session_id: int, body: PptThinkIn | None = None):
                 "deepseek_configured": deepseek.is_configured(),
                 "artifact": artifact.model_dump() if artifact else None,
                 "error": result.error,
+                "skill_slug": result.skill_slug,
+                "skill_path": result.skill_path,
+                "skill_context": result.skill_context or None,
             }
             yield json.dumps(payload, ensure_ascii=False) + "\n"
 

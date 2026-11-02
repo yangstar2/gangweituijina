@@ -10,8 +10,8 @@ from pydantic import BaseModel, Field
 
 from ..db import dumps, get_conn, loads, utcnow
 from ..schemas.common import OutlineOut
-from ..services import membership as membership_svc
-from ..services import mock_ai, pptx_builder
+from ..services import deepseek, membership as membership_svc
+from ..services import mock_ai, pptx_builder, teacher_prep
 
 router = APIRouter(prefix="/api/sessions", tags=["generate"])
 
@@ -83,9 +83,19 @@ def finalize_ppt_artifact(
     title: str | None,
     now: str,
     extra_content: dict | None = None,
+    history: list[dict] | None = None,
 ) -> ArtifactOut:
-    """Generate slide JSON, insert artifact, write .pptx, update content with download URL."""
-    content = mock_ai.generate_ppt(outline_payload, style_id, model_id, title)
+    """Generate slide JSON via teacher-prep-skill, write .pptx, attach preview pages."""
+    if history is None:
+        history_rows = conn.execute(
+            "SELECT role, content FROM messages WHERE session_id = ? ORDER BY id",
+            (session_id,),
+        ).fetchall()
+        history = [{"role": r["role"], "content": r["content"]} for r in history_rows]
+
+    content = deepseek.generate_ppt_content(
+        outline_payload, style_id, model_id, title, history=history
+    )
     if extra_content:
         content.update(extra_content)
     # Attach outline summary for result page
@@ -95,8 +105,16 @@ def finalize_ppt_artifact(
         "notes": outline_payload.get("notes") or [],
         "raw_summary": outline_payload.get("raw_summary"),
     }
-    content["mock"] = False  # slides still from local builder; file is real pptx
-    content["provider_note"] = "PPTX built with python-pptx (or OOXML fallback)"
+    if not content.get("preview_pages"):
+        content["preview_pages"] = teacher_prep.slides_to_preview_pages(
+            content.get("slides") or []
+        )
+    content["mock"] = False
+    content["provider_note"] = content.get("provider_note") or (
+        "teacher-prep-skill → python-pptx"
+    )
+    content["skill_slug"] = content.get("skill_slug") or teacher_prep.SKILL_ORG_SLUG
+    content["skill_path"] = content.get("skill_path") or teacher_prep.skill_install_path()
 
     cur = conn.execute(
         """

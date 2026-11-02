@@ -1,0 +1,3277 @@
+{
+  "curriculum_standards": [
+    {
+      "code": "KP-MAT-001",
+      "name": "1-5的认识和加减法",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-002",
+      "name": "0的认识和加减法",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-MAT-001"
+      ],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-003",
+      "name": "6-10的认识和加减法",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-MAT-001"
+      ],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-004",
+      "name": "11-20各数的认识",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-MAT-003"
+      ],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-005",
+      "name": "20以内的进位加法",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-004"
+      ],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-006",
+      "name": "认识图形（一）",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-007",
+      "name": "钟表的认识",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-010",
+      "name": "100以内的加法和减法",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-005"
+      ],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-011",
+      "name": "表内乘法（一）",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-010"
+      ],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-012",
+      "name": "长度单位",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-013",
+      "name": "角的初步认识",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-014",
+      "name": "表内除法（一）",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-011"
+      ],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-015",
+      "name": "万以内数的认识",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-010"
+      ],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-020",
+      "name": "万以内的加法和减法",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-015"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-021",
+      "name": "多位数乘一位数",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-011",
+        "KP-MAT-020"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-022",
+      "name": "分数的初步认识",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-003"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-023",
+      "name": "长方形和正方形",
+      "difficulty": "L2",
+      "prerequisites": [],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-024",
+      "name": "位置与方向",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-025",
+      "name": "除数是一位数的除法",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-014",
+        "KP-MAT-021"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-026",
+      "name": "面积",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-023"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-027",
+      "name": "年、月、日",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-030",
+      "name": "大数的认识",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-020"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-031",
+      "name": "三位数乘两位数",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-021"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-032",
+      "name": "除数是两位数的除法",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-025"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-033",
+      "name": "平行四边形和梯形",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-023"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-034",
+      "name": "运算律",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-010",
+        "KP-MAT-031"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-035",
+      "name": "小数的意义和性质",
+      "difficulty": "L2",
+      "prerequisites": [],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-036",
+      "name": "三角形",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-013",
+        "KP-MAT-023"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-040",
+      "name": "小数乘法",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-031",
+        "KP-MAT-035"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-041",
+      "name": "小数除法",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-032",
+        "KP-MAT-035"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-042",
+      "name": "简易方程",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-034"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-043",
+      "name": "多边形的面积",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-033",
+        "KP-MAT-036"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-044",
+      "name": "分数的意义和性质",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-022"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-045",
+      "name": "因数与倍数",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-011",
+        "KP-MAT-014"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-046",
+      "name": "长方体和正方体",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-026"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-047",
+      "name": "分数的加法和减法",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-044"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-050",
+      "name": "分数乘法",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-044",
+        "KP-MAT-040"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-051",
+      "name": "分数除法",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-044",
+        "KP-MAT-041"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-052",
+      "name": "比和比例",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-050",
+        "KP-MAT-051"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-053",
+      "name": "圆",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-043"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-054",
+      "name": "百分数",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-050"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-055",
+      "name": "圆柱与圆锥",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-046",
+        "KP-MAT-053"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MAT-056",
+      "name": "整理和复习",
+      "difficulty": "L4",
+      "prerequisites": [],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "K7-MAT-001",
+      "name": "有理数概念",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-MAT-020"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-002",
+      "name": "有理数运算",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-001"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-003",
+      "name": "数轴与绝对值",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-001"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-010",
+      "name": "整式概念",
+      "difficulty": "L1",
+      "prerequisites": [
+        "K7-MAT-002"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-011",
+      "name": "合并同类项",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-010"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-012",
+      "name": "去括号与整式加减",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-011"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-013",
+      "name": "整式乘法",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MAT-012"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-020",
+      "name": "方程概念",
+      "difficulty": "L1",
+      "prerequisites": [
+        "K7-MAT-012"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-021",
+      "name": "等式性质",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-020"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-022",
+      "name": "解一元一次方程合并与移项",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MAT-021",
+        "K7-MAT-012"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-023",
+      "name": "解一元一次方程去括号去分母",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MAT-022"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-024",
+      "name": "一元一次方程应用",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-MAT-023"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-030",
+      "name": "几何图形初步",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-MAT-036"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-031",
+      "name": "直线射线线段",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-032",
+      "name": "角的概念与运算",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-031"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-040",
+      "name": "相交线与平行线",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-032"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-041",
+      "name": "平行线的性质与判定",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MAT-040"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-050",
+      "name": "实数概念",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-002"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-051",
+      "name": "平方根与立方根",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MAT-050"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-060",
+      "name": "平面直角坐标系",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MAT-024"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-070",
+      "name": "二元一次方程组",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MAT-024"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-080",
+      "name": "不等式与不等式组",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MAT-024",
+        "K7-MAT-070"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MAT-090",
+      "name": "数据的收集整理与描述",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-001",
+      "name": "三角形",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-030"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-002",
+      "name": "全等三角形",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MAT-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-003",
+      "name": "轴对称",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MAT-002"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-010",
+      "name": "整式的乘法与因式分解",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MAT-013"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-011",
+      "name": "分式",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MAT-010"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-012",
+      "name": "分式方程",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K8-MAT-011",
+        "K7-MAT-024"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-020",
+      "name": "勾股定理",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MAT-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-030",
+      "name": "平行四边形",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MAT-002"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-031",
+      "name": "矩形菱形正方形",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MAT-030"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-040",
+      "name": "一次函数",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MAT-060",
+        "K7-MAT-024"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MAT-050",
+      "name": "数据的分析",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-090"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-MAT-001",
+      "name": "一元二次方程",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MAT-012",
+        "K7-MAT-024"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-MAT-010",
+      "name": "二次函数",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K8-MAT-040",
+        "K9-MAT-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-MAT-020",
+      "name": "旋转",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MAT-003"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-MAT-030",
+      "name": "圆",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MAT-053",
+        "K8-MAT-002"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-MAT-040",
+      "name": "相似",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K8-MAT-002",
+        "KP-MAT-052"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-MAT-050",
+      "name": "锐角三角函数",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-MAT-040",
+        "K8-MAT-020"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-MAT-060",
+      "name": "概率初步",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K8-MAT-050"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-MAT-001",
+      "name": "集合与常用逻辑用语",
+      "difficulty": "L2",
+      "prerequisites": [],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-002",
+      "name": "一元二次函数方程和不等式",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-MAT-001",
+        "K9-MAT-010"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-010",
+      "name": "函数的概念与性质",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MAT-040"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-011",
+      "name": "指数函数与对数函数",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-MAT-010"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-020",
+      "name": "三角函数",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-MAT-050"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-030",
+      "name": "平面向量及其应用",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MAT-020"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-040",
+      "name": "复数",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-MAT-050"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-050",
+      "name": "立体几何初步",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KP-MAT-046"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-060",
+      "name": "统计",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K8-MAT-050"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-070",
+      "name": "概率",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-MAT-060"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-080",
+      "name": "数列",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KH-MAT-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-090",
+      "name": "导数及其应用",
+      "difficulty": "L5",
+      "prerequisites": [
+        "KH-MAT-010",
+        "KH-MAT-011"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-100",
+      "name": "空间向量与立体几何",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-MAT-050",
+        "KH-MAT-030"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-110",
+      "name": "直线和圆的方程",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-MAT-030",
+        "KH-MAT-030"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-120",
+      "name": "圆锥曲线的方程",
+      "difficulty": "L5",
+      "prerequisites": [
+        "KH-MAT-110"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-130",
+      "name": "计数原理",
+      "difficulty": "L3",
+      "prerequisites": [],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MAT-140",
+      "name": "随机变量及其分布",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-MAT-070",
+        "KH-MAT-130"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KP-CHI-001",
+      "name": "汉语拼音",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-002",
+      "name": "汉字基本笔画",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-003",
+      "name": "常用汉字识记(300字)",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-CHI-002"
+      ],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-010",
+      "name": "看图写话",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-CHI-003"
+      ],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-011",
+      "name": "标点符号（，。？！）",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-020",
+      "name": "段落阅读与理解",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-CHI-010"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-021",
+      "name": "日记与简单记叙文",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-CHI-010",
+        "KP-CHI-011"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-030",
+      "name": "古诗文背诵",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-CHI-020"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-031",
+      "name": "说明文阅读",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-CHI-020"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-040",
+      "name": "记叙文写作",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-CHI-021"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-041",
+      "name": "修辞手法（比喻拟人排比）",
+      "difficulty": "L2",
+      "prerequisites": [],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-050",
+      "name": "议论文初步",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-CHI-040"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-CHI-051",
+      "name": "名著阅读与鉴赏",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-CHI-030"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "K7-CHI-001",
+      "name": "现代文阅读（记叙文）",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-CHI-040"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-CHI-002",
+      "name": "文言文入门",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-CHI-030"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-CHI-003",
+      "name": "说明文阅读与写作",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-CHI-031"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-CHI-010",
+      "name": "古诗词鉴赏",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-CHI-002"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-CHI-011",
+      "name": "议论文阅读与写作",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KP-CHI-050"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-CHI-020",
+      "name": "小说阅读",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-CHI-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-CHI-021",
+      "name": "综合性学习",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-CHI-011"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-CHI-001",
+      "name": "论述类文本阅读",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-CHI-011"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHI-002",
+      "name": "文学类文本阅读",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-CHI-020"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHI-003",
+      "name": "文言文深度阅读",
+      "difficulty": "L5",
+      "prerequisites": [
+        "K7-CHI-002"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHI-010",
+      "name": "古代诗歌鉴赏",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-CHI-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHI-011",
+      "name": "议论文写作进阶",
+      "difficulty": "L5",
+      "prerequisites": [
+        "K7-CHI-011"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHI-020",
+      "name": "高考总复习",
+      "difficulty": "L5",
+      "prerequisites": [],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KP-ENG-001",
+      "name": "字母与发音",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ENG-002",
+      "name": "基本词汇(200词)",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-ENG-001"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ENG-003",
+      "name": "简单问候与自我介绍",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-ENG-002"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ENG-010",
+      "name": "日常对话与基本句型",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-ENG-003"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ENG-011",
+      "name": "现在进行时",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-ENG-010"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ENG-020",
+      "name": "一般现在时",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-ENG-010"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ENG-021",
+      "name": "一般过去时",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-ENG-020"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ENG-022",
+      "name": "简单阅读(100词)",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-ENG-020"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ENG-030",
+      "name": "一般将来时",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-ENG-021"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ENG-031",
+      "name": "比较级与最高级",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-ENG-020"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ENG-032",
+      "name": "简单写作(50词)",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-ENG-022"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "K7-ENG-001",
+      "name": "现在完成时",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-ENG-030"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-ENG-002",
+      "name": "宾语从句",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-ENG-010"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-ENG-003",
+      "name": "状语从句",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-ENG-002"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-ENG-010",
+      "name": "被动语态",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-ENG-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-ENG-011",
+      "name": "定语从句",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-ENG-002"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-ENG-020",
+      "name": "虚拟语气",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-ENG-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-ENG-021",
+      "name": "完形填空策略",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-ENG-011"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-ENG-001",
+      "name": "非谓语动词",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-ENG-010"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-ENG-002",
+      "name": "名词性从句",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-ENG-002"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-ENG-003",
+      "name": "阅读理解进阶",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-ENG-021"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-ENG-010",
+      "name": "书面表达(应用文)",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KP-ENG-032"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-ENG-011",
+      "name": "长难句分析",
+      "difficulty": "L5",
+      "prerequisites": [
+        "KH-ENG-002"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-ENG-020",
+      "name": "高考综合复习",
+      "difficulty": "L5",
+      "prerequisites": [],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "K8-PHY-001",
+      "name": "机械运动",
+      "difficulty": "L2",
+      "prerequisites": [],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-PHY-002",
+      "name": "声现象",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-PHY-003",
+      "name": "光现象",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K8-PHY-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-PHY-010",
+      "name": "热现象",
+      "difficulty": "L2",
+      "prerequisites": [],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-PHY-020",
+      "name": "力学基础",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-PHY-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-PHY-030",
+      "name": "电学初步",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-PHY-020"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-PHY-001",
+      "name": "内能",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-PHY-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-PHY-010",
+      "name": "欧姆定律",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-PHY-030"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-PHY-020",
+      "name": "电功率",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-PHY-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-PHY-030",
+      "name": "电磁现象",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-PHY-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-PHY-001",
+      "name": "运动的描述",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K8-PHY-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PHY-002",
+      "name": "匀变速直线运动",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KH-PHY-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PHY-010",
+      "name": "相互作用与牛顿定律",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-PHY-002"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PHY-020",
+      "name": "曲线运动与万有引力",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-PHY-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PHY-030",
+      "name": "功和能",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-PHY-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PHY-040",
+      "name": "电场与电势",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-PHY-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PHY-050",
+      "name": "恒定电流",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-PHY-020"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PHY-060",
+      "name": "磁场",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-PHY-040",
+        "KH-PHY-050"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PHY-070",
+      "name": "电磁感应",
+      "difficulty": "L5",
+      "prerequisites": [
+        "KH-PHY-060"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PHY-080",
+      "name": "原子物理",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-PHY-010"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "K9-CHEM-001",
+      "name": "物质构成的奥秘",
+      "difficulty": "L2",
+      "prerequisites": [],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-CHEM-002",
+      "name": "元素与元素周期表",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K9-CHEM-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-CHEM-010",
+      "name": "化学方程式",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-CHEM-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-CHEM-020",
+      "name": "常见的酸和碱",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-CHEM-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-CHEM-030",
+      "name": "盐和化肥",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-CHEM-020"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-CHEM-040",
+      "name": "金属和金属材料",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-CHEM-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-CHEM-001",
+      "name": "化学反应的热效应",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-CHEM-010"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHEM-002",
+      "name": "化学反应速率与平衡",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-CHEM-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHEM-010",
+      "name": "电解质溶液",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-CHEM-020"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHEM-020",
+      "name": "物质结构与元素周期律",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-CHEM-002"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHEM-030",
+      "name": "有机化学基础",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-CHEM-001"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHEM-040",
+      "name": "化学实验",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-CHEM-010",
+        "KH-CHEM-020"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-CHEM-050",
+      "name": "化学与生活",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KH-CHEM-001"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "K7-BIO-001",
+      "name": "生物和生物圈",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-BIO-010",
+      "name": "细胞是生命活动的基本单位",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-BIO-001"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-BIO-020",
+      "name": "细胞怎样构成生物体",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-BIO-010"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-BIO-030",
+      "name": "生物圈中的绿色植物",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-BIO-020"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-BIO-001",
+      "name": "动物的主要类群",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-BIO-020"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-BIO-010",
+      "name": "动物的运动和行为",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K8-BIO-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-BIO-020",
+      "name": "生物的多样性及其保护",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K8-BIO-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-BIO-001",
+      "name": "生物体的结构",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-BIO-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-BIO-010",
+      "name": "人体的营养与健康",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-BIO-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-BIO-020",
+      "name": "人体的呼吸与循环",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-BIO-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-BIO-030",
+      "name": "生物的遗传和变异",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-BIO-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-BIO-001",
+      "name": "细胞的结构与功能",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-BIO-010"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-BIO-010",
+      "name": "遗传的基本规律",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-BIO-030",
+        "KH-BIO-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-BIO-020",
+      "name": "生物的进化",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KH-BIO-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-BIO-030",
+      "name": "植物生命活动的调节",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KH-BIO-001"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-BIO-040",
+      "name": "生态系统与环境保护",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KH-BIO-020"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-BIO-050",
+      "name": "生物技术与工程",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-BIO-010"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "K7-POL-001",
+      "name": "成长的节拍",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-POL-010",
+      "name": "友谊的天空",
+      "difficulty": "L1",
+      "prerequisites": [
+        "K7-POL-001"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-POL-020",
+      "name": "师长情谊",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-POL-001",
+      "name": "遵守社会规则",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-POL-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-POL-010",
+      "name": "勇担社会责任",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K8-POL-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-POL-020",
+      "name": "国家利益至上",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K8-POL-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-POL-001",
+      "name": "富强与创新",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K8-POL-020"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-POL-010",
+      "name": "民主与法治",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-POL-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-POL-020",
+      "name": "文明与家园",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K9-POL-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-POL-001",
+      "name": "中国特色社会主义",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-POL-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-POL-010",
+      "name": "经济与社会",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KH-POL-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-POL-020",
+      "name": "政治与法治",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-POL-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-POL-030",
+      "name": "哲学与文化",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-POL-001"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "K7-HIST-001",
+      "name": "中国古代史·先秦",
+      "difficulty": "L2",
+      "prerequisites": [],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-HIST-010",
+      "name": "中国古代史·秦汉",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-HIST-001"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-HIST-020",
+      "name": "中国古代史·三国两晋",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-HIST-010"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-HIST-001",
+      "name": "中国古代史·隋唐",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-HIST-020"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-HIST-010",
+      "name": "中国古代史·宋元明清",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-HIST-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-HIST-020",
+      "name": "中国近代史·列强侵略",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-HIST-010"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-HIST-001",
+      "name": "中国近代史·新民主主义革命",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-HIST-020"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-HIST-010",
+      "name": "中国现代史·社会主义建设",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-HIST-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-HIST-020",
+      "name": "世界历史",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-HIST-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-HIST-001",
+      "name": "中国古代史通论",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-HIST-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-HIST-010",
+      "name": "中国近代史通论",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-HIST-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-HIST-020",
+      "name": "世界古代近代史",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-HIST-020"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-HIST-030",
+      "name": "世界现代史",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-HIST-020"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "K7-GEO-001",
+      "name": "地球和地图",
+      "difficulty": "L2",
+      "prerequisites": [],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-GEO-010",
+      "name": "海洋与陆地",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-GEO-001"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-GEO-020",
+      "name": "天气与气候",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-GEO-001"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-GEO-030",
+      "name": "居民与聚落",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-GEO-020"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-GEO-001",
+      "name": "发展与合作",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K7-GEO-030"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-GEO-010",
+      "name": "中国的自然环境",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-GEO-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-GEO-020",
+      "name": "中国的自然资源",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-GEO-010"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-GEO-030",
+      "name": "中国的经济发展",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-GEO-020"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-GEO-001",
+      "name": "中国的地理差异",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-GEO-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-GEO-010",
+      "name": "北方地区",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-GEO-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-GEO-020",
+      "name": "南方地区与青藏地区",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-GEO-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-GEO-001",
+      "name": "地球运动与时间计算",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-GEO-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-GEO-010",
+      "name": "大气运动与天气系统",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-GEO-020",
+        "KH-GEO-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-GEO-020",
+      "name": "水循环与洋流",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KH-GEO-001"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-GEO-030",
+      "name": "自然地理环境的整体性",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-GEO-020"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-GEO-040",
+      "name": "人文地理与区域发展",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K8-GEO-030"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KP-SCI-001",
+      "name": "观察物体",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-SCI-010",
+      "name": "生命的世界",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-SCI-020",
+      "name": "水与天气",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-SCI-001"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-SCI-030",
+      "name": "简单电路",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-SCI-001"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-SCI-040",
+      "name": "地球与宇宙",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-SCI-020"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-SCI-050",
+      "name": "健康的身体",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-SCI-010"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-SCI-060",
+      "name": "微小世界",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-SCI-001"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-SCI-070",
+      "name": "物质的变化",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-SCI-001"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-IT-001",
+      "name": "认识电脑",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-IT-010",
+      "name": "键盘与鼠标操作",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-IT-001"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-IT-020",
+      "name": "画图与简单编程",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-IT-010"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-IT-030",
+      "name": "网络基础",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-IT-001"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-IT-040",
+      "name": "文字处理",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-IT-010"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "K7-IT-001",
+      "name": "程序设计基础",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-IT-020"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-IT-010",
+      "name": "数据处理",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-IT-040"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-IT-001",
+      "name": "算法与流程图",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-IT-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-IT-010",
+      "name": "多媒体制作",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-IT-040"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-IT-001",
+      "name": "Python编程",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K8-IT-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-IT-010",
+      "name": "数据库基础",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-IT-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-IT-001",
+      "name": "数据结构",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-IT-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-IT-010",
+      "name": "人工智能初步",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-IT-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-IT-020",
+      "name": "信息系统与社会",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-IT-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-IT-030",
+      "name": "算法与程序设计进阶",
+      "difficulty": "L5",
+      "prerequisites": [
+        "KH-IT-001"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KP-PE-001",
+      "name": "基本身体活动",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-PE-010",
+      "name": "体操与队列",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-PE-020",
+      "name": "跑跳基本动作",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-PE-030",
+      "name": "小球类基础",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-PE-020"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-PE-040",
+      "name": "健康知识",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-PE-050",
+      "name": "田径基本技能",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-PE-020"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-PE-060",
+      "name": "球类运动",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-PE-030"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "K7-PE-001",
+      "name": "体能与健康",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-PE-050"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-PE-010",
+      "name": "球类运动技能",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-PE-060"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-PE-001",
+      "name": "田径专项",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-PE-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-PE-010",
+      "name": "体操与武术",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-PE-010"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-PE-001",
+      "name": "中考体育项目",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-PE-001",
+        "K8-PE-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-PE-010",
+      "name": "健康教育专题",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-PE-040"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-PE-001",
+      "name": "体能训练",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-PE-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PE-010",
+      "name": "专项运动技能",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-PE-010"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PE-020",
+      "name": "健康与社会适应",
+      "difficulty": "L2",
+      "prerequisites": [
+        "K9-PE-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-PE-030",
+      "name": "体育与高考",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-PE-001"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KP-ART-001",
+      "name": "认识色彩",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ART-010",
+      "name": "简单绘画",
+      "difficulty": "L1",
+      "prerequisites": [
+        "KP-ART-001"
+      ],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ART-020",
+      "name": "手工制作",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ART-030",
+      "name": "图案设计",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-ART-010"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ART-040",
+      "name": "中国画初步",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-ART-001"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ART-050",
+      "name": "立体造型",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-ART-020"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-ART-060",
+      "name": "美术欣赏",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-ART-010"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "K7-ART-001",
+      "name": "造型·表现",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-ART-030"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-ART-010",
+      "name": "设计·应用",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-ART-050"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-ART-001",
+      "name": "欣赏·评述",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-ART-060"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-ART-010",
+      "name": "综合·探索",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-ART-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-ART-001",
+      "name": "美术与生活",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-ART-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-ART-010",
+      "name": "美术与文化",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-ART-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-ART-001",
+      "name": "美术鉴赏",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K8-ART-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-ART-010",
+      "name": "绘画·雕塑",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-ART-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-ART-020",
+      "name": "设计·工艺",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-ART-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-ART-030",
+      "name": "现代媒体艺术",
+      "difficulty": "L4",
+      "prerequisites": [
+        "KH-ART-001"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KP-MUS-001",
+      "name": "歌唱基础",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MUS-010",
+      "name": "节奏与节拍",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MUS-020",
+      "name": "音乐欣赏",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 2,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MUS-030",
+      "name": "简单乐器",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MUS-001"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MUS-040",
+      "name": "识谱与视唱",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MUS-010"
+      ],
+      "grade": 4,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MUS-050",
+      "name": "合唱",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-MUS-001"
+      ],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-MUS-060",
+      "name": "综合性表演",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MUS-050",
+        "KP-MUS-030"
+      ],
+      "grade": 6,
+      "stage": "小学"
+    },
+    {
+      "code": "K7-MUS-001",
+      "name": "歌唱与鉴赏",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MUS-050"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-MUS-010",
+      "name": "演奏与创作",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-MUS-030"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MUS-001",
+      "name": "音乐与生活",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MUS-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-MUS-010",
+      "name": "民族民间音乐",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-MUS-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-MUS-001",
+      "name": "音乐与时代",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MUS-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-MUS-010",
+      "name": "中外音乐比较",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K8-MUS-010"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-MUS-001",
+      "name": "音乐鉴赏",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K9-MUS-010"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MUS-010",
+      "name": "歌唱与演奏",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-MUS-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MUS-020",
+      "name": "创作基础",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-MUS-010"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-MUS-030",
+      "name": "音乐与社会",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KH-MUS-001"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    },
+    {
+      "code": "KP-COMP-001",
+      "name": "生活实践",
+      "difficulty": "L1",
+      "prerequisites": [],
+      "grade": 1,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-COMP-010",
+      "name": "探究活动",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-COMP-001"
+      ],
+      "grade": 3,
+      "stage": "小学"
+    },
+    {
+      "code": "KP-COMP-020",
+      "name": "职业体验",
+      "difficulty": "L2",
+      "prerequisites": [],
+      "grade": 5,
+      "stage": "小学"
+    },
+    {
+      "code": "K7-COMP-001",
+      "name": "研究性学习",
+      "difficulty": "L3",
+      "prerequisites": [
+        "KP-COMP-010"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K7-COMP-010",
+      "name": "社区服务",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-COMP-001"
+      ],
+      "grade": 7,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-COMP-001",
+      "name": "设计与制作",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-COMP-001"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K8-COMP-010",
+      "name": "职业体验日",
+      "difficulty": "L2",
+      "prerequisites": [
+        "KP-COMP-020"
+      ],
+      "grade": 8,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-COMP-001",
+      "name": "生涯规划",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-COMP-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "K9-COMP-010",
+      "name": "创新实验",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K8-COMP-001"
+      ],
+      "grade": 9,
+      "stage": "初中"
+    },
+    {
+      "code": "KH-COMP-001",
+      "name": "研究性学习进阶",
+      "difficulty": "L4",
+      "prerequisites": [
+        "K7-COMP-001"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-COMP-010",
+      "name": "社会实践",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K7-COMP-010"
+      ],
+      "grade": 10,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-COMP-020",
+      "name": "职业规划与升学指导",
+      "difficulty": "L3",
+      "prerequisites": [
+        "K9-COMP-001"
+      ],
+      "grade": 11,
+      "stage": "高中"
+    },
+    {
+      "code": "KH-COMP-030",
+      "name": "创新创业实践",
+      "difficulty": "L5",
+      "prerequisites": [
+        "KH-COMP-001"
+      ],
+      "grade": 12,
+      "stage": "高中"
+    }
+  ],
+  "metadata": {
+    "total_knowledge_points": 330,
+    "stages": [
+      "小学",
+      "初中",
+      "高中"
+    ],
+    "subjects": [
+      "数学",
+      "语文",
+      "英语",
+      "物理",
+      "化学",
+      "生物",
+      "道德与法治",
+      "历史",
+      "地理",
+      "科学",
+      "信息技术",
+      "体育与健康",
+      "美术",
+      "音乐",
+      "综合实践"
+    ],
+    "grade_range": "1-12",
+    "coding_convention": "KP=小学, K7/K8/K9=初中七八九年级, KH=高中",
+    "generated": "2026-06-25"
+  }
+}
