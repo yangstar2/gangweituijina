@@ -1,0 +1,18 @@
+# Local / CVM compose — SQLite volume mounted
+services:
+  api:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_PATH: /data/qisi.db
+      MOCK_MODE: "true"
+    volumes:
+      - qisi_sqlite:/data
+    restart: unless-stopped
+
+volumes:
+  qisi_sqlite:
