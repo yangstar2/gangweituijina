@@ -42,13 +42,13 @@ def _steps_from_thinking(thinking: str) -> list[dict[str, str]]:
     text = (thinking or "").strip()
     if not text:
         return [
-            {"title": "理解需求", "detail": "梳理主题、受众与课时"},
-            {"title": "拆分结构", "detail": "归纳要点与章节"},
-            {"title": "整理大纲", "detail": "输出可生成的课件结构"},
+            {"title": "锚定学情", "detail": "年级、班级水平与先修薄弱点"},
+            {"title": "设定目标", "detail": "写出可检测的课堂学习目标"},
+            {"title": "编排节段", "detail": "导入→概念→例题→练习→小结"},
         ]
     chunks = re.split(r"\n{2,}|(?<=[。！？\n])\s*(?=\d+[\.、．]|\*|•|- )", text)
     chunks = [c.strip() for c in chunks if c and c.strip()]
-    labels = ["理解需求", "分析受众", "拆分结构", "提炼要点", "整理大纲", "校准注意事项"]
+    labels = ["锚定学情", "设定目标", "设计钩子", "编排节段", "课标校准", "整理大纲"]
     steps: list[dict[str, str]] = []
     for i, chunk in enumerate(chunks[:6]):
         title = labels[i] if i < len(labels) else f"思考 {i + 1}"
@@ -57,7 +57,7 @@ def _steps_from_thinking(thinking: str) -> list[dict[str, str]]:
             detail = detail[:157] + "…"
         steps.append({"title": title, "detail": detail})
     if not steps:
-        steps.append({"title": "深度推理", "detail": text[:160]})
+        steps.append({"title": "教学推理", "detail": text[:160]})
     return steps
 
 
@@ -101,19 +101,23 @@ def _normalize_outline(raw: dict[str, Any] | None, fallback: dict[str, Any]) -> 
         if isinstance(items, str):
             items = [items]
         items = [str(x).strip() for x in items if str(x).strip()]
+        phase = sec.get("phase")
         if section:
-            norm_sections.append({"section": section, "items": items or ["要点"]})
+            entry: dict[str, Any] = {"section": section, "items": items or ["要点"]}
+            if phase:
+                entry["phase"] = str(phase).strip()
+            norm_sections.append(entry)
 
     return {
         "key_points": [str(x).strip() for x in key_points if str(x).strip()][:8]
         or fallback.get("key_points")
-        or ["明确学习目标"],
+        or ["明确可检测的学习目标"],
         "outline": norm_sections
         or fallback.get("outline")
-        or [{"section": "导入", "items": ["目标说明"]}],
+        or [{"section": "导入与目标", "items": ["情境钩子", "目标说明"], "phase": "导入"}],
         "notes": [str(x).strip() for x in notes if str(x).strip()][:8]
         or fallback.get("notes")
-        or ["控制单页信息密度"],
+        or ["控制单页信息密度", "紧扣课标不超纲"],
         "raw_summary": (str(raw_summary).strip() if raw_summary else None)
         or fallback.get("raw_summary"),
     }
@@ -183,16 +187,21 @@ def _mock_think(
             f"知识点 {len(skill_ctx.get('knowledge_points') or [])} 个\n"
         )
     thinking = (
-        "（Mock 推理，未调用 DeepSeek；大纲由 teacher-prep-skill 结构驱动）\n"
+        "（Mock 教学推理，未调用 DeepSeek；大纲由 teacher-prep-skill 驱动）\n"
         if teacher_prep.is_available()
-        else "（Mock 推理，未调用 DeepSeek）\n"
+        else "（Mock 教学推理，未调用 DeepSeek）\n"
     )
+    kps = skill_ctx.get("knowledge_points") or []
     thinking += (
         f"{skill_line}"
-        f"1. 识别主题与受众：{bits or '通用培训场景'}\n"
-        "2. 拆分导入 → 核心知识 → 例题巩固 → 小结作业\n"
-        "3. 控制信息密度，标注注意事项与难度边界\n"
-        "4. 产出可直接生成 PPT 的结构化大纲"
+        f"1. 锚定学情：对话线索「{bits or '通用课堂'}」；"
+        f"班级约 {skill_ctx.get('hints', {}).get('student_count') or 40} 人，"
+        f"风格 {skill_ctx.get('hints', {}).get('teaching_style') or '讲练结合'}。\n"
+        f"2. 设定目标：落实「{(kps[0] if kps else '本节核心概念')}」可检测掌握。\n"
+        f"3. 设计钩子：用生活情境唤醒先修「{('、'.join(kps[:2]) if kps else '旧知')}」。\n"
+        "4. 编排节段：导入(5′)→概念建构(12′)→例题精讲(15′)→变式练习(10′)→小结(3′)。\n"
+        f"5. 课标校准：严格限定 {(('、'.join(kps[:4])) if kps else '本节知识点')}，不超纲。\n"
+        "6. 整理大纲：产出可直接生成课堂 PPT 的结构化章节。"
     )
     return ThinkResult(
         provider="mock",
@@ -289,8 +298,9 @@ def think_ppt_content(
                         "role": "user",
                         "content": (
                             msgs[1]["content"]
-                            + "\n\n请先在 <think>…</think> 中写出逐步推理，"
-                            "然后再输出最终 JSON。"
+                            + "\n\n请先在 <think>…</think> 中按"
+                            "「学情→目标→钩子→节段→课标」写出教学推理，"
+                            "禁止空泛套话，然后再输出最终 JSON。"
                         ),
                     },
                 ]

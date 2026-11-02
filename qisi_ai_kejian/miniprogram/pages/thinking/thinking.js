@@ -1,10 +1,10 @@
 const { api } = require('../../utils/api')
 
 const BASE_STEPS = [
-  { id: 'need', title: '理解需求', detail: '对齐主题、对象与课时' },
-  { id: 'reason', title: '深度推理', detail: '模型展开思考链' },
-  { id: 'outline', title: '结构化大纲', detail: '要点 / 章节 / 注意事项' },
-  { id: 'generate', title: '生成 PPT', detail: '调用课件生成工具' },
+  { id: 'need', title: '锚定学情', detail: '年级、班级水平与先修薄弱点' },
+  { id: 'reason', title: '教学推理', detail: '目标 · 钩子 · 节段 · 课标' },
+  { id: 'outline', title: '结构化大纲', detail: '导入→概念→例题→练习→小结' },
+  { id: 'generate', title: '生成 PPT', detail: '主题视觉 + 可下载 PPTX' },
 ]
 
 function pagesFromOutline(outline, styleId, modelId) {
@@ -15,53 +15,87 @@ function pagesFromOutline(outline, styleId, modelId) {
   const pages = [
     {
       page_no: 1,
-      title: '封面 · 课件预览',
-      bullets: [
-        `风格：${styleId || 'clean_academic'}`,
-        `模型：${modelId || 'mock-qisi-lite'}`,
-        '生成中将据此写出完整 PPTX',
-      ],
-      speaker_note: '开场',
+      layout: 'cover',
+      phase: '导入',
+      title: '封面 · 备课课件',
+      subtitle: `${styleId || 'clean_academic'} · ${modelId || 'mock-qisi-lite'}`,
+      bullets: ['teacher-prep 结构驱动', '课堂视觉主题已就绪'],
+      speaker_note: '开场问候',
     },
     {
       page_no: 2,
-      title: '内容要点',
-      bullets: keyPoints.length ? keyPoints.slice(0, 6) : ['（待补充要点）'],
+      layout: 'agenda',
+      phase: '导入',
+      title: '可检测学习目标',
+      subtitle: '本节下课怎么知道学会了',
+      bullets: keyPoints.length ? keyPoints.slice(0, 5) : ['（待补充目标）'],
       speaker_note: null,
     },
   ]
-  sections.slice(0, 3).forEach((sec, i) => {
+  sections.slice(0, 2).forEach((sec, i) => {
     pages.push({
       page_no: 3 + i,
+      layout: i === 0 ? 'section' : 'example',
+      phase: (sec && sec.phase) || (i === 0 ? '概念建构' : '例题精讲'),
       title: (sec && sec.section) || `章节 ${i + 1}`,
+      subtitle: (sec && sec.phase) || null,
       bullets: (sec && sec.items) || ['要点'],
       speaker_note: null,
     })
   })
-  while (pages.length < 5) {
-    pages.push({
-      page_no: pages.length + 1,
-      title: `扩展页 ${pages.length + 1}`,
-      bullets: ['根据大纲自动补齐'],
-      speaker_note: null,
-    })
-  }
+  pages.push({
+    page_no: pages.length + 1,
+    layout: 'practice',
+    phase: '变式练习',
+    title: '当堂练习',
+    subtitle: '独立完成 → 同桌互查',
+    bullets: ['基础模仿', '限时巩固', '变式迁移'],
+    speaker_note: null,
+  })
   pages.push({
     page_no: 6,
-    title: '注意事项与收尾',
-    bullets: notes.slice(0, 4).length ? notes.slice(0, 4) : ['检查符号与难度', '留足互动时间'],
+    layout: 'summary',
+    phase: '小结',
+    title: '小结与分层作业',
+    subtitle: '回扣目标',
+    bullets: notes.slice(0, 4).length
+      ? notes.slice(0, 4)
+      : ['回顾结构图', '重申易错点', '分层作业'],
     speaker_note: null,
   })
   return pages.slice(0, 6).map((p, i) => ({ ...p, page_no: i + 1 }))
 }
 
 function pagesFromSlides(slides) {
-  return (slides || []).slice(0, 6).map((s, i) => ({
+  const list = slides || []
+  const preferred = ['cover', 'agenda', 'section', 'example', 'practice', 'summary']
+  const picked = []
+  const used = {}
+  preferred.forEach((layout) => {
+    for (let i = 0; i < list.length; i += 1) {
+      if (used[i]) continue
+      if ((list[i].layout || '') === layout) {
+        picked.push(list[i])
+        used[i] = true
+        break
+      }
+    }
+  })
+  list.forEach((s, i) => {
+    if (picked.length >= 6) return
+    if (!used[i]) {
+      picked.push(s)
+      used[i] = true
+    }
+  })
+  return picked.slice(0, 6).map((s, i) => ({
     page_no: i + 1,
     title: s.title || `第 ${i + 1} 页`,
     bullets: s.bullets || [],
     speaker_note: s.speaker_note || null,
     subtitle: s.subtitle || null,
+    layout: s.layout || 'content',
+    phase: s.phase || null,
   }))
 }
 

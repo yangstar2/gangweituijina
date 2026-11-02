@@ -21,7 +21,7 @@
 
   <view class="think-panel">
     <view class="panel-head">
-      <view class="panel-title">思考过程</view>
+      <view class="panel-title">教学思考过程</view>
       <view class="panel-badge {{thinkingOpen ? 'open' : ''}}" bindtap="toggleThinking">
         {{thinkingOpen ? '收起' : '展开'}}
       </view>
@@ -39,13 +39,16 @@
 
   <view class="outline-card" wx:if="{{outlineReady}}">
     <view class="section-title">结构化大纲</view>
-    <view class="muted">要点</view>
+    <view class="muted">可检测目标</view>
     <view class="olist">
       <view class="oitem" wx:for="{{outline.key_points}}" wx:key="*this">· {{item}}</view>
     </view>
-    <view class="muted" style="margin-top: 16rpx;">章节</view>
+    <view class="muted" style="margin-top: 16rpx;">节段</view>
     <block wx:for="{{outline.outline}}" wx:key="section">
-      <view class="osec">{{item.section}}</view>
+      <view class="osec">
+        <text class="ophase" wx:if="{{item.phase}}">{{item.phase}}</text>
+        {{item.section}}
+      </view>
     </block>
   </view>
 
@@ -64,14 +67,22 @@
       bindchange="onPreviewChange"
       indicator-dots
       circular
+      autoplay="{{phase === 'generating'}}"
+      interval="2800"
     >
       <block wx:for="{{previewPages}}" wx:key="page_no">
         <swiper-item>
-          <view class="preview-slide">
-            <view class="page-no">第 {{item.page_no}} / {{previewPages.length}} 页</view>
+          <view class="preview-slide layout-{{item.layout || 'content'}}">
+            <view class="slide-glow"></view>
+            <view class="page-meta">
+              <text class="page-no">第 {{item.page_no}} / {{previewPages.length}} 页</text>
+              <text class="phase-chip" wx:if="{{item.phase}}">{{item.phase}}</text>
+            </view>
             <view class="slide-title">{{item.title}}</view>
             <view class="sub" wx:if="{{item.subtitle}}">{{item.subtitle}}</view>
-            <view class="bullet" wx:for="{{item.bullets}}" wx:for-item="b" wx:key="*this">· {{b}}</view>
+            <view class="bullet" wx:for="{{item.bullets}}" wx:for-item="b" wx:key="*this">
+              <text class="bmark">▸</text> {{b}}
+            </view>
             <view class="note" wx:if="{{item.speaker_note}}">讲者：{{item.speaker_note}}</view>
           </view>
         </swiper-item>
