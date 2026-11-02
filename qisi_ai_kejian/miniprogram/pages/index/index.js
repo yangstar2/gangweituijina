@@ -1,18 +1,15 @@
 const { api } = require('../../utils/api')
 
 Page({
+  /** AI生成PPT → existing ask-teacher / courseware flow */
   startCourseware() {
     this._start('courseware')
   },
 
+  /** AI生成试卷 → existing exam flow */
   startExam() {
     this._start('exam')
   },
-
-  goMembership() {
-    wx.navigateTo({ url: '/pages/membership/membership' })
-  },
-
 
   _start(contentType) {
     wx.showLoading({ title: '创建会话…' })
