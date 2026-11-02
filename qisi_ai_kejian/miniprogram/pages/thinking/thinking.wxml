@@ -1,0 +1,64 @@
+<view class="think-page">
+  <view class="hero">
+    <view class="hero-kicker">{{providerLabel}}</view>
+    <view class="hero-title">{{phaseTitle}}</view>
+    <view class="hero-sub">{{phaseSub}}</view>
+  </view>
+
+  <view class="step-rail">
+    <block wx:for="{{uiSteps}}" wx:key="id">
+      <view class="step-item {{item.status}}">
+        <view class="step-dot">
+          <view class="step-pulse" wx:if="{{item.status === 'active'}}"></view>
+        </view>
+        <view class="step-body">
+          <view class="step-name">{{item.title}}</view>
+          <view class="step-detail" wx:if="{{item.detail}}">{{item.detail}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="think-panel">
+    <view class="panel-head">
+      <view class="panel-title">思考过程</view>
+      <view class="panel-badge {{thinkingOpen ? 'open' : ''}}" bindtap="toggleThinking">
+        {{thinkingOpen ? '收起' : '展开'}}
+      </view>
+    </view>
+    <view class="panel-body" wx:if="{{thinkingOpen}}">
+      <scroll-view scroll-y class="think-scroll" scroll-into-view="{{scrollAnchor}}">
+        <text class="think-text">{{displayedThinking}}</text>
+        <view id="think-end" class="caret {{phase === 'thinking' || phase === 'typing' ? 'blink' : ''}}"></view>
+      </scroll-view>
+    </view>
+    <view class="panel-preview" wx:else>
+      <text class="think-preview">{{thinkingPreview}}</text>
+    </view>
+  </view>
+
+  <view class="outline-card" wx:if="{{outlineReady}}">
+    <view class="section-title">结构化大纲</view>
+    <view class="muted">要点</view>
+    <view class="olist">
+      <view class="oitem" wx:for="{{outline.key_points}}" wx:key="*this">· {{item}}</view>
+    </view>
+    <view class="muted" style="margin-top: 16rpx;">章节</view>
+    <block wx:for="{{outline.outline}}" wx:key="section">
+      <view class="osec">{{item.section}}</view>
+    </block>
+  </view>
+
+  <view class="err" wx:if="{{errorMsg}}">{{errorMsg}}</view>
+
+  <view class="actions" wx:if="{{phase === 'ready' || phase === 'done'}}">
+    <view class="btn-primary ghost" bindtap="goOutline">查看大纲</view>
+    <view class="btn-accent" wx:if="{{phase === 'ready'}}" bindtap="onGenerate">生成 PPT</view>
+    <view class="btn-accent" wx:if="{{phase === 'done'}}" bindtap="goResult">查看结果</view>
+  </view>
+
+  <view class="actions" wx:if="{{phase === 'error'}}">
+    <view class="btn-primary" bindtap="retry">重试思考</view>
+    <view class="btn-primary ghost" bindtap="goOutline">跳过，看大纲</view>
+  </view>
+</view>

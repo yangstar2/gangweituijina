@@ -293,8 +293,9 @@ Page({
       wx.showToast({ title: '会话无效', icon: 'none' })
       return
     }
+    // DeepSeek thinking panel → then PPT generate tool
     wx.navigateTo({
-      url: `/pages/outline/outline?sessionId=${sessionId}`,
+      url: `/pages/thinking/thinking?sessionId=${sessionId}`,
     })
   },
 })

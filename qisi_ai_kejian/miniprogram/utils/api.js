@@ -56,6 +56,15 @@ const api = {
     const q = `style_id=${encodeURIComponent(styleId)}&model_id=${encodeURIComponent(modelId)}`
     return request(`/api/sessions/${sessionId}/preview?${q}`, 'POST')
   },
+  pptThink(sessionId, opts) {
+    const body = opts || {}
+    return request(`/api/sessions/${sessionId}/ppt-think`, 'POST', {
+      style_id: body.style_id || 'clean_academic',
+      model_id: body.model_id || 'mock-qisi-lite',
+      title: body.title || null,
+      auto_generate: !!body.auto_generate,
+    })
+  },
   generate(sessionId, styleId, modelId, title) {
     return request(`/api/sessions/${sessionId}/generate`, 'POST', {
       style_id: styleId,

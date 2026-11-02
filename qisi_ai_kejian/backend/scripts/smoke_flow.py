@@ -11,6 +11,9 @@ from pathlib import Path
 _os_db = tempfile.NamedTemporaryFile(prefix="qisi-smoke-", suffix=".db", delete=False)
 os.environ["DATABASE_PATH"] = _os_db.name
 _os_db.close()
+# Force mock DeepSeek in CI unless explicitly enabled (never requires real key)
+if os.environ.get("DEEPSEEK_SMOKE") != "1":
+    os.environ["DEEPSEEK_API_KEY"] = ""
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -57,6 +60,32 @@ def main() -> None:
     assert preview.status_code == 200, preview.text
     pages = preview.json()["pages"]
     assert len(pages) == 6, pages
+
+    # DeepSeek ppt-think (mock fallback when key cleared above)
+    think = client.post(
+        f"/api/sessions/{sid}/ppt-think",
+        json={"style_id": styles[0]["id"], "model_id": models[0]["id"], "auto_generate": False},
+    )
+    assert think.status_code == 200, think.text
+    think_body = think.json()
+    assert think_body["thinking"]
+    assert think_body["thinking_steps"]
+    assert think_body["outline"]["key_points"]
+    assert think_body["provider"] in ("mock", "deepseek")
+    assert think_body["deepseek_configured"] is False or think_body["provider"] == "deepseek"
+
+    health = client.get("/api/health").json()
+    assert "deepseek_configured" in health
+
+    # exam sessions must not use ppt-think
+    sess_exam_gate = client.post(
+        "/api/sessions", json={"content_type": "exam", "title": "smoke-exam-gate"}
+    )
+    bad_think = client.post(
+        f"/api/sessions/{sess_exam_gate.json()['id']}/ppt-think",
+        json={},
+    )
+    assert bad_think.status_code == 400, bad_think.text
 
     gen = client.post(
         f"/api/sessions/{sid}/generate",

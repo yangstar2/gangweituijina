@@ -65,6 +65,15 @@ Page({
   },
 
   goOutline() {
+    const draft = getApp().globalData.draft || {}
+    // Courseware: show DeepSeek thinking before outline / generate.
+    // Exam flow stays on outline path (no ppt-think).
+    if (draft.contentType === 'courseware' || draft.contentType === undefined) {
+      wx.navigateTo({
+        url: `/pages/thinking/thinking?sessionId=${this.data.sessionId}&autoGenerate=0`,
+      })
+      return
+    }
     wx.navigateTo({
       url: `/pages/outline/outline?sessionId=${this.data.sessionId}`,
     })
