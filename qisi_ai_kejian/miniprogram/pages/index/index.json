@@ -1,4 +1,7 @@
 {
-  "navigationBarTitleText": "奇思 AI 课件",
+  "navigationBarTitleText": "AI课件库",
+  "navigationBarBackgroundColor": "#F3F0F8",
+  "navigationBarTextStyle": "black",
+  "backgroundColor": "#F3F0F8",
   "usingComponents": {}
 }

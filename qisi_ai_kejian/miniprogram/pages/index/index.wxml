@@ -1,10 +1,59 @@
-<view class="hero">
-  <view class="brand">奇思 AI 课件</view>
-  <view class="tagline">生成前先问清楚 —— 追问老师帮你对齐大纲与注意事项</view>
-  <view class="cta-row">
-    <view class="btn-primary" bindtap="startCourseware">做课件</view>
-    <view class="btn-primary ghost" bindtap="startExam">出试卷</view>
+<view class="home">
+  <view class="home-header">
+    <view class="brand-row">
+      <view class="brand-badge">
+        <view class="brand-badge-inner"></view>
+      </view>
+      <text class="brand-name">AI课件库</text>
+    </view>
   </view>
-  <view class="btn-accent member" bindtap="goMembership">会员中心</view>
-  <view class="hint muted">全部 mock：不调用真实模型 / 微信登录 / 支付</view>
+
+  <view class="feature-grid">
+    <view class="feature-tile tile-ppt" hover-class="tile-pressed" bindtap="startCourseware">
+      <view class="tile-top">
+        <view class="tile-icon-wrap">
+          <view class="icon-board">
+            <view class="icon-board-screen"></view>
+            <view class="icon-board-stand"></view>
+            <view class="icon-board-base"></view>
+          </view>
+        </view>
+        <view class="ai-chip">
+          <text class="ai-spark">✦</text>
+          <text class="ai-label">AI</text>
+          <text class="ai-chevron">›</text>
+        </view>
+      </view>
+      <view class="tile-body">
+        <view class="tile-title">AI生成PPT</view>
+        <view class="tile-sub">主题/文档·一键成稿</view>
+      </view>
+    </view>
+
+    <view class="feature-tile tile-exam" hover-class="tile-pressed" bindtap="startExam">
+      <view class="tile-top">
+        <view class="tile-icon-wrap">
+          <view class="icon-exam">
+            <view class="icon-exam-sheet">
+              <view class="icon-exam-line"></view>
+              <view class="icon-exam-line short"></view>
+              <view class="icon-exam-line"></view>
+            </view>
+            <view class="icon-exam-check"></view>
+          </view>
+        </view>
+        <view class="ai-chip">
+          <text class="ai-spark">✦</text>
+          <text class="ai-label">AI</text>
+          <text class="ai-chevron">›</text>
+        </view>
+      </view>
+      <view class="tile-body">
+        <view class="tile-title">AI生成试卷</view>
+        <view class="tile-sub">教材出题·解析全案</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="home-foot muted">全部 mock · 点选上方入口进入追问老师</view>
 </view>
