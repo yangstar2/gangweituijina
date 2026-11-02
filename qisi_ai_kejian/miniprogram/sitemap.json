@@ -1,0 +1,9 @@
+{
+  "desc": "qisi_ai_kejian sitemap",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "*"
+    }
+  ]
+}

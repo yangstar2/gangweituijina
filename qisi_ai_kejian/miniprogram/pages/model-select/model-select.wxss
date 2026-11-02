@@ -1,0 +1,47 @@
+.page {
+  padding: 40rpx 40rpx 120rpx;
+}
+
+.model-row {
+  margin-top: 24rpx;
+  padding: 28rpx 24rpx;
+  border: 2rpx solid var(--line);
+  border-radius: 16rpx;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.model-row.active {
+  border-color: var(--ink);
+  background: #fff;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 30rpx;
+  margin-bottom: 6rpx;
+}
+
+.badge {
+  margin-left: 12rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+  color: var(--ok);
+  background: rgba(47, 107, 79, 0.12);
+  padding: 4rpx 12rpx;
+  border-radius: 6rpx;
+}
+
+.provider {
+  font-size: 22rpx;
+  color: var(--ink-soft);
+  margin-bottom: 8rpx;
+}
+
+.desc {
+  font-size: 24rpx;
+  color: var(--ink-soft);
+}
+
+.next {
+  margin-top: 48rpx;
+}
