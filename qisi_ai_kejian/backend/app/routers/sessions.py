@@ -12,7 +12,7 @@ from ..schemas import (
     SessionOut,
     TeacherTurnOut,
 )
-from ..services import mock_ai
+from ..services import mock_ai, teacher_prep
 
 router = APIRouter(prefix="/api/sessions", tags=["sessions"])
 
@@ -227,16 +227,30 @@ def create_preview(
         if not ol:
             raise HTTPException(400, "outline required before preview")
 
-        pages = mock_ai.build_preview(
-            session["content_type"],
-            {
-                "key_points": ol.key_points,
-                "outline": ol.outline,
-                "notes": ol.notes,
-            },
-            style_id,
-            model_id,
-        )
+        outline_payload = {
+            "key_points": ol.key_points,
+            "outline": ol.outline,
+            "notes": ol.notes,
+            "raw_summary": ol.raw_summary,
+        }
+        if session["content_type"] == "courseware" and teacher_prep.is_available():
+            history_rows = conn.execute(
+                "SELECT role, content FROM messages WHERE session_id = ? ORDER BY id",
+                (session_id,),
+            ).fetchall()
+            history = [{"role": r["role"], "content": r["content"]} for r in history_rows]
+            ctx = teacher_prep.resolve_skill_context(history, session["title"])
+            deck = teacher_prep.local_skill_slides(
+                outline_payload, style_id, model_id, session["title"], ctx
+            )
+            pages = teacher_prep.slides_to_preview_pages(deck.get("slides") or [], limit=6)
+        else:
+            pages = mock_ai.build_preview(
+                session["content_type"],
+                outline_payload,
+                style_id,
+                model_id,
+            )
         conn.execute(
             """
             INSERT INTO previews (session_id, style_id, model_id, pages, created_at)

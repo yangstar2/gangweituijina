@@ -1,0 +1,4 @@
+# Teacher Personal Prep Skill — Python 依赖
+
+# 测试框架
+pytest>=8.0

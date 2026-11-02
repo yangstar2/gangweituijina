@@ -97,6 +97,12 @@ def main() -> None:
     assert art["content"]["slide_count"] >= 6
     assert art.get("download_url") or art["content"].get("download_url")
     assert art["content"].get("has_pptx_file") is True
+    assert art["content"].get("pptx_source") == "teacher-prep-skill" or art[
+        "content"
+    ].get("skill_slug")
+    assert art["content"].get("preview_pages")
+    assert len(art["content"]["preview_pages"]) == 6
+    assert art["content"].get("pptx_valid") is True
     from app.services.pptx_builder import PPTX_MIME, artifact_pptx_path
 
     pptx_path = artifact_pptx_path(art["id"])
@@ -139,6 +145,10 @@ def main() -> None:
     assert got.status_code == 200 and got.json()["id"] == art["id"]
     assert got.json().get("download_url")
     assert art["content"].get("ascii_file_name", "").endswith(".pptx")
+
+    assert health.get("teacher_prep_skill") is True
+    assert think_body.get("skill_slug")
+    assert think_body.get("skill_path")
 
     # exam path
     sess2 = client.post("/api/sessions", json={"content_type": "exam", "title": "smoke-exam"})
@@ -203,6 +213,8 @@ def main() -> None:
         pptx_path.stat().st_size,
         "pptx_builder",
         art["content"].get("pptx_builder"),
+        "skill",
+        art["content"].get("skill_slug"),
         "exam_q",
         len(exam.json()["content"]["questions"]),
         "membership",

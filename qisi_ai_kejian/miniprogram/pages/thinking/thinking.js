@@ -243,7 +243,7 @@ Page({
             phase: 'ready',
             phaseTitle: '大纲已就绪',
             phaseSub: this.data.autoGenerate
-              ? '预览页已展开，即将生成 PPTX'
+              ? 'teacher-prep 大纲就绪，预览后生成 PPTX'
               : '可先滑动预览，再生成 PPT',
           })
           this._setStepStatus('generate', ['need', 'reason', 'outline'])
@@ -297,7 +297,7 @@ Page({
     this.setData({
       phase: 'generating',
       phaseTitle: '正在生成 PPT',
-      phaseSub: '下方可预览幻灯片，同时写出 .pptx 文件',
+      phaseSub: 'teacher-prep-skill 驱动内容；下方可预览并写出 .pptx',
       errorMsg: '',
       thinkingOpen: false,
       showSlidePreview: true,

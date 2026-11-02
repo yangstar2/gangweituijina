@@ -15,7 +15,7 @@ from typing import Any
 import httpx
 
 from ..config import settings
-from . import mock_ai
+from . import mock_ai, teacher_prep
 
 
 @dataclass
@@ -28,6 +28,9 @@ class ThinkResult:
     raw_content: str | None = None
     used_mock_fallback: bool = False
     error: str | None = None
+    skill_slug: str | None = None
+    skill_path: str | None = None
+    skill_context: dict[str, Any] = field(default_factory=dict)
 
 
 def is_configured() -> bool:
@@ -120,7 +123,13 @@ def _build_messages(
     content_type: str,
     history: list[dict[str, str]],
     existing_outline: dict[str, Any] | None,
-) -> list[dict[str, str]]:
+    title: str | None = None,
+) -> tuple[list[dict[str, str]], dict[str, Any]]:
+    """Prefer teacher-prep-skill template; fall back to legacy ad-hoc prompt."""
+    if teacher_prep.is_available():
+        return teacher_prep.build_think_messages(
+            content_type, history, existing_outline, title=title
+        )
     kind = "课件 PPT" if content_type == "courseware" else "试卷"
     sys = (
         "你是资深教研助手。根据师生对话澄清结果，先深度推理，再输出结构化"
@@ -144,7 +153,7 @@ def _build_messages(
     return [
         {"role": "system", "content": sys},
         {"role": "user", "content": user_blob},
-    ]
+    ], {}
 
 
 def _mock_think(
@@ -152,14 +161,34 @@ def _mock_think(
     history: list[dict[str, str]],
     existing_outline: dict[str, Any] | None,
     error: str | None = None,
+    title: str | None = None,
 ) -> ThinkResult:
+    skill_ctx: dict[str, Any] = {}
     if existing_outline and existing_outline.get("outline"):
         outline = _normalize_outline(existing_outline, existing_outline)
+        if teacher_prep.is_available():
+            skill_ctx = teacher_prep.resolve_skill_context(history, title)
+    elif teacher_prep.is_available():
+        raw = teacher_prep.outline_from_skill_fallback(content_type, history, title)
+        skill_ctx = raw.pop("_skill_context", {}) or {}
+        outline = _normalize_outline(raw, raw)
     else:
         outline = mock_ai._build_outline(content_type, history)  # noqa: SLF001 — shared stub
     bits = "；".join(m["content"] for m in history if m.get("role") == "user")[:120]
+    skill_line = ""
+    if teacher_prep.is_available():
+        skill_line = (
+            f"\n0. 加载 teacher-prep-skill（{teacher_prep.skill_install_path()}），"
+            f"匹配教材 {skill_ctx.get('version_id') or '通用'} / "
+            f"知识点 {len(skill_ctx.get('knowledge_points') or [])} 个\n"
+        )
     thinking = (
-        "（Mock 推理，未调用 DeepSeek）\n"
+        "（Mock 推理，未调用 DeepSeek；大纲由 teacher-prep-skill 结构驱动）\n"
+        if teacher_prep.is_available()
+        else "（Mock 推理，未调用 DeepSeek）\n"
+    )
+    thinking += (
+        f"{skill_line}"
         f"1. 识别主题与受众：{bits or '通用培训场景'}\n"
         "2. 拆分导入 → 核心知识 → 例题巩固 → 小结作业\n"
         "3. 控制信息密度，标注注意事项与难度边界\n"
@@ -173,6 +202,9 @@ def _mock_think(
         outline=outline,
         used_mock_fallback=True,
         error=error,
+        skill_slug=teacher_prep.SKILL_ORG_SLUG if teacher_prep.is_available() else None,
+        skill_path=teacher_prep.skill_install_path(),
+        skill_context=skill_ctx,
     )
 
 
@@ -221,16 +253,25 @@ def think_ppt_content(
     content_type: str,
     history: list[dict[str, str]],
     existing_outline: dict[str, Any] | None = None,
+    title: str | None = None,
 ) -> ThinkResult:
     """Run DeepSeek reasoning + structured outline; mock if unconfigured."""
-    fallback_outline = existing_outline or mock_ai._build_outline(  # noqa: SLF001
-        content_type, history
-    )
+    if teacher_prep.is_available() and not (existing_outline and existing_outline.get("outline")):
+        fallback_outline = teacher_prep.outline_from_skill_fallback(
+            content_type, history, title
+        )
+        fallback_outline.pop("_skill_context", None)
+    else:
+        fallback_outline = existing_outline or mock_ai._build_outline(  # noqa: SLF001
+            content_type, history
+        )
 
     if not is_configured():
-        return _mock_think(content_type, history, existing_outline)
+        return _mock_think(content_type, history, existing_outline, title=title)
 
-    messages = _build_messages(content_type, history, existing_outline)
+    messages, skill_ctx = _build_messages(
+        content_type, history, existing_outline, title=title
+    )
     preferred = (settings.deepseek_model or "deepseek-reasoner").strip()
     fallback_model = (settings.deepseek_fallback_model or "deepseek-chat").strip()
     models_to_try = [preferred]
@@ -259,7 +300,7 @@ def think_ppt_content(
             outline = _normalize_outline(parsed, fallback_outline)
             if not thinking:
                 thinking = (
-                    f"已使用 {model} 完成结构化推理，并生成课件大纲。"
+                    f"已使用 {model} + teacher-prep-skill 完成结构化推理，并生成课件大纲。"
                     if content
                     else f"模型 {model} 返回为空，已合并草稿大纲。"
                 )
@@ -271,9 +312,72 @@ def think_ppt_content(
                 outline=outline,
                 raw_content=content,
                 used_mock_fallback=False,
+                skill_slug=teacher_prep.SKILL_ORG_SLUG if teacher_prep.is_available() else None,
+                skill_path=teacher_prep.skill_install_path(),
+                skill_context={
+                    "version_id": skill_ctx.get("version_id"),
+                    "knowledge_points": skill_ctx.get("knowledge_points") or [],
+                    "template_filled": bool(skill_ctx.get("template_filled")),
+                },
             )
         except Exception as exc:  # noqa: BLE001 — soft-fallback to next model / mock
             last_err = f"{type(exc).__name__}: {exc}"
             continue
 
-    return _mock_think(content_type, history, existing_outline, error=last_err)
+    return _mock_think(
+        content_type, history, existing_outline, error=last_err, title=title
+    )
+
+
+def generate_ppt_content(
+    outline: dict[str, Any],
+    style_id: str,
+    model_id: str,
+    title: str | None = None,
+    history: list[dict[str, str]] | None = None,
+) -> dict[str, Any]:
+    """Build full slide JSON via teacher-prep-skill (+ DeepSeek when configured)."""
+    history = history or []
+    if not teacher_prep.is_available():
+        content = mock_ai.generate_ppt(outline, style_id, model_id, title)
+        content["preview_pages"] = teacher_prep.slides_to_preview_pages(
+            content.get("slides") or []
+        )
+        return content
+
+    messages, skill_ctx = teacher_prep.build_ppt_messages(
+        outline, history, title, style_id, model_id
+    )
+    if not is_configured():
+        return teacher_prep.local_skill_slides(
+            outline, style_id, model_id, title, skill_ctx
+        )
+
+    preferred = (settings.deepseek_model or "deepseek-reasoner").strip()
+    fallback_model = (settings.deepseek_fallback_model or "deepseek-chat").strip()
+    models_to_try = [preferred]
+    if fallback_model and fallback_model != preferred:
+        models_to_try.append(fallback_model)
+
+    for model in models_to_try:
+        try:
+            data = _chat_completions(model, messages)
+            _thinking, content = _parse_completion(data)
+            parsed = _extract_json_object(content)
+            result = teacher_prep.parse_ppt_completion(
+                parsed,
+                outline=outline,
+                style_id=style_id,
+                model_id=model_id,
+                title=title,
+                context=skill_ctx,
+            )
+            result["llm_model"] = model
+            result["llm_provider"] = "deepseek"
+            return result
+        except Exception:  # noqa: BLE001
+            continue
+
+    return teacher_prep.local_skill_slides(
+        outline, style_id, model_id, title, skill_ctx
+    )

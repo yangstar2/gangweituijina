@@ -395,7 +395,17 @@ def write_pptx(content: dict[str, Any], dest: Path) -> dict[str, Any]:
         tmp.write_bytes(data)
         tmp.replace(dest)
     # Prefer re-validating the on-disk file (catches partial writes)
-    _assert_valid_pptx_bytes(dest.read_bytes())
+    try:
+        _assert_valid_pptx_bytes(dest.read_bytes())
+    except RuntimeError:
+        # Last-resort rebuild via openable OOXML so download stays usable.
+        data = _minimal_pptx_bytes(content)
+        _assert_valid_pptx_bytes(data)
+        tmp = dest.with_suffix(dest.suffix + ".tmp")
+        tmp.write_bytes(data)
+        tmp.replace(dest)
+        used_lib = False
+        _assert_valid_pptx_bytes(dest.read_bytes())
     meta = {
         "file_name": dest.name,
         "file_path": str(dest),
@@ -403,6 +413,7 @@ def write_pptx(content: dict[str, Any], dest: Path) -> dict[str, Any]:
         "mime_type": PPTX_MIME,
         "builder": "python-pptx" if used_lib else "ooxml-fallback",
         "mock_file": not used_lib,
+        "pptx_valid": True,
     }
     return meta
 
@@ -420,5 +431,6 @@ def persist_artifact_pptx(artifact_id: int, content: dict[str, Any], title: str 
         "mime_type": meta["mime_type"],
         "pptx_builder": meta["builder"],
         "has_pptx_file": True,
+        "pptx_valid": bool(meta.get("pptx_valid", True)),
         "mock": False if meta["builder"] == "python-pptx" else content.get("mock", True),
     }
