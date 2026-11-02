@@ -75,6 +75,39 @@ def main() -> None:
     assert exam.json()["artifact_type"] == "exam"
     assert len(exam.json()["content"]["questions"]) >= 5
 
+    # premium model gated for free users
+    gated = client.post(
+        f"/api/sessions/{sid}/generate",
+        json={"style_id": styles[0]["id"], "model_id": "mock-hunyuan"},
+    )
+    assert gated.status_code == 402, gated.text
+
+    login2 = client.post("/api/auth/login", json={"code": "payer"})
+    uid = login2.json()["user_id"]
+    plans = client.get("/api/membership/plans").json()
+    assert any(p["id"] == "pro_month" for p in plans)
+    order = client.post("/api/pay/orders", json={"user_id": uid, "plan_id": "pro_month"})
+    assert order.status_code == 200, order.text
+    paid = client.post("/api/pay/notify/mock", json={"order_id": order.json()["id"]})
+    assert paid.status_code == 200 and paid.json()["status"] == "paid"
+    me = client.get("/api/membership/me", params={"user_id": uid}).json()
+    assert me["is_premium_active"] is True
+
+    # after pay, create session as same openid path is separate; force member on session user
+    # upgrade default user used by first session
+    from app.db import get_conn
+
+    with get_conn() as conn:
+        conn.execute(
+            "UPDATE members SET plan=?, expires_at=? WHERE user_id=(SELECT user_id FROM sessions WHERE id=?)",
+            (me["plan"], me["expires_at"], sid),
+        )
+    ungated = client.post(
+        f"/api/sessions/{sid}/generate",
+        json={"style_id": styles[0]["id"], "model_id": "mock-hunyuan"},
+    )
+    assert ungated.status_code == 200, ungated.text
+
     print(
         "SMOKE OK — session",
         sid,
@@ -82,6 +115,8 @@ def main() -> None:
         art["content"]["slide_count"],
         "exam_q",
         len(exam.json()["content"]["questions"]),
+        "membership",
+        me["plan"],
     )
 
 

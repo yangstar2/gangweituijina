@@ -9,6 +9,11 @@ Page({
     this._start('exam')
   },
 
+  goMembership() {
+    wx.navigateTo({ url: '/pages/membership/membership' })
+  },
+
+
   _start(contentType) {
     wx.showLoading({ title: '创建会话…' })
     api

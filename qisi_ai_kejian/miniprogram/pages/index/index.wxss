@@ -35,6 +35,10 @@
   flex: 1;
 }
 
+.member {
+  margin-bottom: 36rpx;
+}
+
 .hint {
   margin-top: 24rpx;
 }

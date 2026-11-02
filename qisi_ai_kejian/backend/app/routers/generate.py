@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 
 from ..db import dumps, get_conn, loads, utcnow
 from ..schemas.common import OutlineOut
+from ..services import membership as membership_svc
 from ..services import mock_ai
 
 router = APIRouter(prefix="/api/sessions", tags=["generate"])
@@ -79,6 +80,19 @@ def generate_artifact(session_id: int, body: GenerateIn) -> ArtifactOut:
         artifact_type = body.artifact_type or ("ppt" if content_type == "courseware" else "exam")
         if artifact_type not in ("ppt", "exam"):
             raise HTTPException(400, "artifact_type must be ppt or exam")
+
+        member = conn.execute(
+            "SELECT plan, expires_at FROM members WHERE user_id = ?",
+            (session["user_id"],),
+        ).fetchone()
+        plan = member["plan"] if member else "free"
+        expires = member["expires_at"] if member else None
+        ok, reason = membership_svc.can_use_model(plan, expires, body.model_id)
+        if not ok:
+            raise HTTPException(
+                status_code=402,
+                detail={"message": reason, "code": "membership_required", "plan": plan},
+            )
 
         outline_payload = {
             "key_points": ol.key_points,

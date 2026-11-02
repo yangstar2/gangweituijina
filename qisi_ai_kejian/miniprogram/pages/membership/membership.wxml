@@ -1,5 +1,24 @@
 <view class="page">
   <view class="section-title">会员中心</view>
-  <view class="muted">套餐与支付将在下一切片接入；当前为占位页。</view>
-  <view class="btn-primary" style="margin-top:40rpx" bindtap="back">返回</view>
+  <view class="status" wx:if="{{membership}}">
+    当前：{{membership.plan_name}}
+    <text wx:if="{{membership.is_premium_active}}">（有效至 {{membership.expires_at}}）</text>
+    <text wx:else class="muted"> · 未开通专业权益</text>
+  </view>
+
+  <view
+    class="plan {{selectedId === item.id ? 'active' : ''}}"
+    wx:for="{{plans}}"
+    wx:key="id"
+    wx:if="{{item.premium}}"
+    data-id="{{item.id}}"
+    bindtap="onSelect"
+  >
+    <view class="name">{{item.name}} · ¥{{item.price_yuan}}</view>
+    <view class="desc">{{item.description}}</view>
+    <view class="feat" wx:for="{{item.features}}" wx:for-item="f" wx:key="*this">· {{f}}</view>
+  </view>
+
+  <view class="btn-accent buy" bindtap="onBuy">模拟微信支付</view>
+  <view class="muted tip">真实环境将调起 wx.requestPayment；此处走 mock prepay + notify。</view>
 </view>

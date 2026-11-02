@@ -54,11 +54,17 @@ Page({
       })
       .catch((err) => {
         wx.hideLoading()
-        const detail = (err && (err.detail || err.message)) || '生成失败'
-        if (String(detail).indexOf('会员') >= 0 || (err && err.code === 'membership_required')) {
+        const d = err && err.detail
+        const msg =
+          (d && typeof d === 'object' && (d.message || d.msg)) ||
+          (typeof d === 'string' ? d : null) ||
+          (err && err.message) ||
+          '生成失败'
+        const code = d && typeof d === 'object' ? d.code : null
+        if (code === 'membership_required' || String(msg).indexOf('会员') >= 0) {
           wx.showModal({
             title: '需要会员',
-            content: String(detail),
+            content: String(msg),
             confirmText: '去开通',
             success(res) {
               if (res.confirm) {
@@ -68,7 +74,7 @@ Page({
           })
           return
         }
-        wx.showToast({ title: String(detail), icon: 'none' })
+        wx.showToast({ title: String(msg), icon: 'none' })
       })
   },
 })

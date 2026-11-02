@@ -77,3 +77,4 @@ class ModelInfo(BaseModel):
     provider: str
     description: str
     recommended: bool = False
+    requires_membership: bool = False

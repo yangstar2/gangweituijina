@@ -5,5 +5,6 @@
     <view class="btn-primary" bindtap="startCourseware">做课件</view>
     <view class="btn-primary ghost" bindtap="startExam">出试卷</view>
   </view>
-  <view class="hint muted">本 slice 全部 mock：不调用真实模型 / 微信登录 / 支付</view>
+  <view class="btn-accent member" bindtap="goMembership">会员中心</view>
+  <view class="hint muted">全部 mock：不调用真实模型 / 微信登录 / 支付</view>
 </view>
