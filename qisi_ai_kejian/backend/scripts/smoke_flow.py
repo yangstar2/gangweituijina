@@ -2,8 +2,15 @@
 
 from __future__ import annotations
 
+import os
 import sys
+import tempfile
 from pathlib import Path
+
+# Isolated SQLite so repeated smokes don't inherit paid membership state
+_os_db = tempfile.NamedTemporaryFile(prefix="qisi-smoke-", suffix=".db", delete=False)
+os.environ["DATABASE_PATH"] = _os_db.name
+_os_db.close()
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -75,7 +82,14 @@ def main() -> None:
     assert exam.json()["artifact_type"] == "exam"
     assert len(exam.json()["content"]["questions"]) >= 5
 
-    # premium model gated for free users
+    from app.db import get_conn
+
+    # ensure session owner is free so premium model is gated
+    with get_conn() as conn:
+        conn.execute(
+            "UPDATE members SET plan='free', expires_at=NULL WHERE user_id=(SELECT user_id FROM sessions WHERE id=?)",
+            (sid,),
+        )
     gated = client.post(
         f"/api/sessions/{sid}/generate",
         json={"style_id": styles[0]["id"], "model_id": "mock-hunyuan"},
@@ -92,10 +106,6 @@ def main() -> None:
     assert paid.status_code == 200 and paid.json()["status"] == "paid"
     me = client.get("/api/membership/me", params={"user_id": uid}).json()
     assert me["is_premium_active"] is True
-
-    # after pay, create session as same openid path is separate; force member on session user
-    # upgrade default user used by first session
-    from app.db import get_conn
 
     with get_conn() as conn:
         conn.execute(
