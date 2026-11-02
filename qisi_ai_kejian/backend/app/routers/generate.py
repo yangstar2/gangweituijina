@@ -1,14 +1,15 @@
-"""Full PPT / exam generation from clarified outline (mock AI)."""
+"""Full PPT / exam generation from clarified outline; PPT writes a real .pptx."""
 
 from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from ..db import dumps, get_conn, loads, utcnow
 from ..schemas.common import OutlineOut
 from ..services import membership as membership_svc
-from ..services import mock_ai
+from ..services import mock_ai, pptx_builder
 
 router = APIRouter(prefix="/api/sessions", tags=["generate"])
 
@@ -33,6 +34,7 @@ class ArtifactOut(BaseModel):
     status: str
     content: dict
     created_at: str
+    download_url: str | None = None
 
 
 def _get_outline(conn, session_id: int) -> OutlineOut | None:
@@ -51,6 +53,10 @@ def _get_outline(conn, session_id: int) -> OutlineOut | None:
 
 
 def _row_to_artifact(row) -> ArtifactOut:
+    content = loads(row["content"], {})
+    download_url = None
+    if row["artifact_type"] == "ppt":
+        download_url = content.get("download_url") or pptx_builder.download_url_for(row["id"])
     return ArtifactOut(
         id=row["id"],
         session_id=row["session_id"],
@@ -59,14 +65,71 @@ def _row_to_artifact(row) -> ArtifactOut:
         model_id=row["model_id"],
         title=row["title"],
         status=row["status"],
-        content=loads(row["content"], {}),
+        content=content,
         created_at=row["created_at"],
+        download_url=download_url,
     )
+
+
+def finalize_ppt_artifact(
+    conn,
+    *,
+    session_id: int,
+    outline_payload: dict,
+    style_id: str,
+    model_id: str,
+    title: str | None,
+    now: str,
+    extra_content: dict | None = None,
+) -> ArtifactOut:
+    """Generate slide JSON, insert artifact, write .pptx, update content with download URL."""
+    content = mock_ai.generate_ppt(outline_payload, style_id, model_id, title)
+    if extra_content:
+        content.update(extra_content)
+    # Attach outline summary for result page
+    content["outline_summary"] = {
+        "key_points": outline_payload.get("key_points") or [],
+        "outline": outline_payload.get("outline") or [],
+        "notes": outline_payload.get("notes") or [],
+        "raw_summary": outline_payload.get("raw_summary"),
+    }
+    content["mock"] = False  # slides still from local builder; file is real pptx
+    content["provider_note"] = "PPTX built with python-pptx (or OOXML fallback)"
+
+    cur = conn.execute(
+        """
+        INSERT INTO artifacts (session_id, artifact_type, style_id, model_id, title, content, status, created_at)
+        VALUES (?, 'ppt', ?, ?, ?, ?, 'ready', ?)
+        """,
+        (
+            session_id,
+            style_id,
+            model_id,
+            content.get("title") or title,
+            dumps(content),
+            now,
+        ),
+    )
+    artifact_id = cur.lastrowid
+    file_meta = pptx_builder.persist_artifact_pptx(
+        artifact_id, content, content.get("title") or title
+    )
+    content.update(file_meta)
+    conn.execute(
+        "UPDATE artifacts SET content=? WHERE id=?",
+        (dumps(content), artifact_id),
+    )
+    conn.execute(
+        "UPDATE sessions SET status='done', updated_at=? WHERE id=?",
+        (now, session_id),
+    )
+    row = conn.execute("SELECT * FROM artifacts WHERE id = ?", (artifact_id,)).fetchone()
+    return _row_to_artifact(row)
 
 
 @router.post("/{session_id}/generate", response_model=ArtifactOut)
 def generate_artifact(session_id: int, body: GenerateIn) -> ArtifactOut:
-    """Generate full PPT or exam paper from outline. Mock only — no real model call."""
+    """Generate full PPT (.pptx file) or exam paper from outline."""
     now = utcnow()
     with get_conn() as conn:
         session = conn.execute("SELECT * FROM sessions WHERE id = ?", (session_id,)).fetchone()
@@ -103,12 +166,19 @@ def generate_artifact(session_id: int, body: GenerateIn) -> ArtifactOut:
         title = body.title or session["title"]
 
         if artifact_type == "ppt":
-            content = mock_ai.generate_ppt(outline_payload, body.style_id, body.model_id, title)
-        else:
-            content = mock_ai.generate_exam(
-                outline_payload, body.style_id, body.model_id, title, textbook_hint=ol.raw_summary
+            return finalize_ppt_artifact(
+                conn,
+                session_id=session_id,
+                outline_payload=outline_payload,
+                style_id=body.style_id,
+                model_id=body.model_id,
+                title=title,
+                now=now,
             )
 
+        content = mock_ai.generate_exam(
+            outline_payload, body.style_id, body.model_id, title, textbook_hint=ol.raw_summary
+        )
         cur = conn.execute(
             """
             INSERT INTO artifacts (session_id, artifact_type, style_id, model_id, title, content, status, created_at)
@@ -157,3 +227,37 @@ def get_artifact(artifact_id: int) -> ArtifactOut:
     if not row:
         raise HTTPException(404, "artifact not found")
     return _row_to_artifact(row)
+
+
+@artifacts_router.get("/{artifact_id}/download")
+def download_artifact(artifact_id: int):
+    """Download the generated .pptx (PPT only)."""
+    with get_conn() as conn:
+        row = conn.execute("SELECT * FROM artifacts WHERE id = ?", (artifact_id,)).fetchone()
+    if not row:
+        raise HTTPException(404, "artifact not found")
+    if row["artifact_type"] != "ppt":
+        raise HTTPException(400, "download is only available for PPT artifacts")
+
+    content = loads(row["content"], {})
+    path = pptx_builder.artifact_pptx_path(artifact_id)
+    if not path.is_file():
+        # Rebuild if missing (e.g. DB copied without files)
+        file_meta = pptx_builder.persist_artifact_pptx(artifact_id, content, row["title"])
+        content.update(file_meta)
+        with get_conn() as conn:
+            conn.execute(
+                "UPDATE artifacts SET content=? WHERE id=?",
+                (dumps(content), artifact_id),
+            )
+
+    if not path.is_file():
+        raise HTTPException(404, "pptx file not found")
+
+    filename = content.get("file_name") or path.name
+    return FileResponse(
+        path=str(path),
+        media_type=pptx_builder.PPTX_MIME,
+        filename=filename,
+        content_disposition_type="attachment",
+    )

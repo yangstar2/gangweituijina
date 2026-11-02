@@ -1,6 +1,23 @@
 <view class="page" wx:if="{{artifact}}">
   <view class="section-title">{{artifact.title}}</view>
-  <view class="muted">{{artifact.content.slide_count}} 页 · {{artifact.model_id}} · mock</view>
+  <view class="muted">
+    {{artifact.content.slide_count}} 页 · {{artifact.model_id}}
+    <text wx:if="{{artifact.content.pptx_builder}}"> · {{artifact.content.pptx_builder}}</text>
+  </view>
+
+  <view class="outline-box" wx:if="{{outlineSummary}}">
+    <view class="box-title">大纲摘要</view>
+    <view class="muted">要点</view>
+    <view class="oitem" wx:for="{{outlineSummary.key_points}}" wx:key="*this">· {{item}}</view>
+    <view class="muted" style="margin-top: 12rpx;">章节</view>
+    <view class="oitem" wx:for="{{outlineSummary.outline}}" wx:key="section">· {{item.section}}</view>
+  </view>
+
+  <view class="download-row">
+    <view class="btn-accent {{downloadBusy ? 'disabled' : ''}}" bindtap="onDownload">下载PPT</view>
+    <view class="btn-primary ghost" bindtap="copyLink">复制链接</view>
+  </view>
+  <view class="hint">将下载真实 .pptx 文件；微信内可打开预览或转发保存。</view>
 
   <swiper class="pager" indicator-dots circular>
     <block wx:for="{{artifact.content.slides}}" wx:key="slide_no">

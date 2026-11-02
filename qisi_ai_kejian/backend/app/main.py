@@ -13,7 +13,7 @@ from .services import deepseek
 app = FastAPI(
     title=settings.app_name,
     description="奇思 AI 课件 — ask-teacher + DeepSeek thinking + generate + membership + admin",
-    version="0.4.0",
+    version="0.5.0",
 )
 
 app.add_middleware(
@@ -49,4 +49,5 @@ def health() -> dict:
         "deepseek_configured": deepseek.is_configured(),
         "slice": "full-product-mock",
         "admin": "/admin/members",
+        "pptx_download": True,
     }

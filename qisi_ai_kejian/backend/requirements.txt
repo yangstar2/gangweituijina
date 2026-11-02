@@ -6,3 +6,4 @@ aiosqlite==0.20.0
 httpx==0.28.1
 python-multipart==0.0.20
 jinja2==3.1.5
+python-pptx==1.0.2

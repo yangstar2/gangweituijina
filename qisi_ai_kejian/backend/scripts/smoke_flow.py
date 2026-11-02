@@ -95,8 +95,24 @@ def main() -> None:
     art = gen.json()
     assert art["artifact_type"] == "ppt"
     assert art["content"]["slide_count"] >= 6
+    assert art.get("download_url") or art["content"].get("download_url")
+    assert art["content"].get("has_pptx_file") is True
+    from app.services.pptx_builder import PPTX_MIME, artifact_pptx_path
+
+    pptx_path = artifact_pptx_path(art["id"])
+    assert pptx_path.is_file(), f"missing pptx at {pptx_path}"
+    assert pptx_path.stat().st_size > 1000
+    # ZIP/OOXML signature
+    assert pptx_path.read_bytes()[:2] == b"PK"
+    dl = client.get(f"/api/artifacts/{art['id']}/download")
+    assert dl.status_code == 200, dl.text
+    ctype = (dl.headers.get("content-type") or "").split(";")[0].strip()
+    assert ctype == PPTX_MIME, ctype
+    assert dl.content[:2] == b"PK"
+    assert len(dl.content) == pptx_path.stat().st_size
     got = client.get(f"/api/artifacts/{art['id']}")
     assert got.status_code == 200 and got.json()["id"] == art["id"]
+    assert got.json().get("download_url")
 
     # exam path
     sess2 = client.post("/api/sessions", json={"content_type": "exam", "title": "smoke-exam"})
@@ -157,6 +173,10 @@ def main() -> None:
         sid,
         "ppt_slides",
         art["content"]["slide_count"],
+        "pptx_bytes",
+        pptx_path.stat().st_size,
+        "pptx_builder",
+        art["content"].get("pptx_builder"),
         "exam_q",
         len(exam.json()["content"]["questions"]),
         "membership",

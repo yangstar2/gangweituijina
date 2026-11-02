@@ -10,8 +10,8 @@ from pydantic import BaseModel
 
 from ..db import dumps, get_conn, loads, utcnow
 from ..schemas.common import OutlineOut
-from ..services import deepseek, membership as membership_svc, mock_ai
-from .generate import ArtifactOut, _row_to_artifact
+from ..services import deepseek, membership as membership_svc
+from .generate import ArtifactOut, finalize_ppt_artifact
 
 router = APIRouter(prefix="/api/sessions", tags=["ppt-think"])
 
@@ -131,30 +131,19 @@ def _maybe_generate(
         )
 
     title = body.title or session["title"]
-    content = mock_ai.generate_ppt(outline, body.style_id, body.model_id, title)
-    # Annotate provenance without exposing secrets
-    content["thinking_provider"] = "deepseek" if deepseek.is_configured() else "mock"
-    cur = conn.execute(
-        """
-        INSERT INTO artifacts (session_id, artifact_type, style_id, model_id, title, content, status, created_at)
-        VALUES (?, 'ppt', ?, ?, ?, ?, 'ready', ?)
-        """,
-        (
-            session_id,
-            body.style_id,
-            body.model_id,
-            content.get("title") or title,
-            dumps(content),
-            now,
-        ),
+    return finalize_ppt_artifact(
+        conn,
+        session_id=session_id,
+        outline_payload=outline,
+        style_id=body.style_id,
+        model_id=body.model_id,
+        title=title,
+        now=now,
+        extra_content={
+            # Annotate provenance without exposing secrets
+            "thinking_provider": "deepseek" if deepseek.is_configured() else "mock",
+        },
     )
-    artifact_id = cur.lastrowid
-    conn.execute(
-        "UPDATE sessions SET status='done', updated_at=? WHERE id=?",
-        (now, session_id),
-    )
-    row = conn.execute("SELECT * FROM artifacts WHERE id = ?", (artifact_id,)).fetchone()
-    return _row_to_artifact(row)
 
 
 @router.post("/{session_id}/ppt-think", response_model=PptThinkOut)
