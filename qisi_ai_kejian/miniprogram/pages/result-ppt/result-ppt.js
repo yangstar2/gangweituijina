@@ -42,6 +42,15 @@ Page({
     return `${getBase()}${rel}`
   },
 
+  _localPptxPath(artifact) {
+    const id = (artifact && artifact.id) || 'ppt'
+    // Force .pptx under USER_DATA_PATH — WeChat temp paths often lack an
+    // extension, so openDocument/Keynote treat the file as corrupt.
+    const root = (wx.env && wx.env.USER_DATA_PATH) || ''
+    if (!root) return ''
+    return `${root}/artifact_${id}.pptx`
+  },
+
   onDownload() {
     if (this.data.downloadBusy) return
     const url = this._fullDownloadUrl()
@@ -52,26 +61,46 @@ Page({
     this.setData({ downloadBusy: true })
     wx.showLoading({ title: '下载中…', mask: true })
 
-    wx.downloadFile({
+    const filePath = this._localPptxPath(this.data.artifact)
+    const req = {
       url,
       success: (res) => {
         wx.hideLoading()
         this.setData({ downloadBusy: false })
-        if (res.statusCode >= 200 && res.statusCode < 300 && res.tempFilePath) {
+        const ok =
+          res.statusCode >= 200 &&
+          res.statusCode < 300 &&
+          (res.filePath || res.tempFilePath)
+        if (!ok) {
+          this._copyLinkFallback(url)
+          return
+        }
+        const path = res.filePath || res.tempFilePath
+        // Guard: tiny bodies are almost always HTML/JSON error pages saved as pptx
+        const fs = wx.getFileSystemManager && wx.getFileSystemManager()
+        const openIt = () => {
           wx.openDocument({
-            filePath: res.tempFilePath,
+            filePath: path,
             fileType: 'pptx',
             showMenu: true,
-            fail: () => {
-              wx.setClipboardData({
-                data: url,
-                success: () =>
-                  wx.showToast({ title: '链接已复制，可在浏览器打开', icon: 'none' }),
-              })
+            fail: () => this._copyLinkFallback(url),
+          })
+        }
+        if (fs && fs.getFileInfo) {
+          fs.getFileInfo({
+            filePath: path,
+            success: (info) => {
+              if (!info || !info.size || info.size < 1000) {
+                wx.showToast({ title: '文件异常，已复制链接', icon: 'none' })
+                this._copyLinkFallback(url)
+                return
+              }
+              openIt()
             },
+            fail: openIt,
           })
         } else {
-          this._copyLinkFallback(url)
+          openIt()
         }
       },
       fail: () => {
@@ -79,7 +108,10 @@ Page({
         this.setData({ downloadBusy: false })
         this._copyLinkFallback(url)
       },
-    })
+    }
+    if (filePath) req.filePath = filePath
+
+    wx.downloadFile(req)
   },
 
   _copyLinkFallback(url) {

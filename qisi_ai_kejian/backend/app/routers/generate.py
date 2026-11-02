@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+from urllib.parse import quote
+
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from ..db import dumps, get_conn, loads, utcnow
@@ -231,7 +233,12 @@ def get_artifact(artifact_id: int) -> ArtifactOut:
 
 @artifacts_router.get("/{artifact_id}/download")
 def download_artifact(artifact_id: int):
-    """Download the generated .pptx (PPT only)."""
+    """Download the generated .pptx (PPT only).
+
+    Uses an ASCII ``filename=`` plus RFC 5987 ``filename*`` so WeChat
+    ``downloadFile`` keeps a ``.pptx`` extension instead of saving an HTML
+    error body or extension-less temp file that Keynote/PowerPoint reject.
+    """
     with get_conn() as conn:
         row = conn.execute("SELECT * FROM artifacts WHERE id = ?", (artifact_id,)).fetchone()
     if not row:
@@ -254,10 +261,40 @@ def download_artifact(artifact_id: int):
     if not path.is_file():
         raise HTTPException(404, "pptx file not found")
 
-    filename = content.get("file_name") or path.name
-    return FileResponse(
-        path=str(path),
+    data = path.read_bytes()
+    try:
+        pptx_builder._assert_valid_pptx_bytes(data)
+    except RuntimeError as exc:
+        # Corrupt on disk — rebuild once
+        file_meta = pptx_builder.persist_artifact_pptx(artifact_id, content, row["title"])
+        content.update(file_meta)
+        with get_conn() as conn:
+            conn.execute(
+                "UPDATE artifacts SET content=? WHERE id=?",
+                (dumps(content), artifact_id),
+            )
+        data = path.read_bytes()
+        try:
+            pptx_builder._assert_valid_pptx_bytes(data)
+        except RuntimeError:
+            raise HTTPException(500, f"pptx invalid: {exc}") from exc
+
+    ascii_name = content.get("ascii_file_name") or pptx_builder.ascii_download_name(artifact_id)
+    display_name = content.get("file_name") or ascii_name
+    if not str(display_name).lower().endswith(".pptx"):
+        display_name = f"{display_name}.pptx"
+    # Always include plain ASCII filename=…pptx for WeChat / older clients
+    disposition = (
+        f'attachment; filename="{ascii_name}"; '
+        f"filename*=UTF-8''{quote(str(display_name))}"
+    )
+    return Response(
+        content=data,
         media_type=pptx_builder.PPTX_MIME,
-        filename=filename,
-        content_disposition_type="attachment",
+        headers={
+            "Content-Disposition": disposition,
+            "Content-Length": str(len(data)),
+            "Cache-Control": "no-store",
+            "X-Content-Type-Options": "nosniff",
+        },
     )
